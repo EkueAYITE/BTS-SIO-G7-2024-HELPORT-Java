@@ -62,7 +62,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>sio.projetjavahelport/sio.projetjavahelport.HelloApplication</mainClass>
+              <mainClass>sio.projetjavahelport/sio.projetjavahelport.ProjetJavaHelpOrtApplication</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
