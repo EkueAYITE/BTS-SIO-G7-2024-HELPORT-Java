@@ -1,0 +1,19 @@
+.linear-gradient {
+    -fx-background-color: linear-gradient(
+            to bottom,
+            #7336a8,
+            #0051ec
+    ), linear-gradient(
+            to bottom,
+            #6f9cd5,
+            #699df8
+    ), linear-gradient(
+            to top,
+            #2786a9,
+            #20288d
+    );
+
+    -fx-background-size: 100% 33%, 100% 33%, 100% 34%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: top, center, bottom;
+}

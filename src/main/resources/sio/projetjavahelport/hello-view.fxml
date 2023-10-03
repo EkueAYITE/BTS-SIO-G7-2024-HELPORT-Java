@@ -1,16 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="sio.projetjavahelport.HelloController">
-  <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-  </padding>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-  <Label fx:id="welcomeText"/>
-  <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="496.0" prefWidth="689.0" style="-fx-background-color: linear-gradient(127deg, rgba(0, 255, 0, 0.8), rgba(0, 255, 0, 0) 70.71%);" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.HelloController">
+   <children>
+      <AnchorPane layoutX="350.0" prefHeight="496.0" prefWidth="339.0" styleClass="linear-gradient" stylesheets="@../../CSS/index.css">
+         <children>
+            <TextField fx:id="txtIdentifiant" layoutX="60.0" layoutY="232.0" prefHeight="33.0" prefWidth="224.0" promptText="Identifiants">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="txtMotDePasse" layoutX="60.0" layoutY="293.0" prefHeight="33.0" prefWidth="224.0" promptText="Mot de passe">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </TextField>
+            <Label layoutX="101.0" layoutY="145.0" text="Connectez-vous" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnConnexion" layoutX="96.0" layoutY="398.0" mnemonicParsing="false" onAction="#btnConnexionClicked" prefHeight="25.0" prefWidth="153.0" style="-fx-background-color: white;" text="Connexion">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Label fx:id="lblMotDePasseOublie" layoutX="168.0" layoutY="333.0" onMouseClicked="#lblMotDePasseOublieClicked" text="Mot de passe oublié ?" textFill="#9a9999" />
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="64.0" layoutY="186.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../../../Users/evanm/Pictures/Images_ProjetV1/ORTMONTREUILLOGO.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblMentionsLegales" layoutX="56.0" layoutY="465.0" onMouseClicked="#lblMentionLegalesClicked" text="Mentions légales">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblContact" layoutX="207.0" layoutY="465.0" onMouseClicked="#lblContactClicked" text="Contacts">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
