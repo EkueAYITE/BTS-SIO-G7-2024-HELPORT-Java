@@ -17,3 +17,23 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: top, center, bottom;
 }
+.gradient {
+    -fx-background-color: linear-gradient(to top,
+    #0c9ecb, #1e90ff);
+    -fx-min-width: 200px; /* Ajustez la largeur et la hauteur selon vos besoins */
+    -fx-min-height: 200px;
+}
+
+.gradient-circle {
+    -fx-background-color: linear-gradient(to left    ,
+    violet,
+    indigo,
+    blue,
+    green,
+    yellow,
+    orange,
+    red
+    );
+    width: 200px; /* Ajustez la largeur et la hauteur selon vos besoins */
+    height: 200px;
+}
