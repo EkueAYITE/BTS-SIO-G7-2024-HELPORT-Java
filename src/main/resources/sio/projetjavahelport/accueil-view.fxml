@@ -34,8 +34,8 @@
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Label layoutX="14.0" layoutY="776.0" text="Contacts" />
-            <Label layoutX="100.0" layoutY="776.0" text="Mentions légales" />
+            <Label fx:id="lblContactsAccueil" layoutX="14.0" layoutY="776.0" onMouseClicked="#lblContactsAccueilClicked" text="Contacts" />
+            <Label fx:id="lblMentionsLegalesAccueil" layoutX="100.0" layoutY="776.0" onMouseClicked="#lblMentionsLegalesAccueilClicked" text="Mentions légales" />
             <Button layoutY="397.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="200.0" text="Matière">
                <font>
                   <Font name="System Bold" size="12.0" />
@@ -57,17 +57,17 @@
                   <Font name="System Bold" size="35.0" />
                </font>
             </Label>
-            <Button layoutX="162.0" layoutY="343.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Ajouter" textFill="WHITE">
+            <Button fx:id="btnAjouterCompetenceAccueil" layoutX="162.0" layoutY="343.0" mnemonicParsing="false" onAction="#btnAjouterCompetenceAccueilClicked" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Ajouter" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Button>
-            <Button layoutX="162.0" layoutY="493.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Supprimer" textFill="WHITE">
+            <Button fx:id="btnSupprimerCompetenceAccueil" layoutX="162.0" layoutY="493.0" mnemonicParsing="false" onAction="#btnSupprimerCompetenceAccueilClicked" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Supprimer" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Button>
-            <Button layoutX="162.0" layoutY="419.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Modifier" textFill="WHITE">
+            <Button fx:id="btnModifierCompetenceAccueil" layoutX="162.0" layoutY="419.0" mnemonicParsing="false" onAction="#btnModifierCompetenceAccueilClicked" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Modifier" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
@@ -84,7 +84,7 @@
             </TableView>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="199.0" prefHeight="820.0" prefWidth="910.0">
+      <AnchorPane layoutX="199.0" prefHeight="820.0" prefWidth="910.0" visible="false">
          <children>
             <Label layoutX="30.0" layoutY="38.0" text="Demandes" textFill="#2b62ee">
                <font>
@@ -108,12 +108,12 @@
             </TableView>
             <Label layoutX="41.0" layoutY="210.0" text="Mes demandes :" />
             <Label layoutX="386.0" layoutY="210.0" text="Demandes :" />
-            <Button layoutX="136.0" layoutY="658.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="90.0" style="-fx-background-color: #006bff;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Créer" textFill="WHITE">
+            <Button fx:id="btnCreerDemande" layoutX="136.0" layoutY="658.0" mnemonicParsing="false" onAction="#btnCreeDemandeClicked" prefHeight="41.0" prefWidth="90.0" style="-fx-background-color: #006bff;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Créer" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Button>
-            <Button layoutX="550.0" layoutY="658.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Sélectionner " textFill="WHITE">
+            <Button fx:id="btnSelectionnerDemandeAccueil" layoutX="550.0" layoutY="658.0" mnemonicParsing="false" onAction="#btnSelectionnerDemandeAccueilClicked" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Sélectionner " textFill="WHITE">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
@@ -122,19 +122,19 @@
       </AnchorPane>
       <AnchorPane layoutX="199.0" prefHeight="32.0" prefWidth="910.0" style="-fx-background-color: #113191;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css">
          <children>
-            <Button layoutX="810.0" layoutY="4.0" mnemonicParsing="false" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Déconnexion" textFill="WHITE">
+            <Button fx:id="btnDeconnexionAccueil" layoutX="810.0" layoutY="4.0" mnemonicParsing="false" onAction="#btnDeconnexionAccueilClicked" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Déconnexion" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button layoutX="711.0" layoutY="4.0" mnemonicParsing="false" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Paramètres" textFill="WHITE">
+            <Button fx:id="btnParametreAccueil" layoutX="711.0" layoutY="4.0" mnemonicParsing="false" onAction="#btnParametreAccueilClicked" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Paramètres" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="199.0" prefHeight="820.0" prefWidth="910.0" visible="false">
+      <AnchorPane layoutX="199.0" prefHeight="820.0" prefWidth="910.0">
          <children>
             <Label layoutX="43.0" layoutY="56.0" text="Ajouter une matière" textFill="#2b62ee">
                <font>
@@ -151,17 +151,17 @@
                 <TableColumn prefWidth="354.0" text="Matière" />
               </columns>
             </TableView>
-            <Button layoutX="162.0" layoutY="419.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Modifier" textFill="WHITE">
+            <Button fx:id="btnModifierMatiereAccueil" layoutX="162.0" layoutY="419.0" mnemonicParsing="false" onAction="#btnModifierMatiereAccueilClicked" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Modifier" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Button>
-            <Button layoutX="162.0" layoutY="344.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Ajouter" textFill="WHITE">
+            <Button fx:id="btnAjouterMatiereAccueil" layoutX="162.0" layoutY="344.0" mnemonicParsing="false" onAction="#btnAjouterMatiereAccueilClicked" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Ajouter" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Button>
-            <Button layoutX="162.0" layoutY="493.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Supprimer" textFill="WHITE">
+            <Button fx:id="btnSupprimerMatiereAccueil" layoutX="162.0" layoutY="493.0" mnemonicParsing="false" onAction="#btnSupprimerMatiereAccueilClicked" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Supprimer" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
