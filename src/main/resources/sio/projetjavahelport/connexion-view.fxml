@@ -38,7 +38,7 @@
       </AnchorPane>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="64.0" layoutY="186.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../../Users/evanm/Pictures/Images_ProjetV1/ORTMONTREUILLOGO.png" />
+            <Image url="../projetjavahelport/Images/ORTMONTREUILLOGO.png" />
          </image>
       </ImageView>
       <Label fx:id="lblMentionsLegales" layoutX="56.0" layoutY="465.0" onMouseClicked="#lblMentionLegalesClicked" text="Mentions légales">

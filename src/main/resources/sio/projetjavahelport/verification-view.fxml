@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.VerificationController">
+   <children>
+      <Button layoutX="134.0" layoutY="338.0" mnemonicParsing="false" text="Valider" />
+      <TextField layoutX="30.0" layoutY="239.0" text="Mot de passe" />
+      <TextField layoutX="30.0" layoutY="188.0" text="Identifiant" />
+      <AnchorPane layoutX="246.0" prefHeight="400.0" prefWidth="356.0" style="-fx-background-color: #0e4e94;" />
+   </children>
+</AnchorPane>
