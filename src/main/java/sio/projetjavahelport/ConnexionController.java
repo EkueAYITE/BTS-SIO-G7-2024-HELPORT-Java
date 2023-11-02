@@ -42,6 +42,13 @@ public class ConnexionController implements Initializable {
 
     @FXML
     public void lblMentionLegalesClicked(Event event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mentions-legales-view.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Mentions légales");
+        stage.setScene(scene);
+        stage.show();
 
     }
 
