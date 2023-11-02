@@ -2,6 +2,7 @@ package sio.projetjavahelport;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class ContactController {
@@ -13,6 +14,8 @@ public class ContactController {
     private TextField txtMail;
     @javafx.fxml.FXML
     private Button btnEnvoyer;
+    @javafx.fxml.FXML
+    private TextArea txtAMessage;
 
     @javafx.fxml.FXML
     public void btnEnvoyerClicked(ActionEvent actionEvent) {
