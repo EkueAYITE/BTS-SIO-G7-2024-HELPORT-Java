@@ -10,7 +10,8 @@ import java.io.IOException;
 public class ProjetJavaHelpOrtApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ProjetJavaHelpOrtApplication.class.getResource("connexion-view.fxml"));
+
+        FXMLLoader fxmlLoader = new FXMLLoader(ProjetJavaHelpOrtApplication.class.getResource("accueil-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Connexion");
         stage.setScene(scene);

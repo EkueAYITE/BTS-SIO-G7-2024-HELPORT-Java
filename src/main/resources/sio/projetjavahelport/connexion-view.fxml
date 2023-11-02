@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="496.0" prefWidth="689.0" style="-fx-background-color: linear-gradient(127deg, rgba(0, 255, 0, 0.8), rgba(0, 255, 0, 0) 70.71%);" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.ConnexionController">
    <children>
       <AnchorPane layoutX="350.0" prefHeight="496.0" prefWidth="339.0" styleClass="linear-gradient" stylesheets="@../../CSS/index.css">
@@ -36,11 +35,7 @@
             <Label fx:id="lblMotDePasseOublie" layoutX="168.0" layoutY="333.0" onMouseClicked="#lblMotDePasseOublieClicked" text="Mot de passe oublié ?" textFill="#9a9999" />
          </children>
       </AnchorPane>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="64.0" layoutY="186.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="../projetjavahelport/Images/ORTMONTREUILLOGO.png" />
-         </image>
-      </ImageView>
+      
       <Label fx:id="lblMentionsLegales" layoutX="56.0" layoutY="465.0" onMouseClicked="#lblMentionLegalesClicked" text="Mentions légales">
          <font>
             <Font name="System Bold Italic" size="12.0" />
@@ -51,5 +46,10 @@
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
+      <ImageView fitHeight="158.0" fitWidth="216.0" layoutX="56.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Images/ORTMONTREUILLOGO.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
