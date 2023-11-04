@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.MdpOublieController">
+   <children>
+      <Label alignment="TOP_LEFT" contentDisplay="TOP" layoutX="114.0" layoutY="99.0" lineSpacing="1.0" prefHeight="51.0" prefWidth="401.0" style="-fx-background-color: #afd6fa;" text="Veuillez saisir l'adresse e-mail ou le numéro de téléphone portable que vous aviez renseigné lors de la personnalisation de vos codes d'accès." textAlignment="CENTER" wrapText="true" />
+      <Label layoutX="177.0" layoutY="44.0" text="MOT DE PASSE OUBLIÉ">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="193.0" layoutY="209.0" text="Adresse e-mail ou numéro de téléphone">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtMdpOublie" layoutX="226.0" layoutY="244.0" />
+      <Button fx:id="btnMdpOublie" layoutX="236.0" layoutY="303.0" minHeight="25.0" mnemonicParsing="false" onAction="#btnMdpOublieClicked" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #007bff;" stylesheets="@../../CSS/index.css" text="Valider" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

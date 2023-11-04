@@ -5,6 +5,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -31,29 +32,74 @@ public class ConnexionController implements Initializable {
     private Label lblMentionsLegales;
     @FXML
     private Label lblContact;
+    private Stage fenetre = null;
 
     @FXML
-    public void btnConnexionClicked(ActionEvent actionEvent) {
+    public void btnConnexionClicked(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("accueil-view.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Accueil");
+        stage.setScene(scene);
+        stage.show();
+        // Obtenez la scène (Stage) actuelle à partir de l'objet ActionEvent
+        Stage stageActuel = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        // Fermez la fenêtre actuelle
+        stageActuel.close();
+
+        // Affichez la nouvelle fenêtre
+        stage.show();
     }
 
     @FXML
-    public void lblMotDePasseOublieClicked(Event event) {
+    public void lblMotDePasseOublieClicked(Event event) throws IOException {
+        if (fenetre == null) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mdpOublie-view.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            fenetre = new Stage();
+            fenetre.setTitle("Mot de passe oublié");
+            fenetre.setScene(scene);
+            fenetre.setOnCloseRequest(e -> {
+                fenetre = null; // Réinitialisez la référence lorsque la fenêtre est fermée
+            });
+            fenetre.show();
+        }
     }
 
     @FXML
     public void lblMentionLegalesClicked(Event event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mentions-legales-view.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setTitle("Mentions légales");
-        stage.setScene(scene);
-        stage.show();
+        if (fenetre == null) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mentions-legales-view.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            fenetre = new Stage();
+            fenetre.setTitle("Mentions légales");
+            fenetre.setScene(scene);
+            fenetre.setOnCloseRequest(e -> {
+                fenetre = null; // Réinitialisez la référence lorsque la fenêtre est fermée
+            });
+            fenetre.show();
+        }
 
     }
 
     @FXML
-    public void lblContactClicked(Event event) {
+    public void lblContactClicked(Event event) throws IOException {
+        if (fenetre == null) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("contact-view.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            fenetre = new Stage();
+            fenetre.setTitle("Contacts");
+            fenetre.setScene(scene);
+            fenetre.setOnCloseRequest(e -> {
+                fenetre = null; // Réinitialisez la référence lorsque la fenêtre est fermée
+            });
+            fenetre.show();
+        }
     }
 
     @Override
