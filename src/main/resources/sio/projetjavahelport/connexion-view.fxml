@@ -10,43 +10,44 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="496.0" prefWidth="689.0" style="-fx-background-color: linear-gradient(127deg, rgba(0, 255, 0, 0.8), rgba(0, 255, 0, 0) 70.71%);" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.ConnexionController">
    <children>
-      <AnchorPane layoutX="350.0" prefHeight="496.0" prefWidth="339.0" styleClass="linear-gradient" stylesheets="@../../CSS/index.css">
+      <AnchorPane layoutX="350.0" prefHeight="496.0" prefWidth="339.0" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TextField fx:id="txtIdentifiant" layoutX="60.0" layoutY="232.0" prefHeight="33.0" prefWidth="224.0" promptText="Identifiants">
+            <TextField fx:id="txtIdentifiant" layoutX="60.0" layoutY="232.0" prefHeight="33.0" prefWidth="224.0" promptText="Identifiants" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="55.0">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtMotDePasse" layoutX="60.0" layoutY="293.0" prefHeight="33.0" prefWidth="224.0" promptText="Mot de passe">
+            <TextField fx:id="txtMotDePasse" layoutX="60.0" layoutY="293.0" prefHeight="33.0" prefWidth="224.0" promptText="Mot de passe" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="55.0">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </TextField>
-            <Label layoutX="101.0" layoutY="145.0" text="Connectez-vous" textFill="WHITE">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="101.0" layoutY="145.0" text="Connectez-vous" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="101.0" AnchorPane.rightAnchor="103.0">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="btnConnexion" layoutX="96.0" layoutY="398.0" mnemonicParsing="false" onAction="#btnConnexionClicked" prefHeight="25.0" prefWidth="153.0" style="-fx-background-color: white;" text="Connexion">
+            <Button fx:id="btnConnexion" layoutX="96.0" layoutY="398.0" mnemonicParsing="false" onAction="#btnConnexionClicked" prefHeight="25.0" prefWidth="153.0" style="-fx-background-color: white;" text="Connexion" AnchorPane.leftAnchor="96.0" AnchorPane.rightAnchor="90.0">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
             <Label fx:id="lblMotDePasseOublie" layoutX="168.0" layoutY="333.0" onMouseClicked="#lblMotDePasseOublieClicked" text="Mot de passe oublié ?" textFill="#9a9999" />
+            <Label fx:id="lblInscription" layoutX="148.0" layoutY="423.0" onMouseClicked="#lblInscriptionClicked" text="Pas encore inscrit ?" textFill="#9a9999" />
          </children>
       </AnchorPane>
       
-      <Label fx:id="lblMentionsLegales" layoutX="56.0" layoutY="465.0" onMouseClicked="#lblMentionLegalesClicked" text="Mentions légales">
+      <Label fx:id="lblMentionsLegales" layoutX="56.0" layoutY="465.0" onMouseClicked="#lblMentionLegalesClicked" text="Mentions légales" AnchorPane.bottomAnchor="14.0">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblContact" layoutX="207.0" layoutY="465.0" onMouseClicked="#lblContactClicked" text="Contacts">
+      <Label fx:id="lblContact" layoutX="207.0" layoutY="465.0" onMouseClicked="#lblContactClicked" text="Contacts" AnchorPane.bottomAnchor="14.0">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
-      <ImageView fitHeight="158.0" fitWidth="216.0" layoutX="56.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="158.0" fitWidth="216.0" layoutX="56.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="189.1011199951172" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="417.0" AnchorPane.topAnchor="154.0">
          <image>
             <Image url="@../../Images/ORTMONTREUILLOGO.png" />
          </image>

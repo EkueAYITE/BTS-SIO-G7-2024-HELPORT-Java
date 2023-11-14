@@ -7,10 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -21,8 +18,6 @@ import java.util.ResourceBundle;
 
 public class AccueilController implements Initializable {
     @javafx.fxml.FXML
-    private Button btnDemandesAccueil;
-    @javafx.fxml.FXML
     private Button btnCompetencesAccueil;
     @javafx.fxml.FXML
     private Button btnStatistiquesAccueil;
@@ -31,13 +26,9 @@ public class AccueilController implements Initializable {
     @javafx.fxml.FXML
     private Label lblMentionsLegagesAccueil;
     @javafx.fxml.FXML
-    private Button btnMatiereAccueil;
-    @javafx.fxml.FXML
     private Button btnAjouterCompetence;
     @javafx.fxml.FXML
     private Button btnSupprimerCompetence;
-    @javafx.fxml.FXML
-    private Button btnModifierCompetence;
     @javafx.fxml.FXML
     private Button btnCreerDemande;
     @javafx.fxml.FXML
@@ -47,38 +38,33 @@ public class AccueilController implements Initializable {
     @javafx.fxml.FXML
     private Button btnParametresAccueil;
     @javafx.fxml.FXML
-    private Button btnModifierMatiere;
-    @javafx.fxml.FXML
-    private Button btnAjouterMatiere;
-    @javafx.fxml.FXML
-    private Button btnSupprimerMatiere;
-    @javafx.fxml.FXML
     private AnchorPane apnStatistiques;
     @javafx.fxml.FXML
     private AnchorPane apnCompetences;
     @javafx.fxml.FXML
     private AnchorPane apnDemandes;
-    @javafx.fxml.FXML
-    private AnchorPane apnMatieres;
     private Stage fenetre = null;
+    @javafx.fxml.FXML
+    private Button btnModifierDemande1;
+    @javafx.fxml.FXML
+    private ComboBox cboStatistique;
+    @javafx.fxml.FXML
+    private Button btnSelectionnerDemande1;
+    @javafx.fxml.FXML
+    private Button btnSoutiensAccueil;
+    @javafx.fxml.FXML
+    private TableView TblVValiderSoutiens;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        cboStatistique.getItems().addAll("Nombre de soutiens réalisés","Nombre de demandes restées sans soutien","Nombre de soutiens réalisés par niveau, par matière","Demandes par niveau, par matière","Etudiants qui ont réalisé le plus de soutiens","Sous matières les plus sollicitées");
     }
 
-    @javafx.fxml.FXML
-    public void btnDemandesAccueilClicked(ActionEvent actionEvent) {
-        apnDemandes.setVisible(true);
-        apnMatieres.setVisible(false);
-        apnCompetences.setVisible(false);
-        apnStatistiques.setVisible(false);
-    }
+
 
     @javafx.fxml.FXML
     public void btnCompetencesAccueilClicked(ActionEvent actionEvent) {
         apnDemandes.setVisible(false);
-        apnMatieres.setVisible(false);
         apnCompetences.setVisible(true);
         apnStatistiques.setVisible(false);
     }
@@ -86,7 +72,6 @@ public class AccueilController implements Initializable {
     @javafx.fxml.FXML
     public void btnStatistiquesAccueilClicked(ActionEvent actionEvent) {
         apnDemandes.setVisible(false);
-        apnMatieres.setVisible(false);
         apnCompetences.setVisible(false);
         apnStatistiques.setVisible(true);
     }
@@ -123,13 +108,7 @@ public class AccueilController implements Initializable {
         }
     }
 
-    @javafx.fxml.FXML
-    public void btnMatiereAccueilClicked(ActionEvent actionEvent) {
-        apnDemandes.setVisible(false);
-        apnMatieres.setVisible(true);
-        apnCompetences.setVisible(false);
-        apnStatistiques.setVisible(false);
-    }
+
 
     @javafx.fxml.FXML
     public void btnAjouterCompetenceClicked(ActionEvent actionEvent) throws IOException {
@@ -163,7 +142,7 @@ public class AccueilController implements Initializable {
         }
     }
 
-    @javafx.fxml.FXML
+    @Deprecated
     public void btnModifierCompetenceClicked(ActionEvent actionEvent) throws IOException {
         if (fenetre == null) {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("modifierCompetence-view.fxml"));
@@ -237,15 +216,15 @@ public class AccueilController implements Initializable {
     }
 
     @javafx.fxml.FXML
-    public void btnModifierMatiereClicked(ActionEvent actionEvent) throws IOException {
+    public void btnModifierDemandeClicked(ActionEvent actionEvent) throws IOException {
         if (fenetre == null) {
             // Si la fenêtre n'est pas encore ouverte on créer une instance
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("modifierMatiere-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("modifierDemande-view.fxml"));
             Parent root = fxmlLoader.load();
 
             Scene scene = new Scene(root);
             fenetre = new Stage();
-            fenetre.setTitle("Modifier Matière");
+            fenetre.setTitle("Modifier une demande");
             fenetre.setScene(scene);
             fenetre.setOnCloseRequest(event -> {
                 fenetre = null;
@@ -254,42 +233,11 @@ public class AccueilController implements Initializable {
         }
     }
 
-    @javafx.fxml.FXML
-
-
-    public void btnAjouterMatiereClicked(ActionEvent actionEvent) throws IOException {
-        if (fenetre == null) {
-            // Si la fenêtre n'est pas encore ouverte, créez une nouvelle instance
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ajouterMatiere-view.fxml"));
-            Parent root = fxmlLoader.load();
-
-            Scene scene = new Scene(root);
-            fenetre = new Stage();
-            fenetre.setTitle("Ajouter Matière");
-            fenetre.setScene(scene);
-            fenetre.setOnCloseRequest(event -> {
-                // Réinitialisez la référence à null lorsque la fenêtre est fermée
-                fenetre = null;
-            });
-            fenetre.show();
-        }
-    }
 
     @javafx.fxml.FXML
-    public void btnSupprimerMatiereClicked(ActionEvent actionEvent) throws IOException {
-        if (fenetre == null) {
-            // Si la fenêtre n'est pas encore ouverte on créer une instance
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("supprimerMatiere-view.fxml"));
-            Parent root = fxmlLoader.load();
-
-            Scene scene = new Scene(root);
-            fenetre = new Stage();
-            fenetre.setTitle("Supprimer Matière");
-            fenetre.setScene(scene);
-            fenetre.setOnCloseRequest(event -> {
-                fenetre = null;
-            });
-            fenetre.show();
-        }
+    public void btnSoutiensClicked(ActionEvent actionEvent) {
+        apnDemandes.setVisible(true);
+        apnCompetences.setVisible(false);
+        apnStatistiques.setVisible(false);
     }
 }

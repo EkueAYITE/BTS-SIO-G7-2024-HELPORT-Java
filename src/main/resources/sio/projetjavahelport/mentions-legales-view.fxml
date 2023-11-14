@@ -8,18 +8,18 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.MentionsLegalesController">
    <children>
-      <AnchorPane layoutX="-3.0" prefHeight="400.0" prefWidth="606.0" stylesheets="@../../CSS/index.css">
+      <AnchorPane layoutX="-3.0" prefHeight="400.0" prefWidth="606.0" stylesheets="@../../CSS/index.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="225.0" layoutY="20.0" prefHeight="30.0" prefWidth="164.0" text="Mentions légales">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Label>
-            <AnchorPane layoutX="120.0" layoutY="71.0" prefHeight="330.0" prefWidth="386.0" style="-fx-background-color: grey;">
+            <AnchorPane layoutX="120.0" layoutY="71.0" prefHeight="330.0" prefWidth="386.0" style="-fx-background-color: grey;" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="94.0" AnchorPane.topAnchor="71.0">
                <children>
-                  <TextFlow fx:id="txtFlMentions" layoutX="5.0" layoutY="3.0" prefHeight="324.0" prefWidth="376.0" style="-fx-background-color: white;" />
+                  <TextFlow fx:id="txtFlMentions" layoutX="5.0" layoutY="3.0" prefHeight="324.0" prefWidth="376.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0" />
                </children>
             </AnchorPane>
+            <Label alignment="CENTER" layoutX="174.0" layoutY="29.0" prefHeight="27.0" prefWidth="253.0" text="Menstions legales" textAlignment="CENTER" AnchorPane.leftAnchor="174.0" AnchorPane.rightAnchor="173.0">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
          </children>
          <styleClass>
             <String fx:value="linear-gradient" />

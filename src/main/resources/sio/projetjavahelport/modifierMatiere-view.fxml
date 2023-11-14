@@ -8,13 +8,13 @@
 
 <AnchorPane prefHeight="257.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.ModifierMatiereController">
    <children>
-      <Button fx:id="btnValider" layoutX="127.0" layoutY="188.0" mnemonicParsing="false" onAction="#btnValiderClicked" style="-fx-background-color: #057aff;" text="Valider" textFill="WHITE">
+      <Button fx:id="btnValider" layoutX="80.0" layoutY="185.0" mnemonicParsing="false" onAction="#btnValiderClicked" style="-fx-background-color: #057aff;" text="Valider" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <ComboBox layoutX="80.0" layoutY="116.0" prefWidth="150.0" />
-      <Label layoutX="73.0" layoutY="40.0" text="Modifier la matière">
+      <ComboBox layoutX="80.0" layoutY="116.0" prefWidth="150.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="72.0" />
+      <Label alignment="CENTER" layoutX="43.0" layoutY="52.0" prefHeight="27.0" prefWidth="253.0" text="Modifer Matière" textAlignment="CENTER" AnchorPane.leftAnchor="43.0" AnchorPane.rightAnchor="6.0">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

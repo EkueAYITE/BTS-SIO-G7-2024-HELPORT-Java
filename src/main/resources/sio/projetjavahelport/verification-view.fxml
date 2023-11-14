@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.VerificationController">
+<AnchorPane prefHeight="397.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.VerificationController">
    <children>
-      <Button layoutX="134.0" layoutY="338.0" mnemonicParsing="false" text="Valider" />
+      <Button layoutX="78.0" layoutY="334.0" mnemonicParsing="false" text="Valider" />
       <TextField layoutX="30.0" layoutY="239.0" text="Mot de passe" />
       <TextField layoutX="30.0" layoutY="188.0" text="Identifiant" />
-      <AnchorPane layoutX="246.0" prefHeight="400.0" prefWidth="356.0" style="-fx-background-color: #0e4e94;" />
+      <AnchorPane layoutX="271.0" prefHeight="400.0" prefWidth="323.0" style="-fx-background-color: #0e4e94;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="270.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Label layoutX="42.0" layoutY="40.0" text="Vérification Ecole Directe">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="36.0" layoutY="106.0" style="-fx-background-color: #96bbff;" text="mettez vos identifiants école directe">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -8,22 +8,22 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.MdpOublieController">
    <children>
-      <Label alignment="TOP_LEFT" contentDisplay="TOP" layoutX="114.0" layoutY="99.0" lineSpacing="1.0" prefHeight="51.0" prefWidth="401.0" style="-fx-background-color: #afd6fa;" text="Veuillez saisir l'adresse e-mail ou le numéro de téléphone portable que vous aviez renseigné lors de la personnalisation de vos codes d'accès." textAlignment="CENTER" wrapText="true" />
-      <Label layoutX="177.0" layoutY="44.0" text="MOT DE PASSE OUBLIÉ">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="193.0" layoutY="209.0" text="Adresse e-mail ou numéro de téléphone">
+      <Label alignment="CENTER" layoutX="193.0" layoutY="209.0" text="Adresse e-mail ou numéro de téléphone" AnchorPane.leftAnchor="193.0" AnchorPane.rightAnchor="181.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="txtMdpOublie" layoutX="226.0" layoutY="244.0" />
-      <Button fx:id="btnMdpOublie" layoutX="236.0" layoutY="303.0" minHeight="25.0" mnemonicParsing="false" onAction="#btnMdpOublieClicked" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #007bff;" stylesheets="@../../CSS/index.css" text="Valider" textFill="WHITE">
+      <TextField fx:id="txtMdpOublie" layoutX="226.0" layoutY="244.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="225.0" />
+      <Button fx:id="btnMdpOublie" layoutX="236.0" layoutY="303.0" minHeight="25.0" mnemonicParsing="false" onAction="#btnMdpOublieClicked" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #007bff;" stylesheets="@../../CSS/index.css" text="Valider" textFill="WHITE" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="236.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
+      <Label alignment="CENTER" contentDisplay="TOP" layoutX="119.0" layoutY="129.0" lineSpacing="1.0" prefHeight="51.0" prefWidth="392.0" text="Veuillez saisir l'adresse e-mail ou le numéro de téléphone portable que vous aviez renseigné lors de la personnalisation de vos codes d'accès." textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="119.0" AnchorPane.rightAnchor="89.0" />
+      <Label alignment="CENTER" layoutX="180.0" layoutY="69.0" prefHeight="34.0" prefWidth="260.0" text="MOT DE PASSE OUBLIÉ" textAlignment="CENTER" AnchorPane.leftAnchor="119.0" AnchorPane.rightAnchor="89.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -9,9 +9,9 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.ContactController">
    <children>
-      <AnchorPane layoutX="142.0" layoutY="17.0" prefHeight="366.0" prefWidth="328.0" styleClass="gradient" stylesheets="@../../CSS/index.css">
+      <AnchorPane layoutX="142.0" layoutY="17.0" prefHeight="366.0" prefWidth="328.0" styleClass="gradient" stylesheets="@../../CSS/index.css" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="142.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="17.0">
          <children>
-            <Label layoutX="89.0" layoutY="14.0" prefHeight="26.0" prefWidth="150.0" text="Contactez-nous">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="89.0" layoutY="14.0" prefHeight="26.0" prefWidth="150.0" text="Contactez-nous" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="89.0">
                <font>
                   <Font size="21.0" />
                </font>
@@ -19,11 +19,11 @@
             <Label layoutX="89.0" layoutY="59.0" text="Nom" />
             <Label layoutX="89.0" layoutY="108.0" text="Prénom" />
             <Label layoutX="90.0" layoutY="160.0" text="E-mail" />
-            <TextField fx:id="txtContactNom" layoutX="89.0" layoutY="80.0" />
-            <TextField fx:id="txtContactPrenom" layoutX="89.0" layoutY="129.0" />
-            <TextField fx:id="txtMail" layoutX="89.0" layoutY="177.0" />
-            <Button fx:id="btnEnvoyer" layoutX="113.0" layoutY="326.0" mnemonicParsing="false" onAction="#btnEnvoyerClicked" prefHeight="26.0" prefWidth="101.0" text="Envoyer" />
-            <TextArea fx:id="txtAMessage" layoutX="31.0" layoutY="246.0" prefHeight="57.0" prefWidth="266.0" />
+            <TextField fx:id="txtContactNom" layoutX="89.0" layoutY="80.0" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="90.0" />
+            <TextField fx:id="txtContactPrenom" layoutX="89.0" layoutY="129.0" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="90.0" />
+            <TextField fx:id="txtMail" layoutX="89.0" layoutY="177.0" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="90.0" />
+            <Button fx:id="btnEnvoyer" layoutX="113.0" layoutY="326.0" mnemonicParsing="false" onAction="#btnEnvoyerClicked" prefHeight="26.0" prefWidth="101.0" text="Envoyer" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="113.0" AnchorPane.rightAnchor="114.0" />
+            <TextArea fx:id="txtAMessage" layoutX="31.0" layoutY="246.0" prefHeight="63.0" prefWidth="266.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="31.0" AnchorPane.topAnchor="246.0" />
             <Label layoutX="31.0" layoutY="223.0" text="Votre message" />
          </children>
       </AnchorPane>

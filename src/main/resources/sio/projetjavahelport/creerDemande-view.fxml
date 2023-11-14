@@ -9,15 +9,15 @@
 
 <AnchorPane fx:id="apnCreerDemande" prefHeight="400.0" prefWidth="521.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.CreerDemandeController">
    <children>
-      <Label layoutX="170.0" layoutY="39.0" text="Création de demande">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="170.0" layoutY="39.0" text="Création de demande" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="169.0">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cbMatiere" layoutX="225.0" layoutY="124.0" onAction="#cbMatiereClicked" prefWidth="150.0" />
-      <ComboBox fx:id="cbSalle" layoutX="225.0" layoutY="188.0" onAction="#cbSalleClicked" prefWidth="150.0" />
-      <DatePicker fx:id="dtDate" layoutX="225.0" layoutY="256.0" onAction="#dtDateClicked" />
-      <Button fx:id="btnValider" layoutX="233.0" layoutY="323.0" mnemonicParsing="false" onAction="#btnValiderClicked" style="-fx-background-color: #057aff;" text="Valider" textFill="WHITE">
+      <ComboBox fx:id="cbMatiere" layoutX="225.0" layoutY="124.0" onAction="#cbMatiereClicked" prefWidth="150.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="146.0" />
+      <ComboBox fx:id="cbSalle" layoutX="225.0" layoutY="188.0" onAction="#cbSalleClicked" prefWidth="150.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="146.0" />
+      <DatePicker fx:id="dtDate" layoutX="225.0" layoutY="256.0" onAction="#dtDateClicked" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="122.0" />
+      <Button fx:id="btnValider" layoutX="233.0" layoutY="323.0" mnemonicParsing="false" onAction="#btnValiderClicked" style="-fx-background-color: #057aff;" text="Valider" textFill="WHITE" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="232.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

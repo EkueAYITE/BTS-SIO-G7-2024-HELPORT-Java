@@ -3,21 +3,34 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="257.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.AjouterCompetenceController">
+<AnchorPane prefHeight="505.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.AjouterCompetenceController">
    <children>
-      <Button fx:id="btnValider" layoutX="127.0" layoutY="188.0" mnemonicParsing="false" onAction="#btnValiderClicked" style="-fx-background-color: #057aff;" text="Valider" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
-      <ComboBox layoutX="80.0" layoutY="116.0" prefWidth="150.0" />
-      <Label layoutX="51.0" layoutY="43.0" text="Ajouter une compétence">
+      <ComboBox layoutX="80.0" layoutY="116.0" prefWidth="150.0" promptText="Matière" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="72.0" />
+      <Label alignment="CENTER" layoutX="29.0" layoutY="55.0" prefHeight="27.0" prefWidth="253.0" text="Ajouter une compétence" textAlignment="CENTER" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="20.0">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
+      <AnchorPane layoutX="15.0" layoutY="159.0" prefHeight="260.0" prefWidth="480.0" style="-fx-background-color: #C2DFFF;" AnchorPane.bottomAnchor="86.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="159.0">
+         <children>
+            <Label layoutX="205.0" layoutY="14.0" text="Sous-matière" />
+            <Button fx:id="btnValider" layoutX="213.0" layoutY="221.0" mnemonicParsing="false" onAction="#btnValiderClicked" style="-fx-background-color: #057aff;" text="Valider" textFill="WHITE" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="213.0" AnchorPane.rightAnchor="211.0">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <ComboBox layoutX="114.0" layoutY="45.0" prefWidth="150.0" promptText="Sous-Matière" />
+            <Button fx:id="btnAjouter" layoutX="312.0" layoutY="45.0" mnemonicParsing="false" onAction="#btnAjouterClicked" style="-fx-background-color: #057aff;" text="Ajouter" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <TreeView layoutX="33.0" layoutY="81.0" prefHeight="114.0" prefWidth="416.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="31.0" AnchorPane.topAnchor="81.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

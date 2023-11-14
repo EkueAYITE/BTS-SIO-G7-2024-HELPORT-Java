@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,6 +34,8 @@ public class ConnexionController implements Initializable {
     @FXML
     private Label lblContact;
     private Stage fenetre = null;
+    @FXML
+    private Label lblInscription;
 
     @FXML
     public void btnConnexionClicked(ActionEvent actionEvent) throws IOException {
@@ -105,5 +108,21 @@ public class ConnexionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    }
+
+    @FXML
+    public void lblInscriptionClicked(Event event) throws IOException {
+        if (fenetre == null) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("verification-view.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            fenetre = new Stage();
+            fenetre.setTitle("Inscription");
+            fenetre.setScene(scene);
+            fenetre.setOnCloseRequest(e -> {
+                fenetre = null; // Réinitialisez la référence lorsque la fenêtre est fermée
+            });
+            fenetre.show();
+        }
     }
 }
