@@ -86,7 +86,7 @@
                 <TableColumn prefWidth="410.0" text="Compétences" />
               </columns>
             </TableView>
-            <ComboBox layoutX="424.0" layoutY="231.0" prefHeight="25.0" prefWidth="411.0" promptText="Matière" AnchorPane.leftAnchor="424.0" AnchorPane.rightAnchor="75.0" />
+            <ComboBox fx:id="cboMatiereCompetence" layoutX="424.0" layoutY="231.0" onAction="#cboMatiereCompetenceCliked" prefHeight="25.0" prefWidth="411.0" promptText="Matière" AnchorPane.leftAnchor="424.0" AnchorPane.rightAnchor="75.0" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="apnDemandes" layoutX="199.0" prefHeight="820.0" prefWidth="910.0" visible="false" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="0.0">

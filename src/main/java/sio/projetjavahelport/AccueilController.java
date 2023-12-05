@@ -10,13 +10,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import sio.projetjavahelport.tools.ConnexionBDD;
 
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AccueilController implements Initializable {
+
+    ConnexionBDD maCnx;
+    RequeteServiceController requeteServ;
     @javafx.fxml.FXML
     private Button btnCompetencesAccueil;
     @javafx.fxml.FXML
@@ -54,10 +60,27 @@ public class AccueilController implements Initializable {
     private Button btnSoutiensAccueil;
     @javafx.fxml.FXML
     private TableView TblVValiderSoutiens;
+    @javafx.fxml.FXML
+    private ComboBox cboMatiereCompetence;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cboStatistique.getItems().addAll("Nombre de soutiens réalisés","Nombre de demandes restées sans soutien","Nombre de soutiens réalisés par niveau, par matière","Demandes par niveau, par matière","Etudiants qui ont réalisé le plus de soutiens","Sous matières les plus sollicitées");
+
+       try{
+            maCnx = new ConnexionBDD();
+            requeteServ = new RequeteServiceController();
+
+           ArrayList<String> matieres = requeteServ.GetAllMatieres();
+           for(String matiere : matieres){
+               cboMatiereCompetence.getItems().add(matiere);
+           }
+
+        }catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -239,5 +262,13 @@ public class AccueilController implements Initializable {
         apnDemandes.setVisible(true);
         apnCompetences.setVisible(false);
         apnStatistiques.setVisible(false);
+    }
+
+    @Deprecated
+    public void cboMatièreCompetenceCliked(ActionEvent actionEvent) {
+    }
+
+    @javafx.fxml.FXML
+    public void cboMatiereCompetenceCliked(ActionEvent actionEvent) {
     }
 }
