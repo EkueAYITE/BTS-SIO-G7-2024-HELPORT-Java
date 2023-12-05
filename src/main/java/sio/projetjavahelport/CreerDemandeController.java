@@ -20,6 +20,7 @@ public class CreerDemandeController {
 
     @javafx.fxml.FXML
     public void cbMatiereClicked(ActionEvent actionEvent) {
+        cbMatiere.getItems().addAll();
     }
 
     @javafx.fxml.FXML
