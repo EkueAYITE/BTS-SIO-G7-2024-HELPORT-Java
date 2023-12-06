@@ -52,9 +52,26 @@ public class AjouterCompetenceController implements Initializable {
 
     @javafx.fxml.FXML
     public void cboMatiereCompetenceCiked(ActionEvent actionEvent) {
+        try{
+
+
+            maCnx = new ConnexionBDD();
+            requeteServ = new RequeteServiceController();
+
+            ArrayList<String> matieres = requeteServ.GetAllSousMatieres(cboMatiereAjouterCompetence.getSelectionModel().toString());
+            for(String matiere : matieres){
+                cboListeSousMatiere.getItems().add(matiere);
+            }
+
+        }catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @javafx.fxml.FXML
     public void cboListeSousMatiereCliked(ActionEvent actionEvent) {
+
     }
 }

@@ -31,18 +31,39 @@ public class RequeteServiceController {
     }
     public ArrayList<String> GetAllMatieres()
     {
-        ArrayList<String> lesNomsDesActions = new ArrayList<>();
+        ArrayList<String> lesMatieres = new ArrayList<>();
         try {
             cnx = ConnexionBDD.getCnx();
             ps = cnx.prepareStatement("SELECT designation FROM matiere ");
             rs = ps.executeQuery();
             while(rs.next())
             {
-                lesNomsDesActions.add(rs.getString(1));
+                lesMatieres.add(rs.getString(1));
             }
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
-        return lesNomsDesActions;
+        return lesMatieres;
+    }
+    public ArrayList<String> GetAllSousMatieres(String matiere)
+    {
+
+        ArrayList<String> lesSousMatieres = new ArrayList<>();
+        try {
+            cnx = ConnexionBDD.getCnx();
+            ps = cnx.prepareStatement("SELECT DISTINCT competence.sous_matiere\n" +
+                    "FROM competence\n" +
+                    "JOIN matiere ON competence.id_matiere = matiere.id\n" +
+                    "WHERE matiere.designation = ?");
+            ps.setString(1, matiere);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                lesSousMatieres.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return lesSousMatieres;
     }
 }
