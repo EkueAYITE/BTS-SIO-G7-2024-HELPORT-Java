@@ -81,6 +81,7 @@ public class AccueilController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        cboMatiereCompetence.getSelectionModel().selectFirst();
     }
 
 
