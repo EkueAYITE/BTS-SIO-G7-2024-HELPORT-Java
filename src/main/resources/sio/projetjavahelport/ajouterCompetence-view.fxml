@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="505.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.AjouterCompetenceController">
    <children>
-      <ComboBox fx:id="cboMatiereAjouterCompetence" layoutX="80.0" layoutY="116.0" onAction="#cboMatiereCompetenceCiked" prefWidth="150.0" promptText="Matière" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="72.0" />
+      <ComboBox fx:id="cboMatiereAjouterCompetence" layoutX="80.0" layoutY="116.0" onMouseClicked="#cboMatiereCompetenceCiked" prefWidth="150.0" promptText="Matière" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="72.0" />
       <Label alignment="CENTER" layoutX="29.0" layoutY="55.0" prefHeight="27.0" prefWidth="253.0" text="Ajouter une compétence" textAlignment="CENTER" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="20.0">
          <font>
             <Font name="System Bold" size="18.0" />

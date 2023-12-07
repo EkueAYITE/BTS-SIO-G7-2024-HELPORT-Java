@@ -1,6 +1,7 @@
 package sio.projetjavahelport;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import sio.projetjavahelport.tools.ConnexionBDD;
@@ -42,6 +43,15 @@ public class AjouterCompetenceController implements Initializable {
             for(String matiere : matieres){
                 cboMatiereAjouterCompetence.getItems().add(matiere);
             }
+            cboMatiereAjouterCompetence.getSelectionModel().selectedItemProperty().addListener((observable,  oldValue, newValue )-> {
+                try {
+                    remplirSousMatiere();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            });
 
         }catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -50,28 +60,35 @@ public class AjouterCompetenceController implements Initializable {
         }
     }
 
-    @javafx.fxml.FXML
-    public void cboMatiereCompetenceCiked(ActionEvent actionEvent) {
-        try{
-
-
-            maCnx = new ConnexionBDD();
-            requeteServ = new RequeteServiceController();
-
-            ArrayList<String> matieres = requeteServ.GetAllSousMatieres(cboMatiereAjouterCompetence.getSelectionModel().toString());
-            for(String matiere : matieres){
-                cboListeSousMatiere.getItems().add(matiere);
-            }
-
-        }catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @javafx.fxml.FXML
     public void cboListeSousMatiereCliked(ActionEvent actionEvent) {
 
+    }
+
+
+    @javafx.fxml.FXML
+    public void cboMatiereCompetenceCiked(Event event) {
+        try{
+
+           remplirSousMatiere();
+
+        }catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void remplirSousMatiere() throws SQLException, ClassNotFoundException {
+        if(!(cboMatiereAjouterCompetence.getSelectionModel().getSelectedItem() == null)) {
+            maCnx = new ConnexionBDD();
+            requeteServ = new RequeteServiceController();
+            cboListeSousMatiere.getItems().clear();
+
+            ArrayList<String> sousMatieres = requeteServ.GetAllSousMatieres(cboMatiereAjouterCompetence.getSelectionModel().getSelectedItem().toString());
+            for (String sousMatiere : sousMatieres) {
+                cboListeSousMatiere.getItems().add(sousMatiere);
+            }
+        }
     }
 }

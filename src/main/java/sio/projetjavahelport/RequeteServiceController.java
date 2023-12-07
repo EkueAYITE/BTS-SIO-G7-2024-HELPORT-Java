@@ -51,14 +51,17 @@ public class RequeteServiceController {
         ArrayList<String> lesSousMatieres = new ArrayList<>();
         try {
             cnx = ConnexionBDD.getCnx();
-            ps = cnx.prepareStatement("SELECT DISTINCT competence.sous_matiere\n" +
-                    "FROM competence\n" +
-                    "JOIN matiere ON competence.id_matiere = matiere.id\n" +
-                    "WHERE matiere.designation = ?");
+            ps = cnx.prepareStatement("SELECT sous_matiere FROM `matiere` WHERE designation= ?");
             ps.setString(1, matiere);
             rs = ps.executeQuery();
             while(rs.next())
             {
+                String[] mots = rs.getString("sous_matiere").split("#");
+                for (String mot : mots) {
+                    if (!mot.isEmpty()) {
+                        lesSousMatieres.add(mot);
+                    }
+                }
                 lesSousMatieres.add(rs.getString(1));
             }
         } catch (SQLException ex) {
