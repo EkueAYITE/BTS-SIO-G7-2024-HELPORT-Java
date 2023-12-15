@@ -2,15 +2,19 @@ package sio.projetjavahelport;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import sio.projetjavahelport.tools.ConnexionBDD;
+import sio.projetjavahelport.tools.User;
+import sio.projetjavahelport.tools.UserHolder;
 
 
 import java.io.IOException;
@@ -62,9 +66,15 @@ public class AccueilController implements Initializable {
     private TableView TblVValiderSoutiens;
     @javafx.fxml.FXML
     private ComboBox cboMatiereCompetence;
+    @javafx.fxml.FXML
+    private Label lblNomEleve;
+    @javafx.fxml.FXML
+    private Label lblRoleEleve;
+    private User user;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         cboStatistique.getItems().addAll("Nombre de soutiens réalisés","Nombre de demandes restées sans soutien","Nombre de soutiens réalisés par niveau, par matière","Demandes par niveau, par matière","Etudiants qui ont réalisé le plus de soutiens","Sous matières les plus sollicitées");
 
        try{
@@ -82,6 +92,14 @@ public class AccueilController implements Initializable {
             throw new RuntimeException(e);
         }
         cboMatiereCompetence.getSelectionModel().selectFirst();
+
+       user = UserHolder.getInstance().getUser();
+       lblNomEleve.setText(user.getNom());
+       lblRoleEleve.setText(user.getRole());
+    }
+    @Deprecated
+    private void receiveData(MouseEvent event) {
+
     }
 
 
@@ -272,4 +290,6 @@ public class AccueilController implements Initializable {
     @javafx.fxml.FXML
     public void cboMatiereCompetenceCliked(ActionEvent actionEvent) {
     }
+
+
 }

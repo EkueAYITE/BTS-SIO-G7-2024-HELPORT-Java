@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,11 +14,6 @@
       <AnchorPane layoutX="350.0" prefHeight="496.0" prefWidth="339.0" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <TextField fx:id="txtIdentifiant" layoutX="60.0" layoutY="232.0" prefHeight="33.0" prefWidth="224.0" promptText="Identifiants" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="55.0">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="txtMotDePasse" layoutX="60.0" layoutY="293.0" prefHeight="33.0" prefWidth="224.0" promptText="Mot de passe" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="55.0">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -34,6 +30,7 @@
             </Button>
             <Label fx:id="lblMotDePasseOublie" layoutX="168.0" layoutY="333.0" onMouseClicked="#lblMotDePasseOublieClicked" text="Mot de passe oublié ?" textFill="#9a9999" />
             <Label fx:id="lblInscription" layoutX="148.0" layoutY="423.0" onMouseClicked="#lblInscriptionClicked" text="Pas encore inscrit ?" textFill="#9a9999" />
+            <PasswordField fx:id="txtMotDePasse" layoutX="61.0" layoutY="293.0" prefHeight="34.0" prefWidth="224.0" />
          </children>
       </AnchorPane>
       

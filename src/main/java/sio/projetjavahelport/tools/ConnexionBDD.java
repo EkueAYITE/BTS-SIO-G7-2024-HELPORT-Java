@@ -17,8 +17,10 @@ public class ConnexionBDD {
         // L'objet connexion à la BDD avec le nom de la base, le user et le password
         cnx = DriverManager.getConnection("jdbc:mysql://localhost/BddHelpOrtJava?useSSL=true&serverTimezone="
                 + TimeZone.getDefault().getID(), "root", "");
+        System.out.println(cnx);
     }
     public static Connection getCnx() {
         return cnx;
+
     }
 }
