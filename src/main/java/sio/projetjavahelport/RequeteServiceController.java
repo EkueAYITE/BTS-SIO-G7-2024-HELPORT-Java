@@ -1,12 +1,14 @@
 package sio.projetjavahelport;
 
 import sio.projetjavahelport.tools.ConnexionBDD;
+import sio.projetjavahelport.tools.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RequeteServiceController {
     private Connection cnx;
@@ -69,4 +71,52 @@ public class RequeteServiceController {
         }
         return lesSousMatieres;
     }
+    public User verifierIdentifiants(String mail, String mdp) {
+        User utilisateur = null;
+        try {
+            cnx = ConnexionBDD.getCnx();
+            // System.out.println(cnx);
+            ps = this.cnx.prepareStatement("SELECT * FROM user WHERE email =? AND password =? ");
+            ps.setString(1, mail);
+            ps.setString(2, mdp);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                // Si une ligne est trouvée, créez un objet User avec les données récupérées
+                utilisateur = new User(
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("role"),
+                        rs.getString("niveau"),
+                        rs.getInt("sexe"),
+                        rs.getString("telephone")
+                );
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return utilisateur;
+    }
+    public  void saveUserCompetence(int idMatiere, int idUser , String copmpetence)
+    {
+
+        try {
+            cnx = ConnexionBDD.getCnx();
+            ps = cnx.prepareStatement("INSERT INTO competence(id_matiere,id_user,sous_matiere,statut)\n" +
+                    "VALUES (?,?,?,1) ");
+            ps.setInt(1, idMatiere);
+            ps.setInt(2, idUser);
+            ps.setString(1, copmpetence);
+            rs = ps.executeQuery();
+           /* while(rs.next())
+            {
+                lesMatieres.add(rs.getString(1));
+            }*/
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        //return lesMatieres;
+    }
+
 }

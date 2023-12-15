@@ -31,6 +31,7 @@ public class AjouterCompetenceController implements Initializable {
 
     @javafx.fxml.FXML
     public void btnAjouterClicked(ActionEvent actionEvent) {
+
     }
 
     @Override
