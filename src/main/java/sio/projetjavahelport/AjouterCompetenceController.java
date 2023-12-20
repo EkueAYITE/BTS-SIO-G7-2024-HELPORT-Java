@@ -9,8 +9,12 @@ import sio.projetjavahelport.tools.ConnexionBDD;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.scene.control.ComboBox;
+import sio.projetjavahelport.tools.User;
+import sio.projetjavahelport.tools.UserHolder;
 
 public class AjouterCompetenceController implements Initializable {
     @javafx.fxml.FXML
@@ -23,6 +27,7 @@ public class AjouterCompetenceController implements Initializable {
     private ComboBox cboMatiereAjouterCompetence;
     @javafx.fxml.FXML
     private ComboBox cboListeSousMatiere;
+    User user ;
 
 
     @javafx.fxml.FXML
@@ -31,6 +36,37 @@ public class AjouterCompetenceController implements Initializable {
 
     @javafx.fxml.FXML
     public void btnAjouterClicked(ActionEvent actionEvent) {
+        user = UserHolder.getInstance().getUser();
+       int idEtudiant = user.getId();
+       int idMatiere = -1;
+       String selectedValue;
+        HashMap<Integer, String> matieres = requeteServ.GetAllMatieres();
+        for (Map.Entry<Integer, String> entry : matieres.entrySet()){
+            Object selectedItem = cboMatiereAjouterCompetence.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                selectedValue = selectedItem.toString();
+                if (entry.getValue().equals(cboMatiereAjouterCompetence.getSelectionModel().getSelectedItem().toString())) {
+                    idMatiere = entry.getKey();
+                    break;
+                }
+            } else {
+                System.out.println("Aucune sélection dans la ComboBox.");
+            }
+        }
+        if (idMatiere != -1) {
+            System.out.println("Clé trouvée pour la valeur " + cboMatiereAjouterCompetence.getSelectionModel().getSelectedItem().toString() + ": " +idMatiere+""+ idEtudiant+ matieres);
+        } else {
+            System.out.println("Aucune clé trouvée pour la valeur " + idEtudiant);
+        }
+        ArrayList<String> sousMatieres = requeteServ.GetAllSousMatieres(cboMatiereAjouterCompetence.getSelectionModel().getSelectedItem().toString());
+        String laSousMatiere = null;
+        for (String sousMatiere : sousMatieres) {
+            cboListeSousMatiere.getItems().add(sousMatiere);
+            laSousMatiere  = cboListeSousMatiere.getSelectionModel().getSelectedItem().toString();
+        }
+        requeteServ.saveUserCompetence(idMatiere, idEtudiant, laSousMatiere);
+
+
 
     }
 
@@ -40,9 +76,10 @@ public class AjouterCompetenceController implements Initializable {
             maCnx = new ConnexionBDD();
             requeteServ = new RequeteServiceController();
 
-            ArrayList<String> matieres = requeteServ.GetAllMatieres();
-            for(String matiere : matieres){
-                cboMatiereAjouterCompetence.getItems().add(matiere);
+           HashMap<Integer, String> matieres = requeteServ.GetAllMatieres();
+            for(int matiere : matieres.keySet()){
+                String nomMatiere = matieres.get(matiere);
+                cboMatiereAjouterCompetence.getItems().add(nomMatiere);
             }
             cboMatiereAjouterCompetence.getSelectionModel().selectedItemProperty().addListener((observable,  oldValue, newValue )-> {
                 try {

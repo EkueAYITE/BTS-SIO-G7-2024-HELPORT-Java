@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class AccueilController implements Initializable {
@@ -81,9 +82,10 @@ public class AccueilController implements Initializable {
             maCnx = new ConnexionBDD();
             requeteServ = new RequeteServiceController();
 
-           ArrayList<String> matieres = requeteServ.GetAllMatieres();
-           for(String matiere : matieres){
-               cboMatiereCompetence.getItems().add(matiere);
+           HashMap<Integer, String> matieres = requeteServ.GetAllMatieres();
+           for(int matiere : matieres.keySet()){
+               String nomMatiere = matieres.get(matiere);
+               cboMatiereCompetence.getItems().add(nomMatiere);
            }
 
         }catch (ClassNotFoundException e) {

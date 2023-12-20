@@ -1,7 +1,7 @@
 package sio.projetjavahelport.tools;
 
 public class User {
-    private String id;
+    private int id;
     private String nom;
     private String prenom;
     private String email;
@@ -11,7 +11,7 @@ public class User {
     private int sexe;
     private String 	telephone;
 
-    public User(String nom, String prenom, String email, String password, String role, String niveau, int sexe, String telephone) {
+    public User(int id ,String nom, String prenom, String email, String password, String role, String niveau, int sexe, String telephone) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -23,11 +23,11 @@ public class User {
         this.telephone = telephone;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

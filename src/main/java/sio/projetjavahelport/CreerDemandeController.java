@@ -12,6 +12,7 @@ import sio.projetjavahelport.tools.ConnexionBDD;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class CreerDemandeController implements Initializable {
@@ -62,9 +63,10 @@ public class CreerDemandeController implements Initializable {
             maCnx = new ConnexionBDD();
             requeteServ = new RequeteServiceController();
 
-            ArrayList<String> matieres = requeteServ.GetAllMatieres();
-            for(String matiere : matieres){
-                cboMatiere.getItems().add(matiere);
+            HashMap<Integer, String> matieres = requeteServ.GetAllMatieres();
+            for(int matiere : matieres.keySet()){
+                String nomMatiere = matieres.get(matiere);
+                cboMatiere.getItems().add(nomMatiere);
             }
 
         }catch (ClassNotFoundException e) {

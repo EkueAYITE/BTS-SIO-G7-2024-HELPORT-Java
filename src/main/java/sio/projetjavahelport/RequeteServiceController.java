@@ -31,16 +31,17 @@ public class RequeteServiceController {
         }
         return lesMatiere;
     }
-    public ArrayList<String> GetAllMatieres()
+    public HashMap<Integer,String> GetAllMatieres()
     {
-        ArrayList<String> lesMatieres = new ArrayList<>();
+        HashMap<Integer,String> lesMatieres = new HashMap<>();
         try {
             cnx = ConnexionBDD.getCnx();
-            ps = cnx.prepareStatement("SELECT designation FROM matiere ");
+            ps = cnx.prepareStatement("SELECT id ,designation FROM matiere ");
             rs = ps.executeQuery();
             while(rs.next())
             {
-                lesMatieres.add(rs.getString(1));
+                lesMatieres.put(rs.getInt(1),rs.getString(2));
+
             }
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
@@ -83,6 +84,7 @@ public class RequeteServiceController {
             if (rs.next()) {
                 // Si une ligne est trouvée, créez un objet User avec les données récupérées
                 utilisateur = new User(
+                        rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("prenom"),
                         rs.getString("email"),
@@ -107,8 +109,8 @@ public class RequeteServiceController {
                     "VALUES (?,?,?,1) ");
             ps.setInt(1, idMatiere);
             ps.setInt(2, idUser);
-            ps.setString(1, copmpetence);
-            rs = ps.executeQuery();
+            ps.setString(3, copmpetence);
+            ps.executeUpdate();
            /* while(rs.next())
             {
                 lesMatieres.add(rs.getString(1));
