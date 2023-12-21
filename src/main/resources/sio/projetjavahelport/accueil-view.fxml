@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -81,12 +82,8 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TableView layoutX="424.0" layoutY="301.0" prefHeight="332.0" prefWidth="411.0" AnchorPane.leftAnchor="424.0" AnchorPane.rightAnchor="75.0">
-              <columns>
-                <TableColumn prefWidth="410.0" text="Compétences" />
-              </columns>
-            </TableView>
             <ComboBox fx:id="cboMatiereCompetence" layoutX="424.0" layoutY="231.0" onAction="#cboMatiereCompetenceCliked" prefHeight="25.0" prefWidth="411.0" promptText="Matière" AnchorPane.leftAnchor="424.0" AnchorPane.rightAnchor="75.0" />
+            <ListView fx:id="lstCompetence" layoutX="424.0" layoutY="257.0" prefHeight="298.0" prefWidth="411.0" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="apnDemandes" layoutX="199.0" prefHeight="820.0" prefWidth="910.0" visible="false" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="0.0">

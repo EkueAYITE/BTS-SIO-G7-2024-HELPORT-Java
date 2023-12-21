@@ -1,5 +1,6 @@
 package sio.projetjavahelport;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -22,6 +23,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class AccueilController implements Initializable {
@@ -72,6 +74,8 @@ public class AccueilController implements Initializable {
     @javafx.fxml.FXML
     private Label lblRoleEleve;
     private User user;
+    @FXML
+    private ListView lstCompetence;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -285,12 +289,36 @@ public class AccueilController implements Initializable {
         apnStatistiques.setVisible(false);
     }
 
-    @Deprecated
-    public void cboMatièreCompetenceCliked(ActionEvent actionEvent) {
-    }
-
     @javafx.fxml.FXML
     public void cboMatiereCompetenceCliked(ActionEvent actionEvent) {
+        user = UserHolder.getInstance().getUser();
+        int idEtudiant = user.getId();
+        int idMatiere = -1;
+        String selectedValue ;
+        HashMap<Integer, String>  matieres = requeteServ.GetAllMatieres();
+        for (Map.Entry<Integer, String> entry : matieres.entrySet()){
+            Object selectedItem = cboMatiereCompetence.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                selectedValue = selectedItem.toString();
+                if (entry.getValue().equals(cboMatiereCompetence.getSelectionModel().getSelectedItem().toString())) {
+                    idMatiere = entry.getKey();
+                    break;
+                }
+            } else {
+                System.out.println("Aucune sélection dans la ComboBox.");
+            }
+        }
+      /*   if (idMatiere != -1) {
+         System.out.println("Clé trouvée pour la valeur " + cboMatiereCompetence.getSelectionModel().getSelectedItem().toString() + ": " +idMatiere+":"+ idEtudiant+ matieres);
+          } else {
+           System.out.println("Aucune clé trouvée pour la valeur " + idEtudiant);
+         }*/
+       ArrayList<String> tblSousMatiere = requeteServ.GetSousMatiereByMatiere(idEtudiant,idMatiere);
+       lstCompetence.getItems().clear();
+        lstCompetence.getItems().addAll(tblSousMatiere);
+
+        System.out.println( tblSousMatiere);
+
     }
 
 

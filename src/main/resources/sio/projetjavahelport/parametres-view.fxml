@@ -17,10 +17,10 @@
       <Label layoutX="77.0" layoutY="158.0" text="Mot de passe" />
       <Label layoutX="85.0" layoutY="209.0" text="Téléphone" />
       <Label layoutX="95.0" layoutY="258.0" text="Niveau" />
-      <TextField layoutX="226.0" layoutY="102.0" prefHeight="25.0" prefWidth="206.0" AnchorPane.leftAnchor="226.0" AnchorPane.rightAnchor="168.0" />
-      <TextField layoutX="226.0" layoutY="154.0" prefHeight="25.0" prefWidth="206.0" AnchorPane.leftAnchor="226.0" AnchorPane.rightAnchor="168.0" />
-      <TextField layoutX="226.0" layoutY="197.0" prefHeight="25.0" prefWidth="206.0" AnchorPane.leftAnchor="226.0" AnchorPane.rightAnchor="168.0" />
-      <TextField layoutX="226.0" layoutY="254.0" prefHeight="25.0" prefWidth="206.0" AnchorPane.leftAnchor="226.0" AnchorPane.rightAnchor="168.0" />
+      <TextField fx:id="txtMail" layoutX="226.0" layoutY="102.0" prefHeight="25.0" prefWidth="206.0" AnchorPane.leftAnchor="226.0" AnchorPane.rightAnchor="168.0" />
+      <TextField fx:id="txtMdp" layoutX="226.0" layoutY="154.0" prefHeight="25.0" prefWidth="206.0" AnchorPane.leftAnchor="226.0" AnchorPane.rightAnchor="168.0" />
+      <TextField fx:id="txtTel" layoutX="226.0" layoutY="197.0" prefHeight="25.0" prefWidth="206.0" AnchorPane.leftAnchor="226.0" AnchorPane.rightAnchor="168.0" />
+      <TextField fx:id="txtNiv" layoutX="226.0" layoutY="254.0" prefHeight="25.0" prefWidth="206.0" AnchorPane.leftAnchor="226.0" AnchorPane.rightAnchor="168.0" />
       <Button fx:id="btnValiderParametres" layoutX="287.0" layoutY="331.0" mnemonicParsing="false" onAction="#btnValiderParametresClicked" prefHeight="25.0" prefWidth="72.0" style="-fx-background-color: #006bff;" text="Valider" textFill="WHITE" AnchorPane.leftAnchor="287.0" AnchorPane.rightAnchor="241.0">
          <font>
             <Font name="System Bold" size="12.0" />

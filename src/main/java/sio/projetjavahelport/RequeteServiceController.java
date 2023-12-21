@@ -65,7 +65,7 @@ public class RequeteServiceController {
                         lesSousMatieres.add(mot);
                     }
                 }
-                lesSousMatieres.add(rs.getString(1));
+             //   lesSousMatieres.add(rs.getString(1));
             }
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
@@ -120,5 +120,29 @@ public class RequeteServiceController {
         }
         //return lesMatieres;
     }
+    public ArrayList<String> GetSousMatiereByMatiere(int idUser, int idMatiere)
+    {
+        ArrayList<String> lesSousMatieres = new ArrayList<>();
+        try {
+            cnx = ConnexionBDD.getCnx();
+            ps = cnx.prepareStatement("SELECT sous_matiere FROM `competence` WHERE id_user=? and id_matiere=? ");
+            ps.setInt(1, idUser);
+            ps.setInt(2,idMatiere);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                String[] mots = rs.getString("sous_matiere").split("#");
+                for (String mot : mots) {
+                    if (!mot.isEmpty()) {
+                        lesSousMatieres.add(mot);
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return lesSousMatieres;
+    }
+
 
 }

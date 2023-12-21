@@ -53,17 +53,18 @@ public class AjouterCompetenceController implements Initializable {
                 System.out.println("Aucune sélection dans la ComboBox.");
             }
         }
-        if (idMatiere != -1) {
-            System.out.println("Clé trouvée pour la valeur " + cboMatiereAjouterCompetence.getSelectionModel().getSelectedItem().toString() + ": " +idMatiere+""+ idEtudiant+ matieres);
-        } else {
-            System.out.println("Aucune clé trouvée pour la valeur " + idEtudiant);
-        }
+       // if (idMatiere != -1) {
+        // System.out.println("Clé trouvée pour la valeur " + cboMatiereAjouterCompetence.getSelectionModel().getSelectedItem().toString() + ": " +idMatiere+""+ idEtudiant+ matieres);
+      //  } else {
+        //   System.out.println("Aucune clé trouvée pour la valeur " + idEtudiant);
+        // }
         ArrayList<String> sousMatieres = requeteServ.GetAllSousMatieres(cboMatiereAjouterCompetence.getSelectionModel().getSelectedItem().toString());
         String laSousMatiere = null;
         for (String sousMatiere : sousMatieres) {
             cboListeSousMatiere.getItems().add(sousMatiere);
             laSousMatiere  = cboListeSousMatiere.getSelectionModel().getSelectedItem().toString();
         }
+
         requeteServ.saveUserCompetence(idMatiere, idEtudiant, laSousMatiere);
 
 
