@@ -67,8 +67,6 @@ public class AccueilController implements Initializable {
     @javafx.fxml.FXML
     private Button btnSoutiensAccueil;
     @javafx.fxml.FXML
-    private TableView TblVValiderSoutiens;
-    @javafx.fxml.FXML
     private ComboBox cboMatiereCompetence;
     @javafx.fxml.FXML
     private Label lblNomEleve;
@@ -78,8 +76,6 @@ public class AccueilController implements Initializable {
     private Demande demande;
     @FXML
     private ListView lstCompetence;
-    @FXML
-    private TableView TblVdemande;
 
     @FXML
     private TableColumn clmNiveau;
@@ -89,20 +85,41 @@ public class AccueilController implements Initializable {
     private TableColumn clmMatiere;
     @FXML
     private TableColumn clmSousMatiere;
-    public ObservableList<Demande> tabDemande = FXCollections.observableArrayList();
+    public ObservableList<Demande> tabDemandes = FXCollections.observableArrayList();
+    @FXML
+    private TableView tbvDemandes;
+    @FXML
+    private TableView tbvMesDemandes;
+    @FXML
+    private TableColumn clmMesMatieres;
+    @FXML
+    private TableColumn clmMesSousMatieres;
+    @FXML
+    private TableColumn clmMesDates;
+    public ObservableList<Demande> tabMesDemandes = FXCollections.observableArrayList();
+    @FXML
+    private TableView tbvValiderSoutiens;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try{maCnx = new ConnexionBDD();
             requeteServ = new RequeteServiceController();
+
             clmNiveau.setCellValueFactory(new PropertyValueFactory<Demande,String>("niveau"));
             clmDate.setCellValueFactory(new PropertyValueFactory<Demande, Date>("dateFinDemande"));
             clmMatiere.setCellValueFactory(new PropertyValueFactory<Demande,String>("matiereDesignation"));
             clmSousMatiere.setCellValueFactory(new PropertyValueFactory<Demande,String>("sousMatiere"));
-            ObservableList<Demande> tabDemande = FXCollections.observableArrayList(requeteServ.GetDemande());
+            ObservableList<Demande> tabDemandes = FXCollections.observableArrayList(requeteServ.GetDemande());
 
-            TblVdemande.setItems(tabDemande);
+            tbvDemandes.setItems(tabDemandes);
+
+            clmMesMatieres.setCellValueFactory(new PropertyValueFactory<Demande,String>("matiereDesignation"));
+            clmMesSousMatieres.setCellValueFactory(new PropertyValueFactory<Demande, String>("sousMatiere"));
+            clmMesDates.setCellValueFactory(new PropertyValueFactory<Demande,Date>("dateFinDemande"));
+            ObservableList<Demande> tabMesDemande = FXCollections.observableArrayList(requeteServ.GetMesDemande());
+
+            tbvMesDemandes.setItems(tabMesDemande);
 
             cboStatistique.getItems().addAll("Nombre de soutiens réalisés","Nombre de demandes restées sans soutien","Nombre de soutiens réalisés par niveau, par matière","Demandes par niveau, par matière","Etudiants qui ont réalisé le plus de soutiens","Sous matières les plus sollicitées");
 
@@ -119,18 +136,27 @@ public class AccueilController implements Initializable {
             throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
+        } tbvDemandes.refresh();
 
 
        user = UserHolder.getInstance().getUser();
        lblNomEleve.setText(user.getNom());
        lblRoleEleve.setText(user.getRole());
-    }
-    @Deprecated
-    private void receiveData(MouseEvent event) {
 
+
+        tbvDemandes.setOnMouseMoved(event -> handleTableMouseAction());
+        tbvMesDemandes.setOnMouseMoved(event -> handleTableMouseAction());
     }
 
+    private void handleTableMouseAction() {
+        ObservableList<Demande> updatedTabDemande = FXCollections.observableArrayList(requeteServ.GetDemande());
+        tbvDemandes.setItems(updatedTabDemande);
+        tbvDemandes.refresh();
+
+        ObservableList<Demande> updatedTabMesDemandes = FXCollections.observableArrayList(requeteServ.GetMesDemande());
+        tbvMesDemandes.setItems(updatedTabMesDemandes);
+        tbvMesDemandes.refresh();
+    }
 
 
     @javafx.fxml.FXML

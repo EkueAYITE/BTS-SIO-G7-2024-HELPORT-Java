@@ -105,7 +105,7 @@
                   <Font name="System Bold" size="17.0" />
                </font>
             </Button>
-            <TableView fx:id="TblVdemande" layoutX="354.0" layoutY="141.0" prefHeight="281.0" prefWidth="411.0" AnchorPane.leftAnchor="354.0">
+            <TableView fx:id="tbvDemandes" layoutX="354.0" layoutY="141.0" prefHeight="281.0" prefWidth="411.0" AnchorPane.leftAnchor="354.0">
               <columns>
                   <TableColumn fx:id="clmNiveau" minWidth="0.0" prefWidth="103.0" text="Niveau" />
                   <TableColumn fx:id="clmDate" prefWidth="117.0" text="Date" />
@@ -113,11 +113,11 @@
                   <TableColumn fx:id="clmSousMatiere" prefWidth="83.0" text="Sous-matière" />
               </columns>
             </TableView>
-            <TableView layoutX="24.0" layoutY="141.0" prefHeight="281.0" prefWidth="287.0">
+            <TableView fx:id="tbvMesDemandes" layoutX="24.0" layoutY="141.0" prefHeight="281.0" prefWidth="287.0">
               <columns>
-                <TableColumn prefWidth="89.0" text="Matière" />
-                  <TableColumn prefWidth="106.0" text="Sous-matière" />
-                  <TableColumn prefWidth="90.0" text="Date" />
+                <TableColumn fx:id="clmMesMatieres" prefWidth="89.0" text="Matière" />
+                  <TableColumn fx:id="clmMesSousMatieres" prefWidth="106.0" text="Sous-matière" />
+                  <TableColumn fx:id="clmMesDates" prefWidth="90.0" text="Date" />
               </columns>
             </TableView>
             <Button fx:id="btnModifierDemande1" layoutX="212.0" layoutY="429.0" mnemonicParsing="false" onAction="#btnModifierDemandeClicked" prefHeight="41.0" prefWidth="101.0" style="-fx-background-color: #006bff;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Modifier" textFill="WHITE">
@@ -131,7 +131,7 @@
                   <Font name="System Bold" size="17.0" />
                </font>
             </Button>
-            <TableView fx:id="TblVValiderSoutiens" layoutX="30.0" layoutY="539.0" prefHeight="228.0" prefWidth="577.0">
+            <TableView fx:id="tbvValiderSoutiens" layoutX="30.0" layoutY="539.0" prefHeight="228.0" prefWidth="577.0">
                <columns>
                   <TableColumn minWidth="0.0" prefWidth="132.0" text="Niveau" />
                   <TableColumn prefWidth="120.0" text="Date" />

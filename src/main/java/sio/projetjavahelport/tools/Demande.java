@@ -53,6 +53,12 @@ public class Demande {
 
     }
 
+    public Demande(String matiereDesignation, String sousMatiere, Date dateFinDemande) {
+        this.matiereDesignation = matiereDesignation;
+        this.sousMatiere = sousMatiere;
+        this.dateFinDemande = dateFinDemande;
+    }
+
     public Demande(String niveau, Date dateFinDemande, String matiereDesignation, String sousMatiere) {
         this.niveau = niveau;
         this.dateFinDemande = dateFinDemande;

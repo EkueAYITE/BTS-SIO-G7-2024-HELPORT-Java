@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import sio.projetjavahelport.tools.ConnexionBDD;
 import sio.projetjavahelport.tools.Demande;
 import sio.projetjavahelport.tools.User;
+import sio.projetjavahelport.tools.UserHolder;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +18,7 @@ public class RequeteServiceController {
     private Connection cnx;
     private PreparedStatement ps;
     private ResultSet rs;
+    private User user;
 
     public RequeteServiceController()
     {
@@ -199,6 +201,32 @@ public class RequeteServiceController {
             ps.executeUpdate();
         }
     }
+    public ArrayList<Demande> GetMesDemande() {
+        ArrayList<Demande> data = new ArrayList<>();
+        user = UserHolder.getInstance().getUser();
+        try {
+            cnx = ConnexionBDD.getCnx();
+            String query = "SELECT  m.designation, d.sous_matiere , d.date_fin_demande\n" +
+                    "FROM demande d\n" +
+                    "JOIN matiere m ON d.id_matiere = m.id\n" +
+                    "JOIN user u ON d.id_user = u.id\n" +
+                    "WHERE d.status = 1 AND u.id = ?";
+            ps = cnx.prepareStatement(query);
+            ps.setInt(1, user.getId());
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Demande d = new Demande(rs.getString(1), rs.getString(2), rs.getDate(3));
+                data.add(d);
+            }
+
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return data;
+    }
+
 
 
 

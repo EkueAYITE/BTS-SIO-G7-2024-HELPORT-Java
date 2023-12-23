@@ -81,7 +81,7 @@ public class CreerDemandeController implements Initializable {
             demande.setDateFinDemande(java.sql.Date.valueOf(dpDate.getValue()));
             demande.setDate_updated(java.sql.Date.valueOf(currentDate));
             demande.setId_user(user.getId());
-            demande.setId_matiere(1);
+            demande.setId_matiere(2);
             demande.setStatus(1);
 
 
