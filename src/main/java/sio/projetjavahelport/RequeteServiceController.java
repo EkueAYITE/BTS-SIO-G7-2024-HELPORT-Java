@@ -186,6 +186,19 @@ public class RequeteServiceController {
             throw new RuntimeException(e);
         }
     }
+    public void ajouterDemande(Demande demande) throws SQLException {
+        String query = "INSERT INTO `demande` (`date_updated`, `date_fin_demande`, `sous_matiere`, `id_user`, `id_matiere`, `status`) VALUES (?,?,?,?,?,?)";
+        try (PreparedStatement ps = cnx.prepareStatement(query)) {
+            ps.setDate(1, demande.getDate_updated());
+            ps.setDate(2, demande.getDateFinDemande());
+            ps.setString(3, demande.getSousMatiere());
+            ps.setInt(4, demande.getId_user());
+            ps.setInt(5, demande.getId_matiere());
+            ps.setInt(6, demande.getStatus());
+
+            ps.executeUpdate();
+        }
+    }
 
 
 

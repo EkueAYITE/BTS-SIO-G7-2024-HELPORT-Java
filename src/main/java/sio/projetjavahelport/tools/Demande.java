@@ -11,8 +11,47 @@ public class Demande {
     private String matiereDesignation;
     private String sousMatiere;
     private int id_user;
+
+    public Date getDate_updated() {
+        return date_updated;
+    }
+
+    public int getId_user() {
+        return id_user;
+    }
+
+    public int getId_matiere() {
+        return id_matiere;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
     private int id_matiere;
+
+    public void setDate_updated(Date date_updated) {
+        this.date_updated = date_updated;
+    }
+
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
+    }
+
+    public void setId_matiere(int id_matiere) {
+        this.id_matiere = id_matiere;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     private int status;
+
+    public Demande()
+    {
+
+    }
 
     public Demande(String niveau, Date dateFinDemande, String matiereDesignation, String sousMatiere) {
         this.niveau = niveau;

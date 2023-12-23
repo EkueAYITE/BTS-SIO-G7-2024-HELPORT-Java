@@ -15,9 +15,9 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cboMatiere" layoutX="233.0" layoutY="124.0" onAction="#cboMatiereClicked" prefWidth="150.0" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="138.0" />
-      <ComboBox fx:id="cboSousMatiere" layoutX="233.0" layoutY="188.0" onAction="#cboSousMatiereClicked" prefWidth="150.0" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="138.0" />
-      <DatePicker fx:id="dtDate" layoutX="233.0" layoutY="453.0" onAction="#dtDateClicked" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="114.0" />
+      <ComboBox fx:id="cboMatiere" layoutX="233.0" layoutY="124.0" onAction="#cboMatiereClicked" prefWidth="150.0" promptText="Matière" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="138.0" />
+      <ComboBox fx:id="cboSousMatiere" layoutX="233.0" layoutY="188.0" onAction="#cboSousMatiereClicked" prefWidth="150.0" promptText="Sous-Matière" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="138.0" />
+      <DatePicker fx:id="dpDate" layoutX="233.0" layoutY="453.0" onAction="#dtDateClicked" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="114.0" />
       <Button fx:id="btnValider" layoutX="233.0" layoutY="514.0" mnemonicParsing="false" onAction="#btnValiderClicked" style="-fx-background-color: #057aff;" text="Valider" textFill="WHITE" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="232.0">
          <font>
             <Font name="System Bold" size="12.0" />
