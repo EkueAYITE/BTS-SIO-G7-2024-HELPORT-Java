@@ -6,5 +6,7 @@ module sio.projetjavahelport {
     requires java.sql;
 
     opens sio.projetjavahelport to javafx.fxml;
+    opens sio.projetjavahelport.tools to javafx.fxml;
     exports sio.projetjavahelport;
+    exports sio.projetjavahelport.tools;
 }

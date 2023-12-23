@@ -1,6 +1,9 @@
 package sio.projetjavahelport;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import sio.projetjavahelport.tools.ConnexionBDD;
+import sio.projetjavahelport.tools.Demande;
 import sio.projetjavahelport.tools.User;
 
 import java.sql.Connection;
@@ -143,6 +146,56 @@ public class RequeteServiceController {
         }
         return lesSousMatieres;
     }
+    public ArrayList<Demande> GetDemande()
+    {
+        ArrayList<Demande> data = new ArrayList<>();
+        try {
+            cnx = ConnexionBDD.getCnx();
+            ps = cnx.prepareStatement("SELECT\n" +
+                    "    u.niveau,\n" +
+                    "    d.date_fin_demande,\n" +
+                    "    m.designation ,\n" +
+                    "    m.sous_matiere\n" +
+                    "    \n" +
+                    "FROM\n" +
+                    "    demande d\n" +
+                    "JOIN user u ON d.id_user = u.id\n" +
+                    "JOIN matiere m ON d.id_matiere = m.id; ");
+
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Demande d = new Demande(rs.getString(1),rs.getDate(2),rs.getString(3),rs.getString(4));
+                data.add(d);
+            }
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return data;
+
+    }
+
+    public void DeletCompetence(String sousMatiere, int idMatiere, int idUser){
+        try {
+            cnx = ConnexionBDD.getCnx();
+            ps = cnx.prepareStatement("UPDATE competence\n" +
+                    "    set sous_matiere = ?\n" +
+                    "    WHERE id_matiere = ?\n" +
+                    "    AND id_user = ?" );
+            ps.setString(1, sousMatiere);
+            ps.setInt(2, idMatiere);
+            ps.setInt(3, idUser);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
+
 
 
 }

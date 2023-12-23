@@ -1,6 +1,7 @@
 package sio.projetjavahelport;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -10,21 +11,21 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import sio.projetjavahelport.tools.ConnexionBDD;
+import sio.projetjavahelport.tools.Demande;
 import sio.projetjavahelport.tools.User;
 import sio.projetjavahelport.tools.UserHolder;
 
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class AccueilController implements Initializable {
 
@@ -74,17 +75,39 @@ public class AccueilController implements Initializable {
     @javafx.fxml.FXML
     private Label lblRoleEleve;
     private User user;
+    private Demande demande;
     @FXML
     private ListView lstCompetence;
+    @FXML
+    private TableView TblVdemande;
+
+    @FXML
+    private TableColumn clmNiveau;
+    @FXML
+    private TableColumn clmDate;
+    @FXML
+    private TableColumn clmMatiere;
+    @FXML
+    private TableColumn clmSousMatiere;
+    public ObservableList<Demande> tabDemande = FXCollections.observableArrayList();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        cboStatistique.getItems().addAll("Nombre de soutiens réalisés","Nombre de demandes restées sans soutien","Nombre de soutiens réalisés par niveau, par matière","Demandes par niveau, par matière","Etudiants qui ont réalisé le plus de soutiens","Sous matières les plus sollicitées");
-
-       try{
-            maCnx = new ConnexionBDD();
+        try{maCnx = new ConnexionBDD();
             requeteServ = new RequeteServiceController();
+            clmNiveau.setCellValueFactory(new PropertyValueFactory<Demande,String>("niveau"));
+            clmDate.setCellValueFactory(new PropertyValueFactory<Demande, Date>("dateFinDemande"));
+            clmMatiere.setCellValueFactory(new PropertyValueFactory<Demande,String>("matiereDesignation"));
+            clmSousMatiere.setCellValueFactory(new PropertyValueFactory<Demande,String>("sousMatiere"));
+            ObservableList<Demande> tabDemande = FXCollections.observableArrayList(requeteServ.GetDemande());
+
+            TblVdemande.setItems(tabDemande);
+
+            cboStatistique.getItems().addAll("Nombre de soutiens réalisés","Nombre de demandes restées sans soutien","Nombre de soutiens réalisés par niveau, par matière","Demandes par niveau, par matière","Etudiants qui ont réalisé le plus de soutiens","Sous matières les plus sollicitées");
+
+
+
 
            HashMap<Integer, String> matieres = requeteServ.GetAllMatieres();
            for(int matiere : matieres.keySet()){
