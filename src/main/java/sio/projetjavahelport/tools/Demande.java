@@ -1,12 +1,18 @@
 package sio.projetjavahelport.tools;
 
-import java.util.Date;
+import java.sql.Date;
+
 
 public class Demande {
+
     private String niveau;
+    private Date date_updated;
     private Date dateFinDemande;
     private String matiereDesignation;
     private String sousMatiere;
+    private int id_user;
+    private int id_matiere;
+    private int status;
 
     public Demande(String niveau, Date dateFinDemande, String matiereDesignation, String sousMatiere) {
         this.niveau = niveau;

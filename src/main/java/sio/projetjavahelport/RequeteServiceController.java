@@ -151,16 +151,11 @@ public class RequeteServiceController {
         ArrayList<Demande> data = new ArrayList<>();
         try {
             cnx = ConnexionBDD.getCnx();
-            ps = cnx.prepareStatement("SELECT\n" +
-                    "    u.niveau,\n" +
-                    "    d.date_fin_demande,\n" +
-                    "    m.designation ,\n" +
-                    "    m.sous_matiere\n" +
-                    "    \n" +
-                    "FROM\n" +
-                    "    demande d\n" +
+            ps = cnx.prepareStatement("SELECT u.niveau, d.date_fin_demande, m.designation, d.sous_matiere\n" +
+                    "FROM demande d\n" +
+                    "JOIN matiere m ON d.id_matiere = m.id\n" +
                     "JOIN user u ON d.id_user = u.id\n" +
-                    "JOIN matiere m ON d.id_matiere = m.id; ");
+                    "WHERE d.status = 1;");
 
             rs = ps.executeQuery();
             while(rs.next())
@@ -191,6 +186,8 @@ public class RequeteServiceController {
             throw new RuntimeException(e);
         }
     }
+
+
 
 
 

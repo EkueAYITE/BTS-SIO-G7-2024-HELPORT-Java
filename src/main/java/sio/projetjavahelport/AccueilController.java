@@ -120,7 +120,7 @@ public class AccueilController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        cboMatiereCompetence.getSelectionModel().selectFirst();
+
 
        user = UserHolder.getInstance().getUser();
        lblNomEleve.setText(user.getNom());
