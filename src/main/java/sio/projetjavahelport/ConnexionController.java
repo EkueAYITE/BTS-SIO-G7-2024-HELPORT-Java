@@ -59,9 +59,9 @@ public class ConnexionController implements Initializable {
         String email = txtIdentifiant.getText();
         String password = txtMotDePasse.getText();
         if (email.isEmpty() || password.isEmpty()) {
-            // Affichez un message d'erreur ou effectuez une action en cas d'échec
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Identifiants ou mot de pass vide");
-            alert.showAndWait(); // Affichez l'alerte de manière synchrone
+            // Affiche un message d'erreur ou effectuez une action en cas d'échec
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Identifiant ou mot de passe vide");
+            alert.showAndWait(); // Affiche l'alerte de manière synchrone
         }
 
             User userInfo = this.requeteServ.verifierIdentifiants(email, password);
@@ -70,7 +70,7 @@ public class ConnexionController implements Initializable {
                 try {
                     UserHolder holder = UserHolder.getInstance();
                     holder.setUser(userInfo);
-                    // Chargez la nouvelle fenêtre en cas de succès
+                    // Charge la nouvelle fenêtre en cas de succès
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("accueil-view.fxml"));
                     Parent root = fxmlLoader.load();
                     Scene scene = new Scene(root);
@@ -79,14 +79,12 @@ public class ConnexionController implements Initializable {
                     stage.setScene(scene);
                     stage.show();
 
-                    // Fermez la fenêtre actuelle
+                    // Ferme la fenêtre actuelle
                     stageActuel.close();
                 } catch (IOException e) {
-                    // Gérer les erreurs liées au chargement du fichier FXML
                     e.printStackTrace();
                     showAlert("Erreur lors du chargement de la nouvelle fenêtre.");
                 } catch (Exception e) {
-                    // Gérer d'autres exceptions possibles
                     e.printStackTrace();
                     showAlert("Une erreur inattendue s'est produite.");
                 }
@@ -100,7 +98,7 @@ public class ConnexionController implements Initializable {
 
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR, message);
-        alert.showAndWait(); // Affichez l'alerte de manière synchrone
+        alert.showAndWait(); // Affiche l'alerte de manière synchrone
     }
 
 
@@ -114,7 +112,7 @@ public class ConnexionController implements Initializable {
             fenetre.setTitle("Mot de passe oublié");
             fenetre.setScene(scene);
             fenetre.setOnCloseRequest(e -> {
-                fenetre = null; // Réinitialisez la référence lorsque la fenêtre est fermée
+                fenetre = null; // Réinitialise la référence lorsque la fenêtre est fermée
             });
             fenetre.show();
         }

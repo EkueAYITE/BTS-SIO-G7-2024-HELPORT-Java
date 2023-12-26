@@ -10,6 +10,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -30,6 +34,10 @@ import java.util.*;
 public class AccueilController implements Initializable {
 
     ConnexionBDD maCnx;
+    HashMap<String,Integer> datasGraphiqueTopMatieres;
+    XYChart.Series<String,Integer> serieGraphTopMatieres;
+    XYChart.Series<String,Number> serieGraphDemandesStatuts;
+    HashMap<String,Integer> datasGraphiqueDemandesStatuts;
     RequeteServiceController requeteServ;
     @javafx.fxml.FXML
     private Button btnCompetencesAccueil;
@@ -94,11 +102,30 @@ public class AccueilController implements Initializable {
     private TableColumn clmMesMatieres;
     @FXML
     private TableColumn clmMesSousMatieres;
-    @FXML
-    private TableColumn clmMesDates;
     public ObservableList<Demande> tabMesDemandes = FXCollections.observableArrayList();
     @FXML
     private TableView tbvValiderSoutiens;
+    @FXML
+    private PieChart graphDemandesParUser;
+    @FXML
+    private TableColumn clmMesDates;
+    @FXML
+    private AnchorPane apDemandesParUser;
+    @FXML
+    private Button btnDemandesParUser;
+    @FXML
+    private Button btnTopMatieres;
+    @FXML
+    private AnchorPane apTopMatieres;
+    @FXML
+    private BarChart graphTopMatieres;
+    @FXML
+    private LineChart graphDemandeStatuts;
+    @FXML
+    private Button btnDemandesStatuts;
+    @FXML
+    private AnchorPane apDemandesStatuts;
+
 
 
     @Override
@@ -371,4 +398,86 @@ public class AccueilController implements Initializable {
     }
 
 
+    @FXML
+    public void cboStatistiqueClicked(ActionEvent actionEvent) {
+
+    }
+
+    @FXML
+    public void btnDemandesParUserClicked(ActionEvent actionEvent) {
+        apDemandesParUser.setVisible(true);
+        apTopMatieres.setVisible(false);
+        apDemandesStatuts.setVisible(false);
+
+        graphDemandesParUser.getData().clear();
+
+        ObservableList<PieChart.Data> datasGraph2 =FXCollections.observableArrayList();
+        HashMap<String,Integer> datasGraphique2 =  requeteServ.getDatasGraphiqueDemandesParUser();
+
+        for (String valeur : datasGraphique2.keySet())
+        {
+            datasGraph2.add(new PieChart.Data(valeur,datasGraphique2.get(valeur) ));
+        }
+        graphDemandesParUser.setData(datasGraph2);
+        for (PieChart.Data entry : graphDemandesParUser.getData()) {
+            Tooltip t = new Tooltip(entry.getPieValue()+ " : "+entry.getName()) ;
+            t.setStyle("-fx-background-color:#3D9ADA");
+            Tooltip.install(entry.getNode(), t);
+        }
+    }
+
+    @FXML
+    public void btnTopMatieresClicked(ActionEvent actionEvent) {
+        apDemandesParUser.setVisible(false);
+        apTopMatieres.setVisible(true);
+        apDemandesStatuts.setVisible(false);
+        graphTopMatieres.getData().clear();
+        datasGraphiqueTopMatieres = new HashMap<>();
+        datasGraphiqueTopMatieres =  requeteServ.getDatasGraphiqueTopMatieres();
+        //datasGraphique1 =  graphiqueController.GetDatasGraphique1("FB");
+        serieGraphTopMatieres = new XYChart.Series();
+        serieGraphTopMatieres.setName("Top Matières");
+
+        // Remplir la série nécessaire au graphique à partir des données provenant de la HashMap
+        for (String valeur : datasGraphiqueTopMatieres.keySet())
+        {
+            serieGraphTopMatieres.getData().add(new XYChart.Data(valeur,datasGraphiqueTopMatieres.get(valeur)));
+        }
+        graphTopMatieres.getData().add(serieGraphTopMatieres);
+    }
+
+    @FXML
+    public void btnDemandesStatutsClicked(ActionEvent actionEvent) {
+        apDemandesParUser.setVisible(false);
+        apTopMatieres.setVisible(false);
+        apDemandesStatuts.setVisible(true);
+        try {
+            maCnx = new ConnexionBDD();
+            requeteServ = new RequeteServiceController();
+            datasGraphiqueDemandesStatuts = requeteServ.getDatasGraphiqueDemandesStatuts();
+
+            // Ajoutez une vérification de nullité ici
+            if (datasGraphiqueDemandesStatuts != null) {
+                serieGraphDemandesStatuts = new XYChart.Series();
+                serieGraphDemandesStatuts.setName("Statuts globaux des demandes actuelles");
+                graphDemandeStatuts.getData().clear();
+
+                // Remplir la série nécessaire au graphique à partir des données provenant de la HashMap
+                for (String statut : datasGraphiqueDemandesStatuts.keySet())
+                {
+                    serieGraphDemandesStatuts.getData().add(new XYChart.Data(statut, datasGraphiqueDemandesStatuts.get(statut)));
+                }
+
+                graphDemandeStatuts.getData().add(serieGraphDemandesStatuts);
+            } else {
+                System.out.println("La variable datasGraphiqueDemandesStatuts est null.");
+                // Gérer le cas où datasGraphiqueDemandesStatuts est null
+            }
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

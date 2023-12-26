@@ -226,14 +226,71 @@ public class RequeteServiceController {
         }
         return data;
     }
-
-
-
-
-
-
-
-
-
-
+    public HashMap<String,Integer> getDatasGraphiqueDemandesParUser()
+    {
+        HashMap<String, Integer> datas = new HashMap();
+        try {
+            cnx = ConnexionBDD.getCnx();
+            ps = cnx.prepareStatement("SELECT  u.nom, COUNT(d.id) AS nombre_demandes\n" +
+                    "FROM user u\n" +
+                    "LEFT JOIN demande d ON u.id = d.id_user\n" +
+                    "GROUP BY u.id, u.nom, u.prenom\n" +
+                    "ORDER BY nombre_demandes DESC;");
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                datas.put(rs.getString(1), rs.getInt(2));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return datas;
+    }
+    public HashMap<String,Integer> getDatasGraphiqueTopMatieres()
+    {
+        HashMap<String, Integer> datas = new HashMap();
+        try {
+            cnx = ConnexionBDD.getCnx();
+            ps = cnx.prepareStatement("SELECT m.designation AS matiere, COUNT(d.id) AS nombre_demandes\n" +
+                    "FROM matiere m\n" +
+                    "LEFT JOIN demande d ON m.id = d.id_matiere\n" +
+                    "GROUP BY matiere\n" +
+                    "ORDER BY nombre_demandes DESC\n" +
+                    "LIMIT 5;");
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                datas.put(rs.getString(1), rs.getInt(2));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return datas;
+    }
+    public HashMap<String,Integer> getDatasGraphiqueDemandesStatuts()
+    {
+        HashMap<String, Integer> datas = new HashMap();
+        try {
+            cnx = ConnexionBDD.getCnx();
+            ps = cnx.prepareStatement("SELECT CASE\n" +
+                    "         WHEN status = 1 THEN 'En attente'\n" +
+                    "         WHEN status = 2 THEN 'En cours'\n" +
+                    "         WHEN status = 3 THEN 'Terminée'\n" +
+                    "       END AS statut,\n" +
+                    "       COUNT(id) AS nombre_demandes\n" +
+                    "FROM demande\n" +
+                    "GROUP BY statut;");
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                datas.put(rs.getString(1), rs.getInt(2));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return datas;
+    }
 }
