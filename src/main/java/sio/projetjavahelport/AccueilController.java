@@ -296,6 +296,9 @@ public class AccueilController implements Initializable {
             fenetre.setOnCloseRequest(event -> {
                 fenetre = null;
             });
+            Scene sceneActuelle = ((Node) actionEvent.getSource()).getScene();
+            Stage stageActuel = (Stage) sceneActuelle.getWindow();
+            stageActuel.close();
             fenetre.show();
         }
     }
@@ -480,4 +483,5 @@ public class AccueilController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
 }

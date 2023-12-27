@@ -28,18 +28,21 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Label fx:id="lblMotDePasseOublie" layoutX="168.0" layoutY="333.0" onMouseClicked="#lblMotDePasseOublieClicked" text="Mot de passe oublié ?" textFill="#9a9999" />
-            <Label fx:id="lblInscription" layoutX="148.0" layoutY="423.0" onMouseClicked="#lblInscriptionClicked" text="Pas encore inscrit ?" textFill="#9a9999" />
-            <PasswordField fx:id="txtMotDePasse" layoutX="61.0" layoutY="293.0" prefHeight="34.0" prefWidth="224.0" />
+            <Label fx:id="lblMotDePasseOublie" disable="true" layoutX="168.0" layoutY="333.0" onMouseClicked="#lblMotDePasseOublieClicked" opacity="0.0" text="Mot de passe oublié ?" textFill="#9a9999" />
+            <Label fx:id="lblInscription" disable="true" layoutX="148.0" layoutY="423.0" onMouseClicked="#lblInscriptionClicked" opacity="0.0" text="Pas encore inscrit ?" textFill="#9a9999" />
+            <PasswordField fx:id="txtMotDePasse" layoutX="61.0" layoutY="293.0" prefHeight="34.0" prefWidth="224.0" promptText="Mot de passe">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></PasswordField>
          </children>
       </AnchorPane>
       
-      <Label fx:id="lblMentionsLegales" layoutX="56.0" layoutY="465.0" onMouseClicked="#lblMentionLegalesClicked" text="Mentions légales" AnchorPane.bottomAnchor="14.0">
+      <Label fx:id="lblMentionsLegales" disable="true" layoutX="56.0" layoutY="465.0" onMouseClicked="#lblMentionLegalesClicked" opacity="0.0" text="Mentions légales" AnchorPane.bottomAnchor="14.0">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblContact" layoutX="207.0" layoutY="465.0" onMouseClicked="#lblContactClicked" text="Contacts" AnchorPane.bottomAnchor="14.0">
+      <Label fx:id="lblContact" disable="true" layoutX="207.0" layoutY="465.0" onMouseClicked="#lblContactClicked" opacity="0.0" text="Contacts" AnchorPane.bottomAnchor="14.0">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>

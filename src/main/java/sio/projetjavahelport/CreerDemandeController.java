@@ -1,8 +1,10 @@
 package sio.projetjavahelport;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -12,6 +14,7 @@ import sio.projetjavahelport.tools.Demande;
 import sio.projetjavahelport.tools.User;
 import sio.projetjavahelport.tools.UserHolder;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -22,8 +25,6 @@ import java.util.ResourceBundle;
 public class CreerDemandeController implements Initializable {
     @javafx.fxml.FXML
     private Button btnValider;
-    @javafx.fxml.FXML
-    private AnchorPane apnCreerDemande;
     @javafx.fxml.FXML
     private ComboBox cboMatiere;
     @javafx.fxml.FXML
@@ -37,6 +38,12 @@ public class CreerDemandeController implements Initializable {
     ConnexionBDD maCnx;
     @javafx.fxml.FXML
     private DatePicker dpDate;
+    private Stage fenetre = null;
+    @javafx.fxml.FXML
+    private AnchorPane apCreerDemande;
+    @javafx.fxml.FXML
+    private Button btnRetour;
+
 
 
     @javafx.fxml.FXML
@@ -44,7 +51,8 @@ public class CreerDemandeController implements Initializable {
     }
 
     @javafx.fxml.FXML
-    public void btnValiderClicked(ActionEvent actionEvent) {
+    public void btnValiderClicked(ActionEvent actionEvent) throws IOException {
+        // On gère les erreurs
         if(dpDate.getValue()==null)
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -70,20 +78,39 @@ public class CreerDemandeController implements Initializable {
 
             // Variable qui contient la date actuelle
             LocalDate currentDate = LocalDate.now();
+
             user = UserHolder.getInstance().getUser();
 
             Demande demande = new Demande();
-            /*demande.setMatiere((String) cboMatiere.getValue());
-            demande.setSousMatiere((String) cboSousMatiere.getValue());
-            demande.setDate(dtDate.getValue());
-            AccueilController.recevoirNouvelleDemande(demande);*/
+
+            // Pour insérer les données remplies par l'utilisateur dans la bdd
+            // Matière choisie par l'utilisateur
+            switch (cboMatiere.getSelectionModel().getSelectedIndex() + 1) {
+                case 1: // Anglais
+                    demande.setId_matiere(1);
+                    break;
+                case 2: // CEJM
+                    demande.setId_matiere(2);
+                    break;
+                case 3: // Français
+                    demande.setId_matiere(3);
+                    break;
+                case 4: // Mathématiques
+                    demande.setId_matiere(4);
+                    break;
+                case 5: // Informatique
+                    demande.setId_matiere(5);
+                    break;
+                case 6: // Histoire
+                    demande.setId_matiere(6);
+                    break;
+
+            }
             demande.setSousMatiere((String) cboSousMatiere.getValue());
             demande.setDateFinDemande(java.sql.Date.valueOf(dpDate.getValue()));
             demande.setDate_updated(java.sql.Date.valueOf(currentDate));
             demande.setId_user(user.getId());
-            demande.setId_matiere(2);
             demande.setStatus(1);
-
 
 
             requeteServ = new RequeteServiceController();
@@ -94,9 +121,25 @@ public class CreerDemandeController implements Initializable {
                 e.printStackTrace();
             }
 
-            Scene sceneActuelle = ((Node) actionEvent.getSource()).getScene();
-            Stage stageActuel = (Stage) sceneActuelle.getWindow();
-            stageActuel.close();
+            if (fenetre == null) {
+                // Si la fenêtre n'est pas encore ouverte on crée une instance
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("accueil-view.fxml"));
+                Parent root = fxmlLoader.load();
+
+                Scene scene = new Scene(root);
+                fenetre = new Stage();
+                fenetre.setTitle("Accueil");
+                fenetre.setScene(scene);
+                fenetre.setOnCloseRequest(event -> {
+                    fenetre = null;
+                });
+                Scene sceneActuelle = ((Node) actionEvent.getSource()).getScene();
+                Stage stageActuel = (Stage) sceneActuelle.getWindow();
+                stageActuel.close();
+                fenetre.show();
+            }
+
+
         }
 
     }
@@ -116,6 +159,7 @@ public class CreerDemandeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Pour remplir la combobox des sous-matières en fonction des matières
         try{
             maCnx = new ConnexionBDD();
             requeteServ = new RequeteServiceController();
@@ -135,6 +179,12 @@ public class CreerDemandeController implements Initializable {
                 }
             });
 
+            // Pour instaurer une intervalle sur le choix de la date avec l'utilisation de la classe DatePickerCell
+            LocalDate minDate = LocalDate.of(2024, 1, 1);
+            LocalDate maxDate = LocalDate.of(2024, 12, 31);
+
+            dpDate.setDayCellFactory(picker -> new DatePickerCell(minDate, maxDate));
+
         }catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
@@ -151,6 +201,47 @@ public class CreerDemandeController implements Initializable {
             for (String sousMatiere : sousMatieres) {
                 cboSousMatiere.getItems().add(sousMatiere);
             }
+        }
+    }
+    private void closeCurrentStage(ActionEvent actionEvent) {
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        currentStage.close();
+    }
+
+    @javafx.fxml.FXML
+    public void btnRetourClicked(ActionEvent actionEvent) throws IOException {
+        if (fenetre == null) {
+            // Si la fenêtre n'est pas encore ouverte on crée une instance
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("accueil-view.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Scene scene = new Scene(root);
+            fenetre = new Stage();
+            fenetre.setTitle("Accueil");
+            fenetre.setScene(scene);
+            fenetre.setOnCloseRequest(event -> {
+                fenetre = null;
+            });
+            Scene sceneActuelle = ((Node) actionEvent.getSource()).getScene();
+            Stage stageActuel = (Stage) sceneActuelle.getWindow();
+            stageActuel.close();
+            fenetre.show();
+        }
+    }
+    // Classe qui permet d'instaurer une intervalle dans la sélection de date
+    private class DatePickerCell extends DateCell {
+        private final LocalDate minDate;
+        private final LocalDate maxDate;
+
+        public DatePickerCell(LocalDate minDate, LocalDate maxDate) {
+            this.minDate = minDate;
+            this.maxDate = maxDate;
+        }
+
+        @Override
+        public void updateItem(LocalDate date, boolean empty) {
+            super.updateItem(date, empty);
+            setDisable(date.isBefore(minDate) || date.isAfter(maxDate));
         }
     }
 }
