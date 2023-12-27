@@ -2,6 +2,8 @@ package sio.projetjavahelport;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -110,13 +112,9 @@ public class AccueilController implements Initializable {
     @FXML
     private TableColumn clmMesDates;
     @FXML
-    private AnchorPane apDemandesParUser;
-    @FXML
     private Button btnDemandesParUser;
     @FXML
     private Button btnTopMatieres;
-    @FXML
-    private AnchorPane apTopMatieres;
     @FXML
     private BarChart graphTopMatieres;
     @FXML
@@ -124,8 +122,11 @@ public class AccueilController implements Initializable {
     @FXML
     private Button btnDemandesStatuts;
     @FXML
-    private AnchorPane apDemandesStatuts;
-
+    private AnchorPane apnDemandesParUser;
+    @FXML
+    private AnchorPane apnTopMatieres;
+    @FXML
+    private AnchorPane apnDemandesStatuts;
 
 
     @Override
@@ -139,14 +140,16 @@ public class AccueilController implements Initializable {
             clmSousMatiere.setCellValueFactory(new PropertyValueFactory<Demande,String>("sousMatiere"));
             ObservableList<Demande> tabDemandes = FXCollections.observableArrayList(requeteServ.GetDemande());
 
+
             tbvDemandes.setItems(tabDemandes);
+
 
             clmMesMatieres.setCellValueFactory(new PropertyValueFactory<Demande,String>("matiereDesignation"));
             clmMesSousMatieres.setCellValueFactory(new PropertyValueFactory<Demande, String>("sousMatiere"));
             clmMesDates.setCellValueFactory(new PropertyValueFactory<Demande,Date>("dateFinDemande"));
-            ObservableList<Demande> tabMesDemande = FXCollections.observableArrayList(requeteServ.GetMesDemande());
+            ObservableList<Demande> tabMesDemandes = FXCollections.observableArrayList(requeteServ.GetMesDemande());
 
-            tbvMesDemandes.setItems(tabMesDemande);
+            tbvMesDemandes.setItems(tabMesDemandes);
 
             cboStatistique.getItems().addAll("Nombre de soutiens réalisés","Nombre de demandes restées sans soutien","Nombre de soutiens réalisés par niveau, par matière","Demandes par niveau, par matière","Etudiants qui ont réalisé le plus de soutiens","Sous matières les plus sollicitées");
 
@@ -408,9 +411,9 @@ public class AccueilController implements Initializable {
 
     @FXML
     public void btnDemandesParUserClicked(ActionEvent actionEvent) {
-        apDemandesParUser.setVisible(true);
-        apTopMatieres.setVisible(false);
-        apDemandesStatuts.setVisible(false);
+        apnDemandesParUser.setVisible(true);
+        apnTopMatieres.setVisible(false);
+        apnDemandesStatuts.setVisible(false);
 
         graphDemandesParUser.getData().clear();
 
@@ -431,9 +434,9 @@ public class AccueilController implements Initializable {
 
     @FXML
     public void btnTopMatieresClicked(ActionEvent actionEvent) {
-        apDemandesParUser.setVisible(false);
-        apTopMatieres.setVisible(true);
-        apDemandesStatuts.setVisible(false);
+        apnDemandesParUser.setVisible(false);
+        apnTopMatieres.setVisible(true);
+        apnDemandesStatuts.setVisible(false);
         graphTopMatieres.getData().clear();
         datasGraphiqueTopMatieres = new HashMap<>();
         datasGraphiqueTopMatieres =  requeteServ.getDatasGraphiqueTopMatieres();
@@ -451,9 +454,9 @@ public class AccueilController implements Initializable {
 
     @FXML
     public void btnDemandesStatutsClicked(ActionEvent actionEvent) {
-        apDemandesParUser.setVisible(false);
-        apTopMatieres.setVisible(false);
-        apDemandesStatuts.setVisible(true);
+        apnDemandesParUser.setVisible(false);
+        apnTopMatieres.setVisible(false);
+        apnDemandesStatuts.setVisible(true);
         try {
             maCnx = new ConnexionBDD();
             requeteServ = new RequeteServiceController();

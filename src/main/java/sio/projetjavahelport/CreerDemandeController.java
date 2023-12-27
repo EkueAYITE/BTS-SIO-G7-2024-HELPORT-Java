@@ -81,7 +81,9 @@ public class CreerDemandeController implements Initializable {
 
             user = UserHolder.getInstance().getUser();
 
+
             Demande demande = new Demande();
+
 
             // Pour insérer les données remplies par l'utilisateur dans la bdd
             // Matière choisie par l'utilisateur

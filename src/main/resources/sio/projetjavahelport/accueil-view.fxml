@@ -53,12 +53,12 @@
                </font>
             </Label>
             <ComboBox fx:id="cboStatistique" disable="true" layoutX="563.0" layoutY="232.0" onAction="#cboStatistiqueClicked" prefHeight="25.0" prefWidth="211.0" promptText="Choisir une statistique" />
-            <AnchorPane fx:id="apDemandesParUser" layoutX="167.0" layoutY="329.0" prefHeight="397.0" prefWidth="577.0">
+            <AnchorPane fx:id="apnDemandesParUser" layoutX="167.0" layoutY="329.0" prefHeight="397.0" prefWidth="577.0">
                <children>
                   <PieChart fx:id="graphDemandesParUser" layoutY="-1.0" title="Demandes par utilisateur" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apTopMatieres" layoutX="167.0" layoutY="329.0" prefHeight="397.0" prefWidth="577.0" visible="false">
+            <AnchorPane fx:id="apnTopMatieres" layoutX="167.0" layoutY="329.0" prefHeight="397.0" prefWidth="577.0" visible="false">
                <children>
                   <BarChart fx:id="graphTopMatieres" prefHeight="400.0" prefWidth="577.0">
                     <xAxis>
@@ -69,7 +69,7 @@
                     </yAxis>
                   </BarChart>
                </children></AnchorPane>
-            <AnchorPane fx:id="apDemandesStatuts" layoutX="167.0" layoutY="329.0" prefHeight="397.0" prefWidth="577.0" visible="false">
+            <AnchorPane fx:id="apnDemandesStatuts" layoutX="167.0" layoutY="329.0" prefHeight="397.0" prefWidth="577.0" visible="false">
                <children>
                   <LineChart fx:id="graphDemandeStatuts">
                     <xAxis>
@@ -131,7 +131,7 @@
             </Label>
             <Label layoutX="21.0" layoutY="110.0" prefHeight="17.0" prefWidth="90.0" text="Mes demandes :" AnchorPane.rightAnchor="799.0" />
             <Label layoutX="351.0" layoutY="110.0" text="Demandes :" AnchorPane.rightAnchor="496.0" />
-            <Button fx:id="btnCreerDemande" layoutX="61.0" layoutY="429.0" mnemonicParsing="false" onAction="#btnCreerDemandeClicked" prefHeight="41.0" prefWidth="101.0" style="-fx-background-color: #006bff;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Créer" textFill="WHITE">
+            <Button fx:id="btnCreerDemande" layoutX="117.0" layoutY="429.0" mnemonicParsing="false" onAction="#btnCreerDemandeClicked" prefHeight="41.0" prefWidth="101.0" style="-fx-background-color: #006bff;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Créer" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
@@ -156,7 +156,7 @@
                   <TableColumn fx:id="clmMesDates" prefWidth="90.0" text="Date" />
               </columns>
             </TableView>
-            <Button fx:id="btnModifierDemande1" layoutX="212.0" layoutY="429.0" mnemonicParsing="false" onAction="#btnModifierDemandeClicked" prefHeight="41.0" prefWidth="101.0" style="-fx-background-color: #006bff;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Modifier" textFill="WHITE">
+            <Button fx:id="btnModifierDemande1" disable="true" layoutX="212.0" layoutY="429.0" mnemonicParsing="false" onAction="#btnModifierDemandeClicked" opacity="0.0" prefHeight="41.0" prefWidth="101.0" style="-fx-background-color: #006bff;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Modifier" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
