@@ -225,7 +225,70 @@ public class AccueilController implements Initializable {
 
     @javafx.fxml.FXML
     public void btnSupprimerCompetenceClicked(ActionEvent actionEvent) throws IOException {
-        if (fenetre == null) {
+        // recupération de toutes les compétences
+        List<String> tabCompetence = lstCompetence.getItems();
+        List<String>competenceUpdte = new ArrayList<>();
+
+       // System.out.println("Élément mis à jour : " + competenceUpdte);
+
+        if (tabCompetence != null) {
+            System.out.println("liste sélectionné : " + tabCompetence);
+            // Faites quelque chose avec l'élément sélectionné
+        }
+
+
+        //recupération de la compétences selectionné
+        String laCompetence = String.valueOf(lstCompetence.getSelectionModel().getSelectedItem());
+        //test si la compétence fonctionne
+        if (laCompetence != null) {
+            System.out.println("Élément sélectionné : " + laCompetence);
+
+        }
+       // competenceUpdte.addAll(tabCompetence);
+        System.out.println("nouveau tableau sélectionné : " + competenceUpdte);
+
+        //on refait un tableau sans la valeur selectionné
+        assert tabCompetence != null;
+        for (String competence : tabCompetence) {
+            if (!competence.equals(laCompetence)) {
+                competenceUpdte.add(competence);
+                System.out.println("Élément mis à jour : " + competenceUpdte);
+                //  break; // Sort de la boucle une fois que l'élément est trouvé
+            }
+
+        }
+        //Chaine pour stoké le résultat
+        StringBuilder resultat = new StringBuilder();
+        for (String element : competenceUpdte) {
+            // Ajouter le séparateur "#" avant chaque élément (sauf pour le premier)
+            if (!resultat.isEmpty()) {
+                resultat.append("#");
+            }
+            // Ajouter l'élément au résultat
+            resultat.append(element);
+
+            System.out.println("Élément indenté : " + resultat);
+        }
+        int idEtudiant = user.getId();
+        int idMatiere = -1;
+        String selectedValue;
+        HashMap<Integer, String> matieres = requeteServ.GetAllMatieres();
+        for (Map.Entry<Integer, String> entry : matieres.entrySet()) {
+            Object selectedItem = cboMatiereCompetence.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                selectedValue = selectedItem.toString();
+                if (entry.getValue().equals(cboMatiereCompetence.getSelectionModel().getSelectedItem().toString())) {
+                    idMatiere = entry.getKey();
+                    break;
+                }
+            } else {
+                System.out.println("Aucune sélection dans la ComboBox.");
+            }
+        }
+        String sousMatiere = String.valueOf(resultat);
+        System.out.println("Élément string : " + resultat);
+        requeteServ.DeletCompetence(sousMatiere, idMatiere, idEtudiant );
+        /*if (fenetre == null) {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("supprimerCompetence-view.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
@@ -236,7 +299,7 @@ public class AccueilController implements Initializable {
                 fenetre = null; // Réinitialisez la référence lorsque la fenêtre est fermée
             });
             fenetre.show();
-        }
+        }*/
     }
 
     @Deprecated
