@@ -12,7 +12,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import sio.projetjavahelport.tools.ConnexionBDD;
@@ -287,7 +286,6 @@ public class AccueilController implements Initializable {
         }
         String sousMatiere = String.valueOf(resultat);
         System.out.println("Élément string : " + resultat);
-        requeteServ.DeletCompetence(sousMatiere, idMatiere, idEtudiant );
         /*if (fenetre == null) {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("supprimerCompetence-view.fxml"));
             Parent root = fxmlLoader.load();
@@ -300,6 +298,17 @@ public class AccueilController implements Initializable {
             });
             fenetre.show();
         }*/
+        Boolean sousMatiereExiste;
+        ArrayList<String> tabCompetenceDemande = requeteServ.CheckMesDemande();
+
+        for( String competenceD : tabCompetenceDemande){
+            for(String competence : tabCompetence){
+                if(!competenceD.equals(competence)){
+                    requeteServ.DeletCompetence(sousMatiere, idMatiere, idEtudiant );
+                }
+            }
+        }
+
     }
 
     @Deprecated

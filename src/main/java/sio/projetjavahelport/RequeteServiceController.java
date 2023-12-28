@@ -229,11 +229,47 @@ public class RequeteServiceController {
 
 
 
+    public ArrayList<String> CheckMesDemande() {
+        ArrayList<String> sousMatieresList = new ArrayList<>();
+        try {
+            cnx = ConnexionBDD.getCnx();
+            String query = "SELECT\n" +
+                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 2), '#', -1) AS sous_matiere_1,\n" +
+                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 3), '#', -1) AS sous_matiere_2,\n" +
+                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 4), '#', -1) AS sous_matiere_3,\n" +
+                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 5), '#', -1) AS sous_matiere_4,\n" +
+                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 6), '#', -1) AS sous_matiere_5,\n" +
+                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 7), '#', -1) AS sous_matiere_3,\n" +
+                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 8), '#', -1) AS sous_matiere_3,\n" +
+                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 9), '#', -1) AS sous_matiere_3,\n" +
+                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 10), '#', -1) AS sous_matiere_3,\n" +
+                    "\n" +
+                    "\n" +
+                    "    status\n" +
+                    "    FROM demande;";
+            ps = cnx.prepareStatement(query);
+          //  ps.setInt(user.getId());
+            rs = ps.executeQuery();
 
+            while (rs.next()) {
+                sousMatieresList.add(rs.getString("sous_matiere_1"));
+                sousMatieresList.add(rs.getString("sous_matiere_2"));
+                sousMatieresList.add(rs.getString("sous_matiere_3"));
+                sousMatieresList.add(rs.getString("sous_matiere_4"));
+                sousMatieresList.add(rs.getString("sous_matiere_5"));
+                sousMatieresList.add(rs.getString("sous_matiere_6"));
+                sousMatieresList.add(rs.getString("sous_matiere_7"));
+                sousMatieresList.add(rs.getString("sous_matiere_8"));
+                sousMatieresList.add(rs.getString("sous_matiere_9"));
+            }
 
-
-
-
-
-
+            // Utilisez la liste des sous-matières comme nécessaire
+            for (String sousMatiere : sousMatieresList) {
+                System.out.println("Sous-matière : " + sousMatiere);
+            }
+        } catch (SQLException ex) {
+        throw new RuntimeException(ex);
+        }
+        return sousMatieresList;
+    }
 }
