@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="apnCreerDemande" prefHeight="632.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.CreerDemandeController">
+<AnchorPane fx:id="apCreerDemande" prefHeight="232.0" prefWidth="564.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.CreerDemandeController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="170.0" layoutY="39.0" text="Création de demande" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="169.0">
          <font>
@@ -17,17 +17,22 @@
       </Label>
       <ComboBox fx:id="cboMatiere" layoutX="233.0" layoutY="124.0" onAction="#cboMatiereClicked" prefWidth="150.0" promptText="Matière" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="138.0" />
       <ComboBox fx:id="cboSousMatiere" layoutX="233.0" layoutY="188.0" onAction="#cboSousMatiereClicked" prefWidth="150.0" promptText="Sous-Matière" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="138.0" />
-      <DatePicker fx:id="dpDate" layoutX="233.0" layoutY="453.0" onAction="#dtDateClicked" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="114.0" />
-      <Button fx:id="btnValider" layoutX="233.0" layoutY="514.0" mnemonicParsing="false" onAction="#btnValiderClicked" style="-fx-background-color: #057aff;" text="Valider" textFill="WHITE" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="232.0">
+      <DatePicker fx:id="dpDate" layoutX="233.0" layoutY="253.0" onAction="#dtDateClicked" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="114.0" />
+      <Button fx:id="btnValider" layoutX="233.0" layoutY="314.0" mnemonicParsing="false" onAction="#btnValiderClicked" style="-fx-background-color: #057aff;" text="Valider" textFill="WHITE" AnchorPane.leftAnchor="233.0" AnchorPane.rightAnchor="232.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
       <Label layoutX="114.0" layoutY="128.0" text="Matière" />
       <Label layoutX="112.0" layoutY="192.0" text="Sous-Matière" />
-      <Label layoutX="114.0" layoutY="457.0" text="Date" />
-      <TreeView fx:id="root" layoutX="233.0" layoutY="231.0" prefHeight="200.0" prefWidth="445.0" />
-      <Button fx:id="btnAjouterSousMatiere" layoutX="708.0" layoutY="188.0" mnemonicParsing="false" onAction="#btnAjouterSousMatiereClicked" style="-fx-background-color: #057aff;" text="Ajouter" textFill="WHITE">
+      <Label layoutX="114.0" layoutY="257.0" text="Date" />
+      <TreeView fx:id="root" disable="true" layoutX="233.0" layoutY="231.0" opacity="0.0" prefHeight="200.0" prefWidth="445.0" />
+      <Button fx:id="btnAjouterSousMatiere" disable="true" layoutX="708.0" layoutY="188.0" mnemonicParsing="false" onAction="#btnAjouterSousMatiereClicked" opacity="0.0" style="-fx-background-color: #057aff;" text="Ajouter" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnRetour" layoutX="574.0" layoutY="314.0" mnemonicParsing="false" onAction="#btnRetourClicked" prefHeight="25.0" prefWidth="79.0" style="-fx-background-color: #057aff;" text="Retour" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

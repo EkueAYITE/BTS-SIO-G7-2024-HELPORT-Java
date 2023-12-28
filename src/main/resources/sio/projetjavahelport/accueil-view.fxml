@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.StackedBarChart?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -38,8 +41,8 @@
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Label fx:id="lblContactsAccueil" layoutX="14.0" layoutY="776.0" onMouseClicked="#lblContactsAccueilClicked" text="Contacts" />
-            <Label fx:id="lblMentionsLegagesAccueil" layoutX="100.0" layoutY="776.0" onMouseClicked="#lblMentionsLegagesAccueilClicked" text="Mentions légales" />
+            <Label fx:id="lblContactsAccueil" disable="true" layoutX="14.0" layoutY="776.0" onMouseClicked="#lblContactsAccueilClicked" text="Contacts" />
+            <Label fx:id="lblMentionsLegagesAccueil" disable="true" layoutX="100.0" layoutY="776.0" onMouseClicked="#lblMentionsLegagesAccueilClicked" text="Mentions légales" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="apnStatistiques" layoutX="201.0" prefHeight="820.0" prefWidth="910.0" visible="false">
@@ -49,16 +52,49 @@
                   <Font name="System Bold" size="35.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cboStatistique" layoutX="565.0" layoutY="232.0" prefHeight="25.0" prefWidth="211.0" promptText="Choisir une statistique" />
-            <Label layoutX="168.0" layoutY="257.0" prefHeight="17.0" prefWidth="101.0" text="Nom combo box" />
-            <StackedBarChart layoutX="122.0" layoutY="290.0" prefHeight="400.0" prefWidth="667.0">
-              <xAxis>
-                <CategoryAxis side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis side="LEFT" />
-              </yAxis>
-            </StackedBarChart>
+            <ComboBox fx:id="cboStatistique" disable="true" layoutX="563.0" layoutY="232.0" onAction="#cboStatistiqueClicked" prefHeight="25.0" prefWidth="211.0" promptText="Choisir une statistique" />
+            <AnchorPane fx:id="apnDemandesParUser" layoutX="167.0" layoutY="329.0" prefHeight="397.0" prefWidth="577.0">
+               <children>
+                  <PieChart fx:id="graphDemandesParUser" layoutY="-1.0" title="Demandes par utilisateur" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="apnTopMatieres" layoutX="167.0" layoutY="329.0" prefHeight="397.0" prefWidth="577.0" visible="false">
+               <children>
+                  <BarChart fx:id="graphTopMatieres" prefHeight="400.0" prefWidth="577.0">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </BarChart>
+               </children></AnchorPane>
+            <AnchorPane fx:id="apnDemandesStatuts" layoutX="167.0" layoutY="329.0" prefHeight="397.0" prefWidth="577.0" visible="false">
+               <children>
+                  <LineChart fx:id="graphDemandeStatuts">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+               </children></AnchorPane>
+            <Button fx:id="btnDemandesParUser" layoutX="213.0" layoutY="153.0" mnemonicParsing="false" onAction="#btnDemandesParUserClicked" style="-fx-background-color: #006bff;" text="Demandes par utilisateur" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="btnTopMatieres" graphicTextGap="0.0" layoutX="547.0" layoutY="153.0" mnemonicParsing="false" onAction="#btnTopMatieresClicked" prefHeight="25.0" prefWidth="158.0" style="-fx-background-color: #006bff;" text="Top matières" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets></Button>
+            <Button fx:id="btnDemandesStatuts" layoutX="380.0" layoutY="153.0" mnemonicParsing="false" onAction="#btnDemandesStatutsClicked" prefHeight="25.0" prefWidth="158.0" style="-fx-background-color: #006bff;" text="Statuts des demandes" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
          </children></AnchorPane>
       <AnchorPane fx:id="apnCompetences" layoutX="199.0" prefHeight="820.0" prefWidth="910.0" visible="false" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="0.0">
          <children>
@@ -94,8 +130,8 @@
                </font>
             </Label>
             <Label layoutX="21.0" layoutY="110.0" prefHeight="17.0" prefWidth="90.0" text="Mes demandes :" AnchorPane.rightAnchor="799.0" />
-            <Label layoutX="457.0" layoutY="110.0" text="Demandes :" AnchorPane.rightAnchor="390.0" />
-            <Button fx:id="btnCreerDemande" layoutX="61.0" layoutY="429.0" mnemonicParsing="false" onAction="#btnCreerDemandeClicked" prefHeight="41.0" prefWidth="101.0" style="-fx-background-color: #006bff;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Créer" textFill="WHITE">
+            <Label layoutX="351.0" layoutY="110.0" text="Demandes :" AnchorPane.rightAnchor="496.0" />
+            <Button fx:id="btnCreerDemande" layoutX="117.0" layoutY="429.0" mnemonicParsing="false" onAction="#btnCreerDemandeClicked" prefHeight="41.0" prefWidth="101.0" style="-fx-background-color: #006bff;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Créer" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
@@ -105,12 +141,12 @@
                   <Font name="System Bold" size="17.0" />
                </font>
             </Button>
-            <TableView fx:id="tbvDemandes" layoutX="354.0" layoutY="141.0" prefHeight="281.0" prefWidth="411.0" AnchorPane.leftAnchor="354.0">
+            <TableView fx:id="tbvDemandes" layoutX="351.0" layoutY="141.0" prefHeight="281.0" prefWidth="528.0" AnchorPane.leftAnchor="351.0">
               <columns>
-                  <TableColumn fx:id="clmNiveau" minWidth="0.0" prefWidth="103.0" text="Niveau" />
-                  <TableColumn fx:id="clmDate" prefWidth="117.0" text="Date" />
-                <TableColumn fx:id="clmMatiere" prefWidth="107.0" text="Matière" />
-                  <TableColumn fx:id="clmSousMatiere" prefWidth="83.0" text="Sous-matière" />
+                  <TableColumn fx:id="clmNiveau" minWidth="0.0" prefWidth="122.0" text="Niveau" />
+                  <TableColumn fx:id="clmDate" prefWidth="129.0" text="Date" />
+                <TableColumn fx:id="clmMatiere" prefWidth="145.0" text="Matière" />
+                  <TableColumn fx:id="clmSousMatiere" prefWidth="131.0" text="Sous-matière" />
               </columns>
             </TableView>
             <TableView fx:id="tbvMesDemandes" layoutX="24.0" layoutY="141.0" prefHeight="281.0" prefWidth="287.0">
@@ -120,18 +156,18 @@
                   <TableColumn fx:id="clmMesDates" prefWidth="90.0" text="Date" />
               </columns>
             </TableView>
-            <Button fx:id="btnModifierDemande1" layoutX="212.0" layoutY="429.0" mnemonicParsing="false" onAction="#btnModifierDemandeClicked" prefHeight="41.0" prefWidth="101.0" style="-fx-background-color: #006bff;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Modifier" textFill="WHITE">
+            <Button fx:id="btnModifierDemande1" disable="true" layoutX="212.0" layoutY="429.0" mnemonicParsing="false" onAction="#btnModifierDemandeClicked" opacity="0.0" prefHeight="41.0" prefWidth="101.0" style="-fx-background-color: #006bff;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Modifier" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Button>
-            <Label layoutX="16.0" layoutY="506.0" text="Demandes sélectionnées :" />
-            <Button fx:id="btnSelectionnerDemande1" layoutX="169.0" layoutY="779.0" mnemonicParsing="false" onAction="#btnSelectionnerDemandeClicked" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Sélectionner" textFill="WHITE">
+            <Label layoutX="168.0" layoutY="488.0" text="Demandes sélectionnées :" />
+            <Button fx:id="btnSelectionnerDemande1" disable="true" layoutX="369.0" layoutY="765.0" mnemonicParsing="false" onAction="#btnSelectionnerDemandeClicked" opacity="0.0" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Sélectionner" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Button>
-            <TableView fx:id="tbvValiderSoutiens" layoutX="30.0" layoutY="539.0" prefHeight="228.0" prefWidth="577.0">
+            <TableView fx:id="tbvValiderSoutiens" layoutX="167.0" layoutY="523.0" prefHeight="228.0" prefWidth="577.0">
                <columns>
                   <TableColumn minWidth="0.0" prefWidth="132.0" text="Niveau" />
                   <TableColumn prefWidth="120.0" text="Date" />

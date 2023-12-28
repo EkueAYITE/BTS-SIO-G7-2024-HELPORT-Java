@@ -226,50 +226,72 @@ public class RequeteServiceController {
         }
         return data;
     }
-
-
-
-    public ArrayList<String> CheckMesDemande() {
-        ArrayList<String> sousMatieresList = new ArrayList<>();
+    public HashMap<String,Integer> getDatasGraphiqueDemandesParUser()
+    {
+        HashMap<String, Integer> datas = new HashMap();
         try {
             cnx = ConnexionBDD.getCnx();
-            String query = "SELECT\n" +
-                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 2), '#', -1) AS sous_matiere_1,\n" +
-                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 3), '#', -1) AS sous_matiere_2,\n" +
-                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 4), '#', -1) AS sous_matiere_3,\n" +
-                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 5), '#', -1) AS sous_matiere_4,\n" +
-                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 6), '#', -1) AS sous_matiere_5,\n" +
-                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 7), '#', -1) AS sous_matiere_3,\n" +
-                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 8), '#', -1) AS sous_matiere_3,\n" +
-                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 9), '#', -1) AS sous_matiere_3,\n" +
-                    "    SUBSTRING_INDEX(SUBSTRING_INDEX(sous_matiere, '#', 10), '#', -1) AS sous_matiere_3,\n" +
-                    "\n" +
-                    "\n" +
-                    "    status\n" +
-                    "    FROM demande;";
-            ps = cnx.prepareStatement(query);
-          //  ps.setInt(user.getId());
+            ps = cnx.prepareStatement("SELECT  u.nom, COUNT(d.id) AS nombre_demandes\n" +
+                    "FROM user u\n" +
+                    "LEFT JOIN demande d ON u.id = d.id_user\n" +
+                    "GROUP BY u.id, u.nom, u.prenom\n" +
+                    "ORDER BY nombre_demandes DESC;");
             rs = ps.executeQuery();
-
-            while (rs.next()) {
-                sousMatieresList.add(rs.getString("sous_matiere_1"));
-                sousMatieresList.add(rs.getString("sous_matiere_2"));
-                sousMatieresList.add(rs.getString("sous_matiere_3"));
-                sousMatieresList.add(rs.getString("sous_matiere_4"));
-                sousMatieresList.add(rs.getString("sous_matiere_5"));
-                sousMatieresList.add(rs.getString("sous_matiere_6"));
-                sousMatieresList.add(rs.getString("sous_matiere_7"));
-                sousMatieresList.add(rs.getString("sous_matiere_8"));
-                sousMatieresList.add(rs.getString("sous_matiere_9"));
+            while(rs.next())
+            {
+                datas.put(rs.getString(1), rs.getInt(2));
             }
-
-            // Utilisez la liste des sous-matières comme nécessaire
-            for (String sousMatiere : sousMatieresList) {
-                System.out.println("Sous-matière : " + sousMatiere);
-            }
+            rs.close();
         } catch (SQLException ex) {
-        throw new RuntimeException(ex);
+            throw new RuntimeException(ex);
         }
-        return sousMatieresList;
+        return datas;
     }
+    public HashMap<String,Integer> getDatasGraphiqueTopMatieres()
+    {
+        HashMap<String, Integer> datas = new HashMap();
+        try {
+            cnx = ConnexionBDD.getCnx();
+            ps = cnx.prepareStatement("SELECT m.designation AS matiere, COUNT(d.id) AS nombre_demandes\n" +
+                    "FROM matiere m\n" +
+                    "LEFT JOIN demande d ON m.id = d.id_matiere\n" +
+                    "GROUP BY matiere\n" +
+                    "ORDER BY nombre_demandes DESC\n" +
+                    "LIMIT 5;");
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                datas.put(rs.getString(1), rs.getInt(2));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return datas;
+    }
+    public HashMap<String,Integer> getDatasGraphiqueDemandesStatuts()
+    {
+        HashMap<String, Integer> datas = new HashMap();
+        try {
+            cnx = ConnexionBDD.getCnx();
+            ps = cnx.prepareStatement("SELECT CASE\n" +
+                    "         WHEN status = 1 THEN 'En attente'\n" +
+                    "         WHEN status = 2 THEN 'En cours'\n" +
+                    "         WHEN status = 3 THEN 'Terminée'\n" +
+                    "       END AS statut,\n" +
+                    "       COUNT(id) AS nombre_demandes\n" +
+                    "FROM demande\n" +
+                    "GROUP BY statut;");
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                datas.put(rs.getString(1), rs.getInt(2));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return datas;
+    }
+
 }
