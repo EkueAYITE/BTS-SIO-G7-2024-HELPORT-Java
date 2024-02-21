@@ -7,10 +7,7 @@ import sio.projetjavahelport.tools.Demande;
 import sio.projetjavahelport.tools.User;
 import sio.projetjavahelport.tools.UserHolder;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -332,5 +329,29 @@ public class RequeteServiceController {
             throw new RuntimeException(e);
         }
         return sousMatieresList;
+    }
+    public void createSoutien(int idDemande, int idCompetence, String idSalle, Date dateSoutien, String description) {
+        try {
+            try (PreparedStatement ps = cnx.prepareStatement("INSERT INTO soutien (id_demande, id_competence, id_salle, date_du_soutien, date_updated, description, status) " +
+                    "VALUES (?, ?, ?, ?, CURRENT_DATE, ?, ?)")) {
+
+                ps.setInt(1, idDemande);
+                ps.setInt(2, idCompetence);
+                ps.setString(3, idSalle);
+                ps.setDate(4, dateSoutien);
+                ps.setString(5, description);
+                ps.setInt(6, 2);
+
+                int rowCount = ps.executeUpdate();
+
+                if (rowCount > 0) {
+                    System.out.println("Insertion réussie. Lignes affectées : " + rowCount);
+                } else {
+                    System.out.println("Échec de l'insertion. Aucune ligne affectée.");
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

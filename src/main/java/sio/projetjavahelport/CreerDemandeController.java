@@ -182,7 +182,7 @@ public class CreerDemandeController implements Initializable {
             });
 
             // Pour instaurer une intervalle sur le choix de la date avec l'utilisation de la classe DatePickerCell
-            LocalDate minDate = LocalDate.of(2024, 1, 1);
+            LocalDate minDate = LocalDate.now();
             LocalDate maxDate = LocalDate.of(2024, 12, 31);
 
             dpDate.setDayCellFactory(picker -> new DatePickerCell(minDate, maxDate));

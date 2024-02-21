@@ -15,7 +15,7 @@ public class ConnexionBDD {
         // chargement du pilote
         Class.forName(pilote);
         // L'objet connexion à la BDD avec le nom de la base, le user et le password
-        cnx = DriverManager.getConnection("jdbc:mysql://localhost/BddHelpOrtJava?useSSL=true&serverTimezone="
+        cnx = DriverManager.getConnection("jdbc:mysql://localhost/bddHelpOrtJava?useSSL=true&serverTimezone="
                 + TimeZone.getDefault().getID(), "root", "");
         System.out.println(cnx);
     }

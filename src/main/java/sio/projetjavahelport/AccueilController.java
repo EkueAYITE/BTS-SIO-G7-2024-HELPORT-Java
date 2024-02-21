@@ -18,6 +18,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import sio.projetjavahelport.tools.ConnexionBDD;
@@ -558,5 +559,24 @@ public class AccueilController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
+    public void tbvDemandesClicked(MouseEvent event) throws IOException {
+        if (event.getClickCount() == 2) { // Vérifie si le double clic a été effectué
+            Demande selectedDemande = (Demande) tbvDemandes.getSelectionModel().getSelectedItem();
+            if (selectedDemande != null) {
+                // Passer les informations à la nouvelle page via le contrôleur AcceptationController
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("acceptation-view.fxml"));
+                Parent root = loader.load();
+                AcceptationController acceptationController = loader.getController();
+                acceptationController.initData(selectedDemande); // Méthode pour initialiser les données dans AcceptationController
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setTitle("Accepter une demande");
+                stage.setScene(scene);
+                stage.show();
+            }
+        }
+    }
+
 
 }
