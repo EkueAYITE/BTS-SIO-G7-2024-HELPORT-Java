@@ -131,32 +131,33 @@
             </Label>
             <Label layoutX="21.0" layoutY="110.0" prefHeight="17.0" prefWidth="90.0" text="Mes demandes :" AnchorPane.rightAnchor="799.0" />
             <Label layoutX="351.0" layoutY="110.0" text="Demandes :" AnchorPane.rightAnchor="496.0" />
-            <Button fx:id="btnCreerDemande" layoutX="117.0" layoutY="429.0" mnemonicParsing="false" onAction="#btnCreerDemandeClicked" prefHeight="41.0" prefWidth="101.0" style="-fx-background-color: #006bff;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Créer" textFill="WHITE">
+            <Button fx:id="btnCreerDemande" layoutX="118.0" layoutY="429.0" mnemonicParsing="false" onAction="#btnCreerDemandeClicked" prefHeight="41.0" prefWidth="101.0" style="-fx-background-color: #006bff;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Créer" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Button>
-            <Button fx:id="btnSelectionnerDemande" layoutX="543.0" layoutY="429.0" mnemonicParsing="false" onAction="#btnSelectionnerDemandeClicked" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Sélectionner " textFill="WHITE">
+            <Button fx:id="btnSupprimerDemande" disable="true" layoutX="142.0" layoutY="429.0" mnemonicParsing="false" onAction="#btnSupprimerDemandeClicked" prefHeight="41.0" prefWidth="173.0" style="-fx-background-color: #006bff;" text="Sélectionner " textFill="WHITE" visible="false">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Button>
-            <TableView fx:id="tbvDemandes" layoutX="351.0" layoutY="141.0" onMouseClicked="#tbvDemandesClicked" prefHeight="281.0" prefWidth="528.0" AnchorPane.leftAnchor="351.0">
+            <TableView fx:id="tbvDemandes" layoutX="315.0" layoutY="141.0" onMouseClicked="#tbvDemandesClicked" prefHeight="281.0" prefWidth="577.0" AnchorPane.leftAnchor="315.0">
               <columns>
                   <TableColumn fx:id="clmNiveau" minWidth="0.0" prefWidth="122.0" text="Niveau" />
                   <TableColumn fx:id="clmDate" prefWidth="129.0" text="Date" />
-                <TableColumn fx:id="clmMatiere" prefWidth="145.0" text="Matière" />
-                  <TableColumn fx:id="clmSousMatiere" prefWidth="131.0" text="Sous-matière" />
+                <TableColumn fx:id="clmMatiere" prefWidth="75.0" text="Matière" />
+                  <TableColumn fx:id="clmSousMatiere" prefWidth="151.0" text="Sous-matière" />
+                  <TableColumn fx:id="clmStatut" prefWidth="99.0" text="Statut" />
               </columns>
             </TableView>
-            <TableView fx:id="tbvMesDemandes" layoutX="24.0" layoutY="141.0" prefHeight="281.0" prefWidth="287.0">
+            <TableView fx:id="tbvMesDemandes" layoutX="24.0" layoutY="141.0" onMouseClicked="#tbvMesDemandesClicked" prefHeight="281.0" prefWidth="287.0">
               <columns>
                 <TableColumn fx:id="clmMesMatieres" prefWidth="89.0" text="Matière" />
                   <TableColumn fx:id="clmMesSousMatieres" prefWidth="106.0" text="Sous-matière" />
                   <TableColumn fx:id="clmMesDates" prefWidth="90.0" text="Date" />
               </columns>
             </TableView>
-            <Button fx:id="btnModifierDemande1" disable="true" layoutX="212.0" layoutY="429.0" mnemonicParsing="false" onAction="#btnModifierDemandeClicked" opacity="0.0" prefHeight="41.0" prefWidth="101.0" style="-fx-background-color: #006bff;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Modifier" textFill="WHITE">
+            <Button fx:id="btnModifierDemande1" disable="true" layoutX="212.0" layoutY="429.0" mnemonicParsing="false" onAction="#btnModifierDemandeClicked" prefHeight="41.0" prefWidth="101.0" style="-fx-background-color: #006bff;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Modifier" textFill="WHITE" visible="false">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
@@ -169,11 +170,11 @@
             </Button>
             <TableView fx:id="tbvValiderSoutiens" layoutX="167.0" layoutY="523.0" prefHeight="228.0" prefWidth="577.0">
                <columns>
-                  <TableColumn minWidth="0.0" prefWidth="132.0" text="Niveau" />
-                  <TableColumn prefWidth="120.0" text="Date" />
-                  <TableColumn prefWidth="127.0" text="Matière" />
-                  <TableColumn prefWidth="108.0" text="Sous-matière" />
-                  <TableColumn prefWidth="89.0" text="Elève" />
+                  <TableColumn fx:id="clmSoutienNiveau" minWidth="0.0" prefWidth="132.0" text="Niveau" />
+                  <TableColumn fx:id="clmSoutienDate" prefWidth="120.0" text="Date" />
+                  <TableColumn fx:id="clmSoutienMatiere" prefWidth="127.0" text="Matière" />
+                  <TableColumn fx:id="clmSoutienSousMatiere" prefWidth="108.0" text="Sous-matière" />
+                  <TableColumn fx:id="clmSoutienEleve" prefWidth="89.0" text="Elève" />
                </columns>
             </TableView>
          </children>

@@ -1,42 +1,128 @@
 package sio.projetjavahelport;
 
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import sio.projetjavahelport.tools.ConnexionBDD;
+import sio.projetjavahelport.tools.Demande;
 
-public class ModifierDemandeController {
+import java.net.URL;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.ResourceBundle;
+
+public class ModifierDemandeController implements Initializable {
     @javafx.fxml.FXML
     private AnchorPane apnCreerDemande;
     @javafx.fxml.FXML
-    private ComboBox cbModificationMatiereD;
+    private ComboBox cbModificationMatiere;
     @javafx.fxml.FXML
-    private ComboBox cbModificationSalleD;
+    private Button btnModificationValider;
     @javafx.fxml.FXML
-    private DatePicker dtModificationDateD;
+    private Button btnModificationSupprimer;
     @javafx.fxml.FXML
-    private Button btnModificationDValider;
+    private ComboBox cbModificationSMatiere;
     @javafx.fxml.FXML
-    private Button btnModificationDSupprimer1;
+    private DatePicker dtModificationDate;
+    ConnexionBDD maCnx;
+    RequeteServiceController requeteServ;
+    private int idDemande;
+    Demande selectedDemande;
 
+    public void initData(Demande d) {
+        selectedDemande = d;
+
+    }
     @javafx.fxml.FXML
-    public void cbModificationMatiereDClicked(ActionEvent actionEvent) {
+    public void btnModificationSupprimerClicked(ActionEvent actionEvent) {
+        try {
+            requeteServ.DeleteDemande(selectedDemande.getIdDemande());
+            btnModificationSupprimer.getScene().getWindow().hide();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur de suppression");
+            alert.setHeaderText("Cette demande a déjà été acceptée par un élève. Suppression impossible.");
+            alert.showAndWait();
+        }
     }
 
     @javafx.fxml.FXML
-    public void cbModificationSalleDClicked(ActionEvent actionEvent) {
+    public void cbModificationMatiereClicked(ActionEvent actionEvent) {
     }
 
     @javafx.fxml.FXML
-    public void dtModificationDateDClicked(ActionEvent actionEvent) {
+    public void dtModificationDateClicked(ActionEvent actionEvent) {
     }
 
     @javafx.fxml.FXML
-    public void btnModificationDClicked(ActionEvent actionEvent) {
+    public void btnModificationValiderClicked(ActionEvent actionEvent) {
     }
 
     @javafx.fxml.FXML
-    public void btnModificationDSupprimerClicked(ActionEvent actionEvent) {
+    public void cbModificationSMatiereClicked(ActionEvent actionEvent) {
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try{
+            maCnx = new ConnexionBDD();
+            requeteServ = new RequeteServiceController();
+
+            HashMap<Integer, String> matieres = requeteServ.GetAllMatieres();
+            for(int matiere : matieres.keySet()){
+                String nomMatiere = matieres.get(matiere);
+                cbModificationMatiere.getItems().add(nomMatiere);
+            }
+            cbModificationMatiere.getSelectionModel().selectedItemProperty().addListener((observable,  oldValue, newValue )-> {
+                try {
+                    remplirSousMatiere();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            // Pour instaurer une intervalle sur le choix de la date avec l'utilisation de la classe DatePickerCell
+            LocalDate minDate = LocalDate.now();
+            LocalDate maxDate = LocalDate.of(2024, 12, 31);
+
+            dtModificationDate.setDayCellFactory(picker -> new DatePickerCell(minDate, maxDate));
+
+        }catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void remplirSousMatiere() throws SQLException, ClassNotFoundException {
+        if(!(cbModificationMatiere.getSelectionModel().getSelectedItem() == null)) {
+            maCnx = new ConnexionBDD();
+            requeteServ = new RequeteServiceController();
+            cbModificationSMatiere.getItems().clear();
+
+            ArrayList<String> sousMatieres = requeteServ.GetAllSousMatieres(cbModificationMatiere.getSelectionModel().getSelectedItem().toString());
+            for (String sousMatiere : sousMatieres) {
+                cbModificationSMatiere.getItems().add(sousMatiere);
+            }
+        }
+    }
+    private class DatePickerCell extends DateCell {
+        private final LocalDate minDate;
+        private final LocalDate maxDate;
+
+        public DatePickerCell(LocalDate minDate, LocalDate maxDate) {
+            this.minDate = minDate;
+            this.maxDate = maxDate;
+        }
+
+        @Override
+        public void updateItem(LocalDate date, boolean empty) {
+            super.updateItem(date, empty);
+            setDisable(date.isBefore(minDate) || date.isAfter(maxDate));
+        }
     }
 }

@@ -32,6 +32,8 @@ public class AcceptationController implements Initializable {
     private User user;
     @javafx.fxml.FXML
     private TextArea txtADescription;
+    private int idDemande;
+    private String nomMatiere;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -44,13 +46,14 @@ public class AcceptationController implements Initializable {
         txtMatiere.setText(selectedDemande.getMatiereDesignation());
         txtSousMatiere.setText(selectedDemande.getSousMatiere());
         txtDate.setText(selectedDemande.getDateFinDemande().toString());
+        idDemande = selectedDemande.getIdDemande();
+        nomMatiere = selectedDemande.getMatiereDesignation();
     }
 
     @javafx.fxml.FXML
     public void btnConfirmerDemandeClicked(ActionEvent actionEvent) {
         user = UserHolder.getInstance().getUser();
-        int idDemande = 1;
-        int idCompetence = 1;
+        int idCompetence = requeteServ.getIdCompetenceCorrespondantALaMatiere(user.getId(),nomMatiere);
         String idSalle = "301";
         String description = txtADescription.getText();
 

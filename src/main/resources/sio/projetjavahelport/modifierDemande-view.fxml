@@ -7,32 +7,31 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.ModifierDemandeController">
    <children>
-      <AnchorPane fx:id="apnCreerDemande" prefHeight="410.0" prefWidth="600.0">
+      <AnchorPane fx:id="apnCreerDemande" prefHeight="467.0" prefWidth="600.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="170.0" layoutY="39.0" text="Modification de demande" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="169.0">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cbModificationMatiereD" layoutX="225.0" layoutY="124.0" onAction="#cbModificationMatiereDClicked" prefWidth="150.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="146.0" />
-            <ComboBox fx:id="cbModificationSalleD" layoutX="225.0" layoutY="188.0" onAction="#cbModificationSalleDClicked" prefWidth="150.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="146.0" />
-            <DatePicker fx:id="dtModificationDateD" layoutX="225.0" layoutY="256.0" onAction="#dtModificationDateDClicked" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="122.0" />
-            <Button fx:id="btnModificationDValider" layoutX="122.0" layoutY="324.0" mnemonicParsing="false" onAction="#btnModificationDClicked" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #057aff;" text="Valider" textFill="WHITE" AnchorPane.leftAnchor="122.0" AnchorPane.rightAnchor="357.0">
+            <ComboBox fx:id="cbModificationMatiere" layoutX="225.0" layoutY="124.0" onAction="#cbModificationMatiereClicked" prefWidth="150.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="146.0" />
+            <DatePicker fx:id="dtModificationDate" layoutX="226.0" layoutY="248.0" onAction="#dtModificationDateClicked" AnchorPane.leftAnchor="226.0" AnchorPane.rightAnchor="121.0" />
+            <Button fx:id="btnModificationValider" layoutX="135.0" layoutY="349.0" mnemonicParsing="false" onAction="#btnModificationValiderClicked" prefHeight="47.0" prefWidth="106.0" style="-fx-background-color: #057aff;" text="Valider" textFill="WHITE" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="359.0">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="System Bold" size="15.0" />
                </font>
             </Button>
             <Label layoutX="114.0" layoutY="128.0" text="Matière" />
-            <Label layoutX="122.0" layoutY="192.0" text="Salle" />
-            <Label layoutX="122.0" layoutY="260.0" text="Date" />
-            <Button fx:id="btnModificationDSupprimer1" layoutX="357.0" layoutY="324.0" mnemonicParsing="false" onAction="#btnModificationDSupprimerClicked" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #057aff;" text="Supprimer" textFill="WHITE">
+            <Label layoutX="122.0" layoutY="252.0" text="Date" />
+            <Button fx:id="btnModificationSupprimer" layoutX="353.0" layoutY="349.0" mnemonicParsing="false" onAction="#btnModificationSupprimerClicked" prefHeight="47.0" prefWidth="106.0" style="-fx-background-color: #057aff;" text="Supprimer" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Button>
+            <ComboBox fx:id="cbModificationSMatiere" layoutX="225.0" layoutY="186.0" onAction="#cbModificationSMatiereClicked" prefHeight="25.0" prefWidth="229.0" />
+            <Label layoutX="87.0" layoutY="190.0" text="Sous-Matière" />
          </children>
       </AnchorPane>
    </children>

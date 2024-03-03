@@ -4,13 +4,15 @@ import java.sql.Date;
 
 
 public class Demande {
-
+    private int idDemande;
     private String niveau;
     private Date date_updated;
     private Date dateFinDemande;
     private String matiereDesignation;
     private String sousMatiere;
+    private int id_matiere;
     private int id_user;
+    private int status;
 
     public Date getDate_updated() {
         return date_updated;
@@ -28,8 +30,6 @@ public class Demande {
         return status;
     }
 
-    private int id_matiere;
-
     public void setDate_updated(Date date_updated) {
         this.date_updated = date_updated;
     }
@@ -46,20 +46,37 @@ public class Demande {
         this.status = status;
     }
 
-    private int status;
+
 
     public Demande()
     {
 
     }
-
-    public Demande(String matiereDesignation, String sousMatiere, Date dateFinDemande) {
+    public Demande(int idDemande, String niveau, Date dateFinDemande, String matiereDesignation, String sousMatiere, int id_user, int id_matiere, int status) {
+        this.idDemande = idDemande;
+        this.niveau = niveau;
+        this.dateFinDemande = dateFinDemande;
+        this.matiereDesignation = matiereDesignation;
+        this.sousMatiere = sousMatiere;
+        this.id_user = id_user;
+        this.id_matiere = id_matiere;
+        this.status = status;
+    }
+    public Demande(int idDemande, String matiereDesignation, String sousMatiere, Date dateFinDemande) {
+        this.idDemande = idDemande;
         this.matiereDesignation = matiereDesignation;
         this.sousMatiere = sousMatiere;
         this.dateFinDemande = dateFinDemande;
     }
 
     public Demande(String niveau, Date dateFinDemande, String matiereDesignation, String sousMatiere) {
+        this.niveau = niveau;
+        this.dateFinDemande = dateFinDemande;
+        this.matiereDesignation = matiereDesignation;
+        this.sousMatiere = sousMatiere;
+    }
+    public Demande(int idDemande, String niveau, Date dateFinDemande, String matiereDesignation, String sousMatiere) {
+        this.idDemande = idDemande;
         this.niveau = niveau;
         this.dateFinDemande = dateFinDemande;
         this.matiereDesignation = matiereDesignation;
@@ -96,5 +113,12 @@ public class Demande {
 
     public void setSousMatiere(String sousMatiere) {
         this.sousMatiere = sousMatiere;
+    }
+    public int getIdDemande() {
+        return idDemande;
+    }
+
+    public void setIdDemande(int idDemande) {
+        this.idDemande = idDemande;
     }
 }

@@ -2,14 +2,12 @@ package sio.projetjavahelport;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import sio.projetjavahelport.tools.ConnexionBDD;
-import sio.projetjavahelport.tools.Demande;
-import sio.projetjavahelport.tools.User;
-import sio.projetjavahelport.tools.UserHolder;
+import sio.projetjavahelport.tools.*;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class RequeteServiceController {
     private Connection cnx;
@@ -150,7 +148,7 @@ public class RequeteServiceController {
         ArrayList<Demande> data = new ArrayList<>();
         try {
             cnx = ConnexionBDD.getCnx();
-            ps = cnx.prepareStatement("SELECT u.niveau, d.date_fin_demande, m.designation, d.sous_matiere\n" +
+            ps = cnx.prepareStatement("SELECT d.id, u.niveau, d.date_fin_demande, m.designation, d.sous_matiere, d.id_user, d.id_matiere, d.status\n" +
                     "FROM demande d\n" +
                     "JOIN matiere m ON d.id_matiere = m.id\n" +
                     "JOIN user u ON d.id_user = u.id\n" +
@@ -159,7 +157,7 @@ public class RequeteServiceController {
             rs = ps.executeQuery();
             while(rs.next())
             {
-                Demande d = new Demande(rs.getString(1),rs.getDate(2),rs.getString(3),rs.getString(4));
+                Demande d = new Demande(rs.getInt(1),rs.getString(2),rs.getDate(3),rs.getString(4),rs.getString(5),rs.getInt(6),rs.getInt(7),rs.getInt(8));
                 data.add(d);
             }
 
@@ -203,7 +201,7 @@ public class RequeteServiceController {
         user = UserHolder.getInstance().getUser();
         try {
             cnx = ConnexionBDD.getCnx();
-            String query = "SELECT  m.designation, d.sous_matiere , d.date_fin_demande\n" +
+            String query = "SELECT  d.id, m.designation, d.sous_matiere , d.date_fin_demande\n" +
                     "FROM demande d\n" +
                     "JOIN matiere m ON d.id_matiere = m.id\n" +
                     "JOIN user u ON d.id_user = u.id\n" +
@@ -213,7 +211,7 @@ public class RequeteServiceController {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                Demande d = new Demande(rs.getString(1), rs.getString(2), rs.getDate(3));
+                Demande d = new Demande(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getDate(4));
                 data.add(d);
             }
 
@@ -353,5 +351,112 @@ public class RequeteServiceController {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
+    }
+    public int getIdCompetenceCorrespondantALaMatiere(int userId, String matiereNom) {
+        int idCompetenceCorrespondantALaMatiere = 0;
+        try {
+            ps = cnx.prepareStatement("SELECT competence.id \n" +
+                    "FROM competence \n" +
+                    "INNER JOIN user ON user.id = competence.id_user\n" +
+                    "INNER JOIN matiere ON matiere.id = competence.id_matiere\n" +
+                    "WHERE user.id = ? \n" +
+                    "AND matiere.designation LIKE ?");
+            ps.setInt(1, userId);
+            ps.setString(2, matiereNom);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                idCompetenceCorrespondantALaMatiere = rs.getInt("id");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return idCompetenceCorrespondantALaMatiere;
+    }
+    public ArrayList<Soutien> getLesSoutiens(String matiereSelected) {
+        ArrayList<Soutien> lesSoutiens = new ArrayList<>();
+        user = UserHolder.getInstance().getUser();
+
+        try {
+            ps = cnx.prepareStatement("SELECT\n" +
+                    "    soutien.*,\n" +
+                    "    matiere.designation,\n" +
+                    "    (SELECT demande.sous_matiere FROM demande WHERE demande.id = soutien.id_demande) AS competence,\n" +
+                    "    (SELECT user.niveau FROM user INNER JOIN demande ON user.id = demande.id_user WHERE demande.id = soutien.id_demande) AS niveauAssiste,\n" +
+                    "    (SELECT user.prenom FROM user INNER JOIN demande ON user.id = demande.id_user WHERE demande.id = soutien.id_demande) AS prenomAssiste,\n" +
+                    "    (SELECT user.nom FROM user INNER JOIN demande ON user.id = demande.id_user WHERE demande.id = soutien.id_demande) AS nomAssiste\n" +
+                    "FROM\n" +
+                    "    user\n" +
+                    "INNER JOIN competence ON competence.id_user = user.id\n" +
+                    "INNER JOIN soutien ON soutien.id_competence = competence.id\n" +
+                    "INNER JOIN matiere ON matiere.id = competence.id_matiere\n" +
+                    "WHERE\n" +
+                    "    user.id = ?\n" +
+                    "AND matiere.designation LIKE ? ");
+
+            ps.setInt(1, user.getId());
+            ps.setString(2, "%" + matiereSelected + "%");
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String soutienId = rs.getString("id");
+                String designation = rs.getString("designation");
+                String niveauAssiste = rs.getString("niveauAssiste");
+                String nomAssiste = rs.getString("nomAssiste");
+                String prenomAssiste = rs.getString("prenomAssiste");
+                String competence = rs.getString("competence");
+                String idCompetence = rs.getString("id_competence");
+                String idDemande = rs.getString("id_demande");
+                String idSalle = rs.getString("id_salle");
+                String description = rs.getString("description");
+                int statue = rs.getInt("status");
+                java.util.Date dateUpdate = rs.getDate("date_updated");
+                java.util.Date dateDuSoutien = rs.getDate("date_du_soutien");
+
+                String[] competencesArray = competence.replaceAll("[^\\p{L}#]", "").split("#");
+                List<String> sousMatieresList = new ArrayList<>();
+
+                for (String competenceD : competencesArray) {
+                    if (!competenceD.isEmpty()) {
+                        sousMatieresList.add(competenceD);
+                    }
+                }
+
+                Soutien unSoutien = new Soutien(soutienId, designation, niveauAssiste, nomAssiste, prenomAssiste, sousMatieresList, idDemande,idCompetence, idSalle, description, statue, dateUpdate, dateDuSoutien);
+
+                lesSoutiens.add(unSoutien);
+            }
+
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return lesSoutiens;
+    }
+    public void DeleteDemande(int demandeId) {
+        try {
+            ps = cnx.prepareStatement("DELETE FROM demande WHERE id = ?");
+            ps.setInt(1, demandeId);
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Demande supprimée avec succès.");
+            } else {
+                System.out.println("Aucune demande correspondante trouvée pour la suppression.");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void updateDemande(int demandeId) {
+
     }
 }

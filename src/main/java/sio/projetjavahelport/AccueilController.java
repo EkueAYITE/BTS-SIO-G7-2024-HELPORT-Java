@@ -21,10 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import sio.projetjavahelport.tools.ConnexionBDD;
-import sio.projetjavahelport.tools.Demande;
-import sio.projetjavahelport.tools.User;
-import sio.projetjavahelport.tools.UserHolder;
+import sio.projetjavahelport.tools.*;
 
 
 import java.io.IOException;
@@ -36,10 +33,10 @@ import java.util.*;
 public class AccueilController implements Initializable {
 
     ConnexionBDD maCnx;
-    HashMap<String,Integer> datasGraphiqueTopMatieres;
-    XYChart.Series<String,Integer> serieGraphTopMatieres;
-    XYChart.Series<String,Number> serieGraphDemandesStatuts;
-    HashMap<String,Integer> datasGraphiqueDemandesStatuts;
+    HashMap<String, Integer> datasGraphiqueTopMatieres;
+    XYChart.Series<String, Integer> serieGraphTopMatieres;
+    XYChart.Series<String, Number> serieGraphDemandesStatuts;
+    HashMap<String, Integer> datasGraphiqueDemandesStatuts;
     RequeteServiceController requeteServ;
     @javafx.fxml.FXML
     private Button btnCompetencesAccueil;
@@ -55,8 +52,6 @@ public class AccueilController implements Initializable {
     private Button btnSupprimerCompetence;
     @javafx.fxml.FXML
     private Button btnCreerDemande;
-    @javafx.fxml.FXML
-    private Button btnSelectionnerDemande;
     @javafx.fxml.FXML
     private Button btnDeconnexionAccueil;
     @javafx.fxml.FXML
@@ -127,67 +122,123 @@ public class AccueilController implements Initializable {
     private AnchorPane apnTopMatieres;
     @FXML
     private AnchorPane apnDemandesStatuts;
+    @FXML
+    private TableColumn clmStatut;
+    @FXML
+    private TableColumn clmSoutienNiveau;
+    @FXML
+    private TableColumn clmSoutienDate;
+    @FXML
+    private TableColumn clmSoutienMatiere;
+    @FXML
+    private TableColumn clmSoutienSousMatiere;
+    @FXML
+    private TableColumn clmSoutienEleve;
+    @FXML
+    private Button btnSupprimerDemande;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try{maCnx = new ConnexionBDD();
+        try {
+            maCnx = new ConnexionBDD();
             requeteServ = new RequeteServiceController();
+            user = UserHolder.getInstance().getUser();
+            String matiereSelected = "";
 
-            clmNiveau.setCellValueFactory(new PropertyValueFactory<Demande,String>("niveau"));
+
+            //Pour afficher les demandes générales
+            clmNiveau.setCellValueFactory(new PropertyValueFactory<Demande, String>("niveau"));
             clmDate.setCellValueFactory(new PropertyValueFactory<Demande, Date>("dateFinDemande"));
-            clmMatiere.setCellValueFactory(new PropertyValueFactory<Demande,String>("matiereDesignation"));
-            clmSousMatiere.setCellValueFactory(new PropertyValueFactory<Demande,String>("sousMatiere"));
+            clmMatiere.setCellValueFactory(new PropertyValueFactory<Demande, String>("matiereDesignation"));
+            clmSousMatiere.setCellValueFactory(new PropertyValueFactory<Demande, String>("sousMatiere"));
+            clmStatut.setCellValueFactory(new PropertyValueFactory<Demande, Integer>("status"));
+
             ObservableList<Demande> tabDemandes = FXCollections.observableArrayList(requeteServ.GetDemande());
 
 
             tbvDemandes.setItems(tabDemandes);
 
+            tbvDemandes.setOnMouseEntered(event -> {
+                // Récupérer une nouvelle liste de soutiens mise à jour
+                ObservableList<Demande> nouvelleListeDemandes = FXCollections.observableArrayList(requeteServ.GetDemande());
 
-            clmMesMatieres.setCellValueFactory(new PropertyValueFactory<Demande,String>("matiereDesignation"));
+                // Mettre à jour la liste observable tabMesSoutiens avec la nouvelle liste
+                tabDemandes.setAll(nouvelleListeDemandes);
+
+                // Assurez-vous que le tableau est lié à cette liste observable mise à jour
+                tbvDemandes.setItems(nouvelleListeDemandes);
+            });
+
+
+
+
+            //Pour afficher les demandes de l'élève connecté
+            clmMesMatieres.setCellValueFactory(new PropertyValueFactory<Demande, String>("matiereDesignation"));
             clmMesSousMatieres.setCellValueFactory(new PropertyValueFactory<Demande, String>("sousMatiere"));
-            clmMesDates.setCellValueFactory(new PropertyValueFactory<Demande,Date>("dateFinDemande"));
+            clmMesDates.setCellValueFactory(new PropertyValueFactory<Demande, Date>("dateFinDemande"));
+
             ObservableList<Demande> tabMesDemandes = FXCollections.observableArrayList(requeteServ.GetMesDemande());
 
             tbvMesDemandes.setItems(tabMesDemandes);
 
-            cboStatistique.getItems().addAll("Nombre de soutiens réalisés","Nombre de demandes restées sans soutien","Nombre de soutiens réalisés par niveau, par matière","Demandes par niveau, par matière","Etudiants qui ont réalisé le plus de soutiens","Sous matières les plus sollicitées");
+            tbvMesDemandes.setOnMouseEntered(event -> {
+                // Récupérer une nouvelle liste de soutiens mise à jour
+                ObservableList<Demande> nouvelleListeMesDemandes = FXCollections.observableArrayList(requeteServ.GetMesDemande());
+
+                // Mettre à jour la liste observable tabMesSoutiens avec la nouvelle liste
+                tabMesDemandes.setAll(nouvelleListeMesDemandes);
+
+                // Assurez-vous que le tableau est lié à cette liste observable mise à jour
+                tbvMesDemandes.setItems(nouvelleListeMesDemandes);
+            });
 
 
+            //Pour afficher les soutiens de l'élève connecté
+            clmSoutienNiveau.setCellValueFactory(new PropertyValueFactory<Demande, String>("niveauAssiste"));
+            clmSoutienDate.setCellValueFactory(new PropertyValueFactory<Demande, String>("dateDuSoutien"));
+            clmSoutienMatiere.setCellValueFactory(new PropertyValueFactory<Demande, String>("designation"));
+            clmSoutienSousMatiere.setCellValueFactory(new PropertyValueFactory<Demande, String>("competence"));
+
+            ObservableList<Soutien> tabMesSoutiens = FXCollections.observableArrayList(requeteServ.getLesSoutiens(matiereSelected));
+
+            tbvValiderSoutiens.setItems(tabMesSoutiens);
 
 
-           HashMap<Integer, String> matieres = requeteServ.GetAllMatieres();
-           for(int matiere : matieres.keySet()){
-               String nomMatiere = matieres.get(matiere);
-               cboMatiereCompetence.getItems().add(nomMatiere);
-           }
+            tbvValiderSoutiens.setOnMouseEntered(event -> {
+                // Récupérer une nouvelle liste de soutiens mise à jour
+                ObservableList<Soutien> nouvelleListeSoutiens = FXCollections.observableArrayList(requeteServ.getLesSoutiens(matiereSelected));
 
-        }catch (ClassNotFoundException e) {
+                // Mettre à jour la liste observable tabMesSoutiens avec la nouvelle liste
+                tabMesSoutiens.setAll(nouvelleListeSoutiens);
+
+                // Assurez-vous que le tableau est lié à cette liste observable mise à jour
+                tbvValiderSoutiens.setItems(tabMesSoutiens);
+            });
+
+
+            cboStatistique.getItems().addAll("Nombre de soutiens réalisés", "Nombre de demandes restées sans soutien", "Nombre de soutiens réalisés par niveau, par matière", "Demandes par niveau, par matière", "Etudiants qui ont réalisé le plus de soutiens", "Sous matières les plus sollicitées");
+
+
+            HashMap<Integer, String> matieres = requeteServ.GetAllMatieres();
+            for (int matiere : matieres.keySet()) {
+                String nomMatiere = matieres.get(matiere);
+                cboMatiereCompetence.getItems().add(nomMatiere);
+            }
+
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } tbvDemandes.refresh();
-
-
-       user = UserHolder.getInstance().getUser();
-       lblNomEleve.setText(user.getNom());
-       lblRoleEleve.setText(user.getRole());
-
-
-        tbvDemandes.setOnMouseMoved(event -> handleTableMouseAction());
-        tbvMesDemandes.setOnMouseMoved(event -> handleTableMouseAction());
-    }
-
-    private void handleTableMouseAction() {
-        ObservableList<Demande> updatedTabDemande = FXCollections.observableArrayList(requeteServ.GetDemande());
-        tbvDemandes.setItems(updatedTabDemande);
+        }
         tbvDemandes.refresh();
 
-        ObservableList<Demande> updatedTabMesDemandes = FXCollections.observableArrayList(requeteServ.GetMesDemande());
-        tbvMesDemandes.setItems(updatedTabMesDemandes);
-        tbvMesDemandes.refresh();
-    }
 
+        user = UserHolder.getInstance().getUser();
+        lblNomEleve.setText(user.getNom());
+        lblRoleEleve.setText(user.getRole());
+
+    }
 
     @javafx.fxml.FXML
     public void btnCompetencesAccueilClicked(ActionEvent actionEvent) {
@@ -236,7 +287,6 @@ public class AccueilController implements Initializable {
     }
 
 
-
     @javafx.fxml.FXML
     public void btnAjouterCompetenceClicked(ActionEvent actionEvent) throws IOException {
         if (fenetre == null) {
@@ -257,9 +307,9 @@ public class AccueilController implements Initializable {
     public void btnSupprimerCompetenceClicked(ActionEvent actionEvent) throws IOException {
         // recupération de toutes les compétences
         List<String> tabCompetence = lstCompetence.getItems();
-        List<String>competenceUpdte = new ArrayList<>();
+        List<String> competenceUpdte = new ArrayList<>();
 
-       // System.out.println("Élément mis à jour : " + competenceUpdte);
+        // System.out.println("Élément mis à jour : " + competenceUpdte);
 
         if (tabCompetence != null) {
             System.out.println("liste sélectionné : " + tabCompetence);
@@ -274,7 +324,7 @@ public class AccueilController implements Initializable {
             System.out.println("Élément sélectionné : " + laCompetence);
 
         }
-       // competenceUpdte.addAll(tabCompetence);
+        // competenceUpdte.addAll(tabCompetence);
         System.out.println("nouveau tableau sélectionné : " + competenceUpdte);
 
         //on refait un tableau sans la valeur selectionné
@@ -332,10 +382,10 @@ public class AccueilController implements Initializable {
         Boolean sousMatiereExiste;
         ArrayList<String> tabCompetenceDemande = requeteServ.CheckMesDemande();
 
-        for( String competenceD : tabCompetenceDemande){
-            for(String competence : tabCompetence){
-                if(!competenceD.equals(competence)){
-                    requeteServ.DeletCompetence(sousMatiere, idMatiere, idEtudiant );
+        for (String competenceD : tabCompetenceDemande) {
+            for (String competence : tabCompetence) {
+                if (!competenceD.equals(competence)) {
+                    requeteServ.DeletCompetence(sousMatiere, idMatiere, idEtudiant);
                 }
             }
         }
@@ -400,6 +450,7 @@ public class AccueilController implements Initializable {
         stageActuel.close();
         stage.show();
     }
+
     @javafx.fxml.FXML
     public void btnParametresAccueilClicked(ActionEvent actionEvent) throws IOException {
         if (fenetre == null) {
@@ -449,9 +500,9 @@ public class AccueilController implements Initializable {
         user = UserHolder.getInstance().getUser();
         int idEtudiant = user.getId();
         int idMatiere = -1;
-        String selectedValue ;
-        HashMap<Integer, String>  matieres = requeteServ.GetAllMatieres();
-        for (Map.Entry<Integer, String> entry : matieres.entrySet()){
+        String selectedValue;
+        HashMap<Integer, String> matieres = requeteServ.GetAllMatieres();
+        for (Map.Entry<Integer, String> entry : matieres.entrySet()) {
             Object selectedItem = cboMatiereCompetence.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
                 selectedValue = selectedItem.toString();
@@ -468,11 +519,11 @@ public class AccueilController implements Initializable {
           } else {
            System.out.println("Aucune clé trouvée pour la valeur " + idEtudiant);
          }*/
-       ArrayList<String> tblSousMatiere = requeteServ.GetSousMatiereByMatiere(idEtudiant,idMatiere);
-       lstCompetence.getItems().clear();
+        ArrayList<String> tblSousMatiere = requeteServ.GetSousMatiereByMatiere(idEtudiant, idMatiere);
+        lstCompetence.getItems().clear();
         lstCompetence.getItems().addAll(tblSousMatiere);
 
-        System.out.println( tblSousMatiere);
+        System.out.println(tblSousMatiere);
 
     }
 
@@ -490,16 +541,15 @@ public class AccueilController implements Initializable {
 
         graphDemandesParUser.getData().clear();
 
-        ObservableList<PieChart.Data> datasGraph2 =FXCollections.observableArrayList();
-        HashMap<String,Integer> datasGraphique2 =  requeteServ.getDatasGraphiqueDemandesParUser();
+        ObservableList<PieChart.Data> datasGraph2 = FXCollections.observableArrayList();
+        HashMap<String, Integer> datasGraphique2 = requeteServ.getDatasGraphiqueDemandesParUser();
 
-        for (String valeur : datasGraphique2.keySet())
-        {
-            datasGraph2.add(new PieChart.Data(valeur,datasGraphique2.get(valeur) ));
+        for (String valeur : datasGraphique2.keySet()) {
+            datasGraph2.add(new PieChart.Data(valeur, datasGraphique2.get(valeur)));
         }
         graphDemandesParUser.setData(datasGraph2);
         for (PieChart.Data entry : graphDemandesParUser.getData()) {
-            Tooltip t = new Tooltip(entry.getPieValue()+ " : "+entry.getName()) ;
+            Tooltip t = new Tooltip(entry.getPieValue() + " : " + entry.getName());
             t.setStyle("-fx-background-color:#3D9ADA");
             Tooltip.install(entry.getNode(), t);
         }
@@ -512,15 +562,14 @@ public class AccueilController implements Initializable {
         apnDemandesStatuts.setVisible(false);
         graphTopMatieres.getData().clear();
         datasGraphiqueTopMatieres = new HashMap<>();
-        datasGraphiqueTopMatieres =  requeteServ.getDatasGraphiqueTopMatieres();
+        datasGraphiqueTopMatieres = requeteServ.getDatasGraphiqueTopMatieres();
         //datasGraphique1 =  graphiqueController.GetDatasGraphique1("FB");
         serieGraphTopMatieres = new XYChart.Series();
         serieGraphTopMatieres.setName("Top Matières");
 
         // Remplir la série nécessaire au graphique à partir des données provenant de la HashMap
-        for (String valeur : datasGraphiqueTopMatieres.keySet())
-        {
-            serieGraphTopMatieres.getData().add(new XYChart.Data(valeur,datasGraphiqueTopMatieres.get(valeur)));
+        for (String valeur : datasGraphiqueTopMatieres.keySet()) {
+            serieGraphTopMatieres.getData().add(new XYChart.Data(valeur, datasGraphiqueTopMatieres.get(valeur)));
         }
         graphTopMatieres.getData().add(serieGraphTopMatieres);
     }
@@ -542,8 +591,7 @@ public class AccueilController implements Initializable {
                 graphDemandeStatuts.getData().clear();
 
                 // Remplir la série nécessaire au graphique à partir des données provenant de la HashMap
-                for (String statut : datasGraphiqueDemandesStatuts.keySet())
-                {
+                for (String statut : datasGraphiqueDemandesStatuts.keySet()) {
                     serieGraphDemandesStatuts.getData().add(new XYChart.Data(statut, datasGraphiqueDemandesStatuts.get(statut)));
                 }
 
@@ -560,10 +608,13 @@ public class AccueilController implements Initializable {
         }
     }
 
+
+    @FXML
     public void tbvDemandesClicked(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) { // Vérifie si le double clic a été effectué
             Demande selectedDemande = (Demande) tbvDemandes.getSelectionModel().getSelectedItem();
             if (selectedDemande != null) {
+                int idDemande = selectedDemande.getIdDemande();
                 // Passer les informations à la nouvelle page via le contrôleur AcceptationController
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("acceptation-view.fxml"));
                 Parent root = loader.load();
@@ -578,5 +629,24 @@ public class AccueilController implements Initializable {
         }
     }
 
+    @FXML
+    public void btnSupprimerDemandeClicked(ActionEvent actionEvent) {
+    }
 
-}
+    @FXML
+    public void tbvMesDemandesClicked(Event event) throws IOException {
+            Demande d = (Demande) tbvMesDemandes.getSelectionModel().getSelectedItem();
+            if (d != null) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("modifierDemande-view.fxml"));
+                Parent root = loader.load();
+                ModifierDemandeController modifierDemandeController = loader.getController();
+                modifierDemandeController.initData(d); // Méthode pour initialiser les données dans AcceptationController
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setTitle("Accepter une demande");
+                stage.setScene(scene);
+                stage.show();
+            }
+        }
+    }
+
