@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="504.0" prefWidth="565.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.AjouterCompetenceController">
+<AnchorPane prefHeight="444.0" prefWidth="589.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.AjouterMatiereController">
    <children>
-      <Button fx:id="btnValider" layoutX="264.0" layoutY="453.0" mnemonicParsing="false" onAction="#btnValiderClicked" style="-fx-background-color: #057aff;" text="Valider" textFill="WHITE">
+      <Button fx:id="btnValider" layoutX="177.0" layoutY="374.0" mnemonicParsing="false" onAction="#btnValiderClicked" prefHeight="41.0" prefWidth="98.0" style="-fx-background-color: #057aff;" text="Valider" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="17.0" />
          </font>
       </Button>
       <Label alignment="CENTER" layoutX="34.0" layoutY="27.0" prefHeight="27.0" prefWidth="253.0" text="Ajouter une matière" textAlignment="CENTER" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="15.0">
@@ -18,16 +18,30 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="168.0" layoutY="116.0" prefHeight="25.0" prefWidth="248.0" />
-      <AnchorPane layoutX="52.0" layoutY="182.0" prefHeight="260.0" prefWidth="480.0" style="-fx-background-color: #C2DFFF;">
+      <AnchorPane layoutX="52.0" layoutY="96.0" prefHeight="260.0" prefWidth="485.0" style="-fx-background-color: #057aff;">
          <children>
-            <TextField layoutX="117.0" layoutY="57.0" prefHeight="25.0" prefWidth="248.0" />
-            <TextField layoutX="117.0" layoutY="102.0" prefHeight="25.0" prefWidth="248.0" />
-            <TextField layoutX="117.0" layoutY="141.0" prefHeight="25.0" prefWidth="248.0" />
-            <TextField layoutX="117.0" layoutY="179.0" prefHeight="25.0" prefWidth="248.0" />
-            <Label layoutX="205.0" layoutY="14.0" text="Sous-matière" />
+            <Label layoutX="199.0" layoutY="120.0" text="Sous-matière :" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <TextField fx:id="txtSousMatiere" layoutX="38.0" layoutY="178.0" prefHeight="25.0" prefWidth="405.0" />
+            <TextField fx:id="txtMatiere" layoutX="119.0" layoutY="54.0" prefHeight="25.0" prefWidth="248.0" />
+            <Label layoutX="161.0" layoutY="14.0" text="Nom de la nouvelle matière :" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="51.0" layoutY="150.0" text="(Écrivez les sous-matières sous cette forme, exemple : #abc#efg#hij)" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
-      <Label layoutX="209.0" layoutY="99.0" text="Nom de la nouvelle matière" />
+      <Button fx:id="btnRetour" layoutX="322.0" layoutY="374.0" mnemonicParsing="false" onAction="#btnRetourClicked" prefHeight="41.0" prefWidth="98.0" style="-fx-background-color: #057aff;" text="Retour" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

@@ -18,8 +18,25 @@ public class Soutien {
     private int statue;
     private Date dateUpdate;
     private Date dateDuSoutien;
+    private String sousMatiere;
 
-    public Soutien(String id, String designation, String niveauAssiste, String nomAssiste, String prenomAssiste, List<String> competence, String idDemande, String idCompetence,String idSalle, String description, int statue, Date dateUpdate, Date dateDuSoutien) {
+    public void setDateUpdate(Date dateUpdate) {
+        this.dateUpdate = dateUpdate;
+    }
+
+    public void setDateDuSoutien(Date dateDuSoutien) {
+        this.dateDuSoutien = dateDuSoutien;
+    }
+
+    public String getSousMatiere() {
+        return sousMatiere;
+    }
+
+    public void setSousMatiere(String sousMatiere) {
+        this.sousMatiere = sousMatiere;
+    }
+
+    public Soutien(String id, String designation, String niveauAssiste, String nomAssiste, String prenomAssiste, List<String> competence, String idDemande, String idCompetence, String idSalle, String description, int statue, Date dateUpdate, Date dateDuSoutien) {
         this.id = id;
         this.designation = designation;
         this.niveauAssiste = niveauAssiste;
@@ -34,6 +51,18 @@ public class Soutien {
         this.dateUpdate = dateUpdate;
         this.dateDuSoutien = dateDuSoutien;
     }
+
+    public Soutien(String soutienId, String niveauAssiste, String nomEtudiant, String matiere, String sousMatiereDemandee, java.sql.Date dateSoutien) {
+        this.id = soutienId;
+        this.niveauAssiste = niveauAssiste;
+        this.nomAssiste = nomEtudiant;
+        this.designation = matiere;
+        this.sousMatiere = sousMatiereDemandee;
+        this.dateDuSoutien = dateSoutien;
+
+
+    }
+
 
     public String getIdDemande() {
         return idDemande;

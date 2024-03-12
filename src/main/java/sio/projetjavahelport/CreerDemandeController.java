@@ -51,7 +51,7 @@ public class CreerDemandeController implements Initializable {
     }
 
     @javafx.fxml.FXML
-    public void btnValiderClicked(ActionEvent actionEvent) throws IOException {
+    public void btnValiderClicked(ActionEvent actionEvent) throws IOException, SQLException {
         // On gère les erreurs
         if(dpDate.getValue()==null)
         {
@@ -84,6 +84,7 @@ public class CreerDemandeController implements Initializable {
 
             Demande demande = new Demande();
 
+            String mDesignation = (String) cboMatiere.getValue();
 
             // Pour insérer les données remplies par l'utilisateur dans la bdd
             // Matière choisie par l'utilisateur
@@ -108,6 +109,7 @@ public class CreerDemandeController implements Initializable {
                     break;
 
             }
+
             demande.setSousMatiere((String) cboSousMatiere.getValue());
             demande.setDateFinDemande(java.sql.Date.valueOf(dpDate.getValue()));
             demande.setDate_updated(java.sql.Date.valueOf(currentDate));

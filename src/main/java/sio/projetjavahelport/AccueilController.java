@@ -273,7 +273,7 @@ public class AccueilController implements Initializable {
     @javafx.fxml.FXML
     public void lblMentionsLegagesAccueilClicked(Event event) throws IOException {
         if (fenetre == null) {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mentions-legales-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ajouterSalle-view.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
             fenetre = new Stage();

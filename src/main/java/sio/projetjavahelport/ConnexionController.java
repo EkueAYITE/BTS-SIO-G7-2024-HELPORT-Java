@@ -71,7 +71,7 @@ public class ConnexionController implements Initializable {
                     UserHolder holder = UserHolder.getInstance();
                     holder.setUser(userInfo);
                     // Charge la nouvelle fenêtre en cas de succès
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("accueil-view.fxml"));
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("accueilAdmin-view.fxml"));
                     Parent root = fxmlLoader.load();
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
@@ -121,7 +121,7 @@ public class ConnexionController implements Initializable {
     @FXML
     public void lblMentionLegalesClicked(Event event) throws IOException {
         if (fenetre == null) {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mentions-legales-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ajouterSalle-view.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
             fenetre = new Stage();

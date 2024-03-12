@@ -9,8 +9,10 @@ import sio.projetjavahelport.tools.Demande;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -31,9 +33,11 @@ public class ModifierDemandeController implements Initializable {
     RequeteServiceController requeteServ;
     private int idDemande;
     Demande selectedDemande;
+    String mDesignation;
 
     public void initData(Demande d) {
         selectedDemande = d;
+
 
     }
     @javafx.fxml.FXML
@@ -59,6 +63,53 @@ public class ModifierDemandeController implements Initializable {
 
     @javafx.fxml.FXML
     public void btnModificationValiderClicked(ActionEvent actionEvent) {
+        try {
+            if (requeteServ.isDemandeSelectedAsSoutien(selectedDemande.getIdDemande())) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur de modification");
+                alert.setHeaderText("Cette demande a déjà été sélectionnée en tant que soutien. Modification impossible.");
+                alert.showAndWait();
+            } else {
+                mDesignation = (String) cbModificationMatiere.getValue();
+                LocalDate localDate = dtModificationDate.getValue(); // Récupération de la date sélectionnée
+                java.sql.Date dateSoutien = java.sql.Date.valueOf(localDate); // Conversion de LocalDate en java.sql.Date
+                int idMatiere = getIdMatiere((String) cbModificationMatiere.getValue());
+                String sousMatiere = (String) cbModificationSMatiere.getValue();
+                requeteServ.ModifyDemande(selectedDemande.getIdDemande(), sousMatiere, mDesignation, dateSoutien);
+                btnModificationValider.getScene().getWindow().hide();
+            }
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Problème dans la requête");
+            alert.show();
+        }
+    }
+    private int getIdMatiere(String matiere) {
+        int idMatiere = -1; // Valeur par défaut si aucune correspondance n'est trouvée
+        switch (matiere) {
+            case "Anglais":
+                idMatiere = 1;
+                break;
+            case "CEJM":
+                idMatiere = 2;
+                break;
+            case "Français":
+                idMatiere = 3;
+                break;
+            case "Mathématiques":
+                idMatiere = 4;
+                break;
+            case "Informatique":
+                idMatiere = 5;
+                break;
+            case "Histoire":
+                idMatiere = 6;
+            default:
+                // Si aucune correspondance n'est trouvée, l'ID reste à sa valeur par défaut (-1)
+                break;
+        }
+        return idMatiere;
     }
 
     @javafx.fxml.FXML

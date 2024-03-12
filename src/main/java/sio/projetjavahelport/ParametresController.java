@@ -26,11 +26,11 @@ public class ParametresController implements Initializable {
 
     @javafx.fxml.FXML
     public void btnValiderParametresClicked(ActionEvent actionEvent) {
-        /*user = UserHolder.getInstance().getUser();
+        user = UserHolder.getInstance().getUser();
         txtMail.setText(user.getEmail());
         txtMdp.setText(user.getPassword());
         txtNiv.setText(user.getNiveau());
-        txtTel.setText(user.getTelephone());*/
+        txtTel.setText(user.getTelephone());
 
 
     }

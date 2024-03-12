@@ -2,6 +2,7 @@ package sio.projetjavahelport;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -14,6 +15,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class AcceptationController implements Initializable {
@@ -33,6 +35,7 @@ public class AcceptationController implements Initializable {
     @javafx.fxml.FXML
     private TextArea txtADescription;
     private int idDemande;
+    private String niveauDemande;
     private String nomMatiere;
 
     @Override
@@ -48,10 +51,27 @@ public class AcceptationController implements Initializable {
         txtDate.setText(selectedDemande.getDateFinDemande().toString());
         idDemande = selectedDemande.getIdDemande();
         nomMatiere = selectedDemande.getMatiereDesignation();
+        niveauDemande = selectedDemande.getNiveau();
     }
 
     @javafx.fxml.FXML
     public void btnConfirmerDemandeClicked(ActionEvent actionEvent) {
+
+        if (requeteServ.isDemandeSelectedAsSoutien(idDemande)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur de modification");
+            alert.setHeaderText("Cette demande a déjà été sélectionnée en tant que soutien. Aide impossible.");
+            alert.showAndWait();
+        } else  if (peutAccepterDemandeSoutien(niveauDemande)){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur de modification");
+            alert.setHeaderText("Cette demande est supérieur à votre niveau. Aide impossible.");
+            alert.showAndWait();
+        }
+
+
+            else {
+
         user = UserHolder.getInstance().getUser();
         int idCompetence = requeteServ.getIdCompetenceCorrespondantALaMatiere(user.getId(),nomMatiere);
         String idSalle = "301";
@@ -70,9 +90,28 @@ public class AcceptationController implements Initializable {
 
         requeteServ = new RequeteServiceController();
 
+
+
         requeteServ.createSoutien(idDemande, idCompetence, idSalle, dateSoutien, description);
         btnConfirmerDemande.getScene().getWindow().hide();
+        }
+    }
+    public boolean peutAccepterDemandeSoutien(String niveauDemande) {
+        // Définir l'ordre des niveaux
+        try {
+            user = UserHolder.getInstance().getUser();
+            String niveau = user.getNiveau();
+            String[] ordreNiveaux = {"Master 2", "Master 1", "Bachelor", "BTS 2", "BTS 1", "Terminale"};
 
+            // Récupérer l'index des niveaux dans l'ordre défini
+            int indexUtilisateur = Arrays.asList(ordreNiveaux).indexOf(niveau);
+            int indexDemande = Arrays.asList(ordreNiveaux).indexOf(niveauDemande);
 
+            // Vérifier si l'utilisateur peut accepter la demande en soutien
+            return indexUtilisateur >= indexDemande + 2;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

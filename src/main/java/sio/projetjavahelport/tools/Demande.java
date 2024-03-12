@@ -13,6 +13,7 @@ public class Demande {
     private int id_matiere;
     private int id_user;
     private int status;
+    private int idCompetence;
 
     public Date getDate_updated() {
         return date_updated;
@@ -52,6 +53,16 @@ public class Demande {
     {
 
     }
+
+    public Demande(int idDemande, String matiereDesignation, String sousMatiere, Date dateFinDemande, int id_matiere) {
+        this.idDemande = idDemande;
+        this.matiereDesignation = matiereDesignation;
+        this.dateFinDemande = dateFinDemande;
+        this.sousMatiere = sousMatiere;
+        this.id_matiere = id_matiere;
+
+    }
+
     public Demande(int idDemande, String niveau, Date dateFinDemande, String matiereDesignation, String sousMatiere, int id_user, int id_matiere, int status) {
         this.idDemande = idDemande;
         this.niveau = niveau;
@@ -61,19 +72,6 @@ public class Demande {
         this.id_user = id_user;
         this.id_matiere = id_matiere;
         this.status = status;
-    }
-    public Demande(int idDemande, String matiereDesignation, String sousMatiere, Date dateFinDemande) {
-        this.idDemande = idDemande;
-        this.matiereDesignation = matiereDesignation;
-        this.sousMatiere = sousMatiere;
-        this.dateFinDemande = dateFinDemande;
-    }
-
-    public Demande(String niveau, Date dateFinDemande, String matiereDesignation, String sousMatiere) {
-        this.niveau = niveau;
-        this.dateFinDemande = dateFinDemande;
-        this.matiereDesignation = matiereDesignation;
-        this.sousMatiere = sousMatiere;
     }
     public Demande(int idDemande, String niveau, Date dateFinDemande, String matiereDesignation, String sousMatiere) {
         this.idDemande = idDemande;
