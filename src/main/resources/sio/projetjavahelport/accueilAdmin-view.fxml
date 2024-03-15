@@ -117,36 +117,51 @@
             <ListView fx:id="lstMatiere" layoutX="424.0" layoutY="301.0" prefHeight="384.0" prefWidth="411.0" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="apnDemandes" layoutX="199.0" prefHeight="820.0" prefWidth="910.0" visible="false" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane fx:id="apnDemandes" layoutX="199.0" prefHeight="820.0" prefWidth="1016.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Label layoutX="30.0" layoutY="38.0" text="Demandes" textFill="#2b62ee">
                <font>
                   <Font name="System Bold" size="35.0" />
                </font>
             </Label>
-            <Label layoutX="49.0" layoutY="138.0" text="Demandes :" AnchorPane.rightAnchor="798.0" />
-            <Button fx:id="btnCreerDemande" layoutX="30.0" layoutY="252.0" mnemonicParsing="false" onAction="#btnCreerDemandeClicked" prefHeight="41.0" prefWidth="101.0" style="-fx-background-color: #006bff;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Créer" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Button>
-            <TableView fx:id="tbvDemandes" layoutX="162.0" layoutY="138.0" onMouseClicked="#tbvDemandesClicked" prefHeight="281.0" prefWidth="559.0" AnchorPane.leftAnchor="162.0">
+            <Label layoutX="155.0" layoutY="97.0" text="Demandes :" AnchorPane.rightAnchor="692.0" />
+            <TableView fx:id="tbvDemandes" layoutX="254.0" layoutY="38.0" onMouseClicked="#tbvDemandesClicked" prefHeight="162.0" prefWidth="439.0" AnchorPane.leftAnchor="254.0">
               <columns>
                 <TableColumn fx:id="clmDate" prefWidth="107.0" text="Date" />
                   <TableColumn fx:id="clmNiveau" minWidth="0.0" prefWidth="103.0" text="Niveau" />
                   <TableColumn fx:id="clmMatiere" prefWidth="117.0" text="Matière" />
                   <TableColumn fx:id="clmSousMatiere" prefWidth="117.0" text="Sous-Matière" />
-                  <TableColumn fx:id="clmEleve" prefWidth="117.0" text="Élève" />
               </columns>
             </TableView>
-            <Label layoutX="31.0" layoutY="498.0" text="Soutiens à valider :" />
-            <TableView fx:id="tbvValiderSoutiens" layoutX="153.0" layoutY="498.0" prefHeight="228.0" prefWidth="577.0">
+            <Label layoutX="36.0" layoutY="182.0" text="Soutiens à valider :" />
+            <Label layoutX="36.0" layoutY="216.0" style="-fx-background-color: #96c0ff;" text="Sélectionnez un soutien en cliquant dessus">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tbvValiderSoutiens" layoutX="20.0" layoutY="250.0" onMouseClicked="#tbvValiderSoutienClicked" prefHeight="228.0" prefWidth="870.0">
                <columns>
                   <TableColumn fx:id="clmSoutienNiveau" minWidth="0.0" prefWidth="132.0" text="Niveau" />
-                  <TableColumn fx:id="clmSoutienDate" prefWidth="120.0" text="Date" />
-                  <TableColumn fx:id="clmSoutienMatiere" prefWidth="127.0" text="Matière" />
-                  <TableColumn fx:id="clmSoutienSousMatiere" prefWidth="108.0" text="Sous-matière" />
-                  <TableColumn fx:id="clmSoutienEleve" prefWidth="89.0" text="Elève" />
+                  <TableColumn fx:id="clmSoutienDate" prefWidth="118.0" text="Date" />
+                  <TableColumn fx:id="clmSoutienMatiere" prefWidth="122.0" text="Matière" />
+                  <TableColumn fx:id="clmSoutienSousMatiere" prefWidth="119.0" text="Sous-matière" />
+                  <TableColumn fx:id="clmSoutienEleveAssisté" prefWidth="125.0" text="Elève assisté" />
+                  <TableColumn fx:id="clmSoutienEleveAssistant" prefWidth="115.0" text="Elève assistant" />
+                  <TableColumn fx:id="clmSoutienSalle" prefWidth="66.0" text="Salle" />
+                  <TableColumn fx:id="clmSoutienStatus" prefWidth="75.0" text="Status" />
+               </columns>
+            </TableView>
+            <Label layoutX="41.0" layoutY="489.0" text="Soutiens validés :" />
+            <TableView fx:id="tbvSoutiensValides" layoutX="20.0" layoutY="531.0" onMouseClicked="#tbvSoutiensValides" prefHeight="228.0" prefWidth="870.0">
+               <columns>
+                  <TableColumn fx:id="clmSoutienNiveauV" minWidth="0.0" prefWidth="132.0" text="Niveau" />
+                  <TableColumn fx:id="clmSoutienDateV" prefWidth="118.0" text="Date" />
+                  <TableColumn fx:id="clmSoutienMatiereV" prefWidth="122.0" text="Matière" />
+                  <TableColumn fx:id="clmSoutienSousMatiereV" prefWidth="119.0" text="Sous-matière" />
+                  <TableColumn fx:id="clmSoutienEleveAssistéV" prefWidth="125.0" text="Elève assisté" />
+                  <TableColumn fx:id="clmSoutienEleveAssistantV" prefWidth="115.0" text="Elève assistant" />
+                  <TableColumn fx:id="clmSoutienSalleV" prefWidth="66.0" text="Salle" />
+                  <TableColumn fx:id="clmSoutienStatusV" prefWidth="75.0" text="Status" />
                </columns>
             </TableView>
          </children>
@@ -165,7 +180,7 @@
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="apnSalle" layoutX="199.0" prefHeight="820.0" prefWidth="910.0">
+      <AnchorPane fx:id="apnSalle" layoutX="199.0" prefHeight="820.0" prefWidth="910.0" visible="false">
          <children>
             <Label layoutX="43.0" layoutY="56.0" text="Salle" textFill="#2b62ee">
                <font>

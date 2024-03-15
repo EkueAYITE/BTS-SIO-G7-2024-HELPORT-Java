@@ -10,13 +10,33 @@ public class Soutien {
     private String niveauAssiste;
     private String nomAssiste;
     private String prenomAssiste;
+    private String nomAssistant;
+
+    public String getNomAssistant() {
+        return nomAssistant;
+    }
+
+    public void setNomAssistant(String nomAssistant) {
+        this.nomAssistant = nomAssistant;
+    }
+
     private List<String> competence;
     private String idDemande;
     private String idCompetence;
     private String idSalle;
     private String description;
-    private int statue;
+    private int status;
+    private String statusAttente;
     private Date dateUpdate;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     private Date dateDuSoutien;
     private String sousMatiere;
 
@@ -36,6 +56,14 @@ public class Soutien {
         this.sousMatiere = sousMatiere;
     }
 
+    public String getStatusAttente() {
+        return statusAttente;
+    }
+
+    public void setStatusAttente(String statusAttente) {
+        this.statusAttente = statusAttente;
+    }
+
     public Soutien(String id, String designation, String niveauAssiste, String nomAssiste, String prenomAssiste, List<String> competence, String idDemande, String idCompetence, String idSalle, String description, int statue, Date dateUpdate, Date dateDuSoutien) {
         this.id = id;
         this.designation = designation;
@@ -47,19 +75,22 @@ public class Soutien {
         this.idCompetence = idCompetence;
         this.idSalle = idSalle;
         this.description = description;
-        this.statue = statue;
+        this.status = statue;
         this.dateUpdate = dateUpdate;
         this.dateDuSoutien = dateDuSoutien;
     }
 
-    public Soutien(String soutienId, String niveauAssiste, String nomEtudiant, String matiere, String sousMatiereDemandee, java.sql.Date dateSoutien) {
+    public Soutien(String soutienId, String niveauAssiste, String nomEtudiant, String matiere, String sousMatiereDemandee, java.sql.Date dateSoutien, String description, String idSalle, String nomAssistant, String status) {
         this.id = soutienId;
         this.niveauAssiste = niveauAssiste;
         this.nomAssiste = nomEtudiant;
         this.designation = matiere;
         this.sousMatiere = sousMatiereDemandee;
         this.dateDuSoutien = dateSoutien;
-
+        this.description = description;
+        this.idSalle = idSalle;
+        this.nomAssistant = nomAssistant;
+        this.statusAttente = status;
 
     }
 
@@ -147,14 +178,6 @@ public class Soutien {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public int getStatue() {
-        return statue;
-    }
-
-    public void setStatue(int statue) {
-        this.statue = statue;
     }
 
     public java.util.Date getDateUpdate() {

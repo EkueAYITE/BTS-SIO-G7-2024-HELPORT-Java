@@ -123,8 +123,6 @@ public class AccueilController implements Initializable {
     @FXML
     private AnchorPane apnDemandesStatuts;
     @FXML
-    private TableColumn clmStatut;
-    @FXML
     private TableColumn clmSoutienNiveau;
     @FXML
     private TableColumn clmSoutienDate;
@@ -152,7 +150,6 @@ public class AccueilController implements Initializable {
             clmDate.setCellValueFactory(new PropertyValueFactory<Demande, Date>("dateFinDemande"));
             clmMatiere.setCellValueFactory(new PropertyValueFactory<Demande, String>("matiereDesignation"));
             clmSousMatiere.setCellValueFactory(new PropertyValueFactory<Demande, String>("sousMatiere"));
-            clmStatut.setCellValueFactory(new PropertyValueFactory<Demande, Integer>("status"));
 
             ObservableList<Demande> tabDemandes = FXCollections.observableArrayList(requeteServ.GetDemande());
 
@@ -199,6 +196,7 @@ public class AccueilController implements Initializable {
             clmSoutienDate.setCellValueFactory(new PropertyValueFactory<Demande, String>("dateDuSoutien"));
             clmSoutienMatiere.setCellValueFactory(new PropertyValueFactory<Demande, String>("designation"));
             clmSoutienSousMatiere.setCellValueFactory(new PropertyValueFactory<Demande, String>("competence"));
+            clmSoutienEleve.setCellValueFactory(new PropertyValueFactory<Demande, String>("nomAssiste"));
 
             ObservableList<Soutien> tabMesSoutiens = FXCollections.observableArrayList(requeteServ.getLesSoutiens(matiereSelected));
 
@@ -289,18 +287,18 @@ public class AccueilController implements Initializable {
 
     @javafx.fxml.FXML
     public void btnAjouterCompetenceClicked(ActionEvent actionEvent) throws IOException {
-        if (fenetre == null) {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ajouterCompetence-view.fxml"));
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root);
-            fenetre = new Stage();
-            fenetre.setTitle("Ajouter une compétence");
-            fenetre.setScene(scene);
-            fenetre.setOnCloseRequest(e -> {
-                fenetre = null; // Réinitialisez la référence lorsque la fenêtre est fermée
-            });
-            fenetre.show();
-        }
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ajouterCompetence-view.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Connexion");
+        stage.setScene(scene);
+
+
+        Scene sceneActuelle = ((Node) actionEvent.getSource()).getScene();
+        Stage stageActuel = (Stage) sceneActuelle.getWindow();
+        stageActuel.close();
+        stage.show();
     }
 
     @javafx.fxml.FXML
@@ -337,7 +335,7 @@ public class AccueilController implements Initializable {
             }
 
         }
-        //Chaine pour stoké le résultat
+        //Chaîne pour stocker le résultat
         StringBuilder resultat = new StringBuilder();
         for (String element : competenceUpdte) {
             // Ajouter le séparateur "#" avant chaque élément (sauf pour le premier)
@@ -390,22 +388,6 @@ public class AccueilController implements Initializable {
             }
         }
 
-    }
-
-    @Deprecated
-    public void btnModifierCompetenceClicked(ActionEvent actionEvent) throws IOException {
-        if (fenetre == null) {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("modifierCompetence-view.fxml"));
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root);
-            fenetre = new Stage();
-            fenetre.setTitle("Modifier une compétence");
-            fenetre.setScene(scene);
-            fenetre.setOnCloseRequest(e -> {
-                fenetre = null; // Réinitialisez la référence lorsque la fenêtre est fermée
-            });
-            fenetre.show();
-        }
     }
 
     @javafx.fxml.FXML
@@ -643,7 +625,7 @@ public class AccueilController implements Initializable {
                 modifierDemandeController.initData(d); // Méthode pour initialiser les données dans AcceptationController
                 Scene scene = new Scene(root);
                 Stage stage = new Stage();
-                stage.setTitle("Accepter une demande");
+                stage.setTitle("Modifier une demande");
                 stage.setScene(scene);
                 stage.show();
             }

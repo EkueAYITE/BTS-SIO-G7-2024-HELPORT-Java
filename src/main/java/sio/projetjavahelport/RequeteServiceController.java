@@ -23,18 +23,6 @@ public class RequeteServiceController {
     {
         cnx = ConnexionBDD.getCnx();
     }
-    public ArrayList<String> getDemandesSansSoutient() throws SQLException {
-        ArrayList<String> lesMatiere = new ArrayList<>();
-
-        ps = cnx.prepareStatement("SELECT *\n" +
-                "FROM demande\n" +
-                "WHERE id NOT IN (SELECT id_demande FROM soutien);`");
-        rs = ps.executeQuery();
-        while(rs.next()) {
-            lesMatiere.add(rs.getString(1));
-        }
-        return lesMatiere;
-    }
     public HashMap<Integer,String> GetAllMatieres()
     {
         HashMap<Integer,String> lesMatieres = new HashMap<>();
@@ -609,27 +597,18 @@ public class RequeteServiceController {
         }
     }
     public int getIdMatiere(String designationMatiere) throws SQLException {
-        int idMatiere = -1; // Valeur par défaut si aucune correspondance n'est trouvée
+        int idMatiere = 0; // Valeur par défaut si aucune correspondance n'est trouvée
         cnx = ConnexionBDD.getCnx();
         // Requête SQL pour récupérer l'ID de la matière en fonction de sa désignation
-        String query = ("SELECT demande.id_matiere\n" +
-                "FROM demande\n" +
-                "    id_matiere = (SELECT matiere.id \n" +
-                "                  FROM matiere\n" +
-                "                  WHERE matiere.designation = ?)\n" +
-                "WHERE \n" +
-                "    demande.id = ?\n" +
-                "\n" +
-                "\t\n");
+        String query = ("SELECT id FROM matiere WHERE designation = ?");
 
         try (
              PreparedStatement statement = cnx.prepareStatement(query)) {
             statement.setString(1, designationMatiere); // Remplacer le ? par la désignation de la matière
             ResultSet resultSet = statement.executeQuery();
 
-            // Si un enregistrement est trouvé, récupérer l'ID de la matière
             if (resultSet.next()) {
-                idMatiere = resultSet.getInt("id_matiere");
+                idMatiere = resultSet.getInt("id");
             }
         }
 
@@ -641,28 +620,90 @@ public class RequeteServiceController {
         try {
             cnx = ConnexionBDD.getCnx();
             ps = cnx.prepareStatement(
-                    "SELECT soutien.*, demande.sous_matiere, matiere.designation AS matiere, user.nom AS nom_etudiant, user.niveau AS niveau_etudiant " +
-                            "FROM soutien " +
-                            "INNER JOIN demande ON soutien.id_demande = demande.id " +
-                            "INNER JOIN user ON demande.id_user = user.id " +
-                            "INNER JOIN matiere ON demande.id_matiere = matiere.id");
+                        "SELECT  soutien.*, demande.sous_matiere, matiere.designation AS matiere, user_etudiant.nom AS nom_etudiant, user_etudiant.niveau AS niveau_etudiant, user_assistant.nom AS nom_assistant\n" +
+                                "FROM soutien \n" +
+                                "INNER JOIN demande ON soutien.id_demande = demande.id \n" +
+                                "INNER JOIN user AS user_etudiant ON demande.id_user = user_etudiant.id \n" +
+                                "INNER JOIN matiere ON demande.id_matiere = matiere.id\n" +
+                                "INNER JOIN competence ON soutien.id_competence = competence.id\n" +
+                                "INNER JOIN user AS user_assistant ON competence.id_user = user_assistant.id\n" +
+                                "WHERE soutien.status = 2");
             rs = ps.executeQuery();
 
             while (rs.next()) {
                 String id = rs.getString("id");
                 String idDemande = rs.getString("id_demande");
                 int idCompetence = rs.getInt("id_competence");
-                int idSalle = rs.getInt("id_salle");
+                String idSalle = rs.getString("id_salle");
                 java.sql.Date dateSoutien = rs.getDate("date_du_soutien");
                 String dateUpdated = rs.getString("date_updated");
                 String description = rs.getString("description");
-                int status = rs.getInt("status");
+                int statusInt = rs.getInt("status");
+                String status;
+                if (statusInt == 2) {
+                    status = "En attente";
+                } else {
+                    status = "Autre";
+                }
                 String niveauEtudiant = rs.getString("niveau_etudiant");
                 String sousMatiere = rs.getString("sous_matiere");
                 String matiere = rs.getString("matiere");
                 String nomEtudiant = rs.getString("nom_etudiant");
+                String nomAssistant = rs.getString("nom_assistant");
 
-                Soutien soutien = new Soutien(idDemande, niveauEtudiant, nomEtudiant, matiere, sousMatiere, dateSoutien);
+
+
+                Soutien soutien = new Soutien(idDemande, niveauEtudiant, nomEtudiant, matiere, sousMatiere, dateSoutien, description, idSalle, nomAssistant, status);
+                soutiensList.add(soutien);
+            }
+
+            rs.close();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return soutiensList;
+    }
+    public ObservableList<Soutien> getLesSoutiensGenerauxValides() {
+        ObservableList<Soutien> soutiensList = FXCollections.observableArrayList();
+
+        try {
+            cnx = ConnexionBDD.getCnx();
+            ps = cnx.prepareStatement(
+                    "SELECT  soutien.*, demande.sous_matiere, matiere.designation AS matiere, user_etudiant.nom AS nom_etudiant, user_etudiant.niveau AS niveau_etudiant, user_assistant.nom AS nom_assistant\n" +
+                            "FROM soutien \n" +
+                            "INNER JOIN demande ON soutien.id_demande = demande.id \n" +
+                            "INNER JOIN user AS user_etudiant ON demande.id_user = user_etudiant.id \n" +
+                            "INNER JOIN matiere ON demande.id_matiere = matiere.id\n" +
+                            "INNER JOIN competence ON soutien.id_competence = competence.id\n" +
+                            "INNER JOIN user AS user_assistant ON competence.id_user = user_assistant.id\n" +
+                            "WHERE soutien.status = 3");
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String idDemande = rs.getString("id_demande");
+                int idCompetence = rs.getInt("id_competence");
+                String idSalle = rs.getString("id_salle");
+                java.sql.Date dateSoutien = rs.getDate("date_du_soutien");
+                String dateUpdated = rs.getString("date_updated");
+                String description = rs.getString("description");
+                int statusInt = rs.getInt("status");
+                String status;
+                if (statusInt == 3) {
+                    status = "Validé";
+                } else {
+                    status = "Autre";
+                }
+                String niveauEtudiant = rs.getString("niveau_etudiant");
+                String sousMatiere = rs.getString("sous_matiere");
+                String matiere = rs.getString("matiere");
+                String nomEtudiant = rs.getString("nom_etudiant");
+                String nomAssistant = rs.getString("nom_assistant");
+
+
+
+                Soutien soutien = new Soutien(idDemande, niveauEtudiant, nomEtudiant, matiere, sousMatiere, dateSoutien, description, idSalle, nomAssistant, status);
                 soutiensList.add(soutien);
             }
 
@@ -759,6 +800,68 @@ public class RequeteServiceController {
             throw new RuntimeException();
         }
         return lesSalles;
+    }
+    public void modifierIdSalleSoutien(String idSoutien, int idSalle) throws SQLException {
+        try {
+            cnx = ConnexionBDD.getCnx();
+            ps = cnx.prepareStatement("UPDATE soutien SET id_salle = ? WHERE id_demande = ?");
+            ps.setInt(1, idSalle);
+            ps.setString(2, idSoutien);
+            ps.executeUpdate();
+        } catch (Exception e){
+            throw new RuntimeException();
+        }
+    }
+    public void modifierStatusSoutien(String idSoutien, int nouveauStatus) throws SQLException {
+        try {
+            cnx = ConnexionBDD.getCnx();
+            ps = cnx.prepareCall("UPDATE soutien SET soutien.status = ? WHERE soutien.id_demande = ?");
+            ps.setInt(1, nouveauStatus);
+            ps.setString(2, idSoutien);
+            ps.executeUpdate();
+            ps.close();
+
+       } catch (Exception e){
+            throw new RuntimeException();
+        }
+    }
+    public boolean isDemandeAppartenantUtilisateur(int idDemande, int idUser) {
+        try {
+            cnx = ConnexionBDD.getCnx();
+            ps = cnx.prepareStatement("SELECT COUNT(*) FROM demande WHERE id = ? AND id_user = ?");
+
+
+            ps.setInt(1, idDemande);
+            ps.setInt(2, idUser);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public boolean userPossedeSousMatiere(int idUser, String sousMatiere) {
+        try {
+
+            cnx = ConnexionBDD.getCnx();
+            ps = cnx.prepareStatement("SELECT COUNT(*) FROM demande WHERE id_user = ? AND sous_matiere LIKE ?");
+
+            ps.setInt(1, idUser);
+            ps.setString(2, "%" + sousMatiere + "%");
+            try (ResultSet resultSet = ps.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

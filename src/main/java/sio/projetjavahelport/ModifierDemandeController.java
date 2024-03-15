@@ -73,7 +73,6 @@ public class ModifierDemandeController implements Initializable {
                 mDesignation = (String) cbModificationMatiere.getValue();
                 LocalDate localDate = dtModificationDate.getValue(); // Récupération de la date sélectionnée
                 java.sql.Date dateSoutien = java.sql.Date.valueOf(localDate); // Conversion de LocalDate en java.sql.Date
-                int idMatiere = getIdMatiere((String) cbModificationMatiere.getValue());
                 String sousMatiere = (String) cbModificationSMatiere.getValue();
                 requeteServ.ModifyDemande(selectedDemande.getIdDemande(), sousMatiere, mDesignation, dateSoutien);
                 btnModificationValider.getScene().getWindow().hide();
@@ -84,32 +83,6 @@ public class ModifierDemandeController implements Initializable {
             alert.setHeaderText("Problème dans la requête");
             alert.show();
         }
-    }
-    private int getIdMatiere(String matiere) {
-        int idMatiere = -1; // Valeur par défaut si aucune correspondance n'est trouvée
-        switch (matiere) {
-            case "Anglais":
-                idMatiere = 1;
-                break;
-            case "CEJM":
-                idMatiere = 2;
-                break;
-            case "Français":
-                idMatiere = 3;
-                break;
-            case "Mathématiques":
-                idMatiere = 4;
-                break;
-            case "Informatique":
-                idMatiere = 5;
-                break;
-            case "Histoire":
-                idMatiere = 6;
-            default:
-                // Si aucune correspondance n'est trouvée, l'ID reste à sa valeur par défaut (-1)
-                break;
-        }
-        return idMatiere;
     }
 
     @javafx.fxml.FXML

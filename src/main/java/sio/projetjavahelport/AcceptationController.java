@@ -12,6 +12,8 @@ import sio.projetjavahelport.tools.UserHolder;
 
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,6 +40,7 @@ public class AcceptationController implements Initializable {
     private String niveauDemande;
     private String nomMatiere;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         requeteServ = new RequeteServiceController();
@@ -57,43 +60,46 @@ public class AcceptationController implements Initializable {
     @javafx.fxml.FXML
     public void btnConfirmerDemandeClicked(ActionEvent actionEvent) {
 
-        if (requeteServ.isDemandeSelectedAsSoutien(idDemande)) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur de modification");
-            alert.setHeaderText("Cette demande a déjà été sélectionnée en tant que soutien. Aide impossible.");
-            alert.showAndWait();
-        } else  if (peutAccepterDemandeSoutien(niveauDemande)){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur de modification");
-            alert.setHeaderText("Cette demande est supérieur à votre niveau. Aide impossible.");
-            alert.showAndWait();
-        }
-
-
-            else {
-
-        user = UserHolder.getInstance().getUser();
-        int idCompetence = requeteServ.getIdCompetenceCorrespondantALaMatiere(user.getId(),nomMatiere);
-        String idSalle = "301";
-        String description = txtADescription.getText();
-
-        String dateString = txtDate.getText();
-        Date dateSoutien = null;
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Format de la date
-            java.util.Date parsedDate = dateFormat.parse(dateString); // Conversion de la chaîne en Date
-            dateSoutien = new Date(parsedDate.getTime()); // Création de l'objet Date
-        } catch (ParseException e) {
-            e.printStackTrace(); // Gérer l'erreur de conversion
-        }
+            if (requeteServ.isDemandeSelectedAsSoutien(idDemande)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur d'ajout");
+                alert.setHeaderText("Cette demande a déjà été sélectionnée en tant que soutien. Aide impossible.");
+                alert.showAndWait();
+            } else if (peutAccepterDemandeSoutien(niveauDemande)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur d'ajout");
+                alert.setHeaderText("Cette demande est supérieure à votre niveau. Aide impossible.");
+                alert.showAndWait();
+            } else if (requeteServ.isDemandeAppartenantUtilisateur(idDemande, user.getId())){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur d'ajout");
+                alert.setHeaderText("Vous ne pouvez pas accepter vos propres demandes.");
+                alert.showAndWait();
+            }else {
+                user = UserHolder.getInstance().getUser();
+                int idCompetence = requeteServ.getIdCompetenceCorrespondantALaMatiere(user.getId(), nomMatiere);
+                String idSalle = "301";
+                String description = txtADescription.getText();
 
+                String dateString = txtDate.getText();
+                Date dateSoutien = null;
+                try {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    java.util.Date parsedDate = dateFormat.parse(dateString);
+                    dateSoutien = new Date(parsedDate.getTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
-        requeteServ = new RequeteServiceController();
-
-
-
-        requeteServ.createSoutien(idDemande, idCompetence, idSalle, dateSoutien, description);
-        btnConfirmerDemande.getScene().getWindow().hide();
+                requeteServ.createSoutien(idDemande, idCompetence, idSalle, dateSoutien, description);
+                btnConfirmerDemande.getScene().getWindow().hide();
+            }
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur d'ajout");
+            alert.setHeaderText("Impossible d'ajouter le soutien : Vous devez au moins posséder une des compétences de la demande.");
+            alert.showAndWait();
         }
     }
     public boolean peutAccepterDemandeSoutien(String niveauDemande) {

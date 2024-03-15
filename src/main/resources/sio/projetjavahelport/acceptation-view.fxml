@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="557.0" prefWidth="703.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.projetjavahelport.AcceptationController">
     <children>
         <TextField fx:id="txtNiveau" editable="false" layoutX="208.0" layoutY="116.0" prefHeight="25.0" prefWidth="225.0" />
@@ -28,7 +27,7 @@
                 <Font name="System Bold" size="17.0" />
             </font>
         </Button>
-        <TextArea fx:id="txtADescription" layoutX="208.0" layoutY="308.0" prefHeight="153.0" prefWidth="242.0" />
-        <Label layoutX="78.0" layoutY="376.0" text="Description" />
+        <TextArea fx:id="txtADescription" layoutX="208.0" layoutY="308.0" prefHeight="153.0" prefWidth="242.0" promptText="Inscrivez un message, accompagné de l'heure que vous proposez" />
+        <Label layoutX="61.0" layoutY="308.0" text="Description" />
     </children>
 </AnchorPane>

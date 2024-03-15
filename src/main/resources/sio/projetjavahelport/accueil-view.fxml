@@ -129,8 +129,8 @@
                   <Font name="System Bold" size="35.0" />
                </font>
             </Label>
-            <Label layoutX="21.0" layoutY="110.0" prefHeight="17.0" prefWidth="90.0" text="Mes demandes :" AnchorPane.rightAnchor="799.0" />
-            <Label layoutX="351.0" layoutY="110.0" text="Demandes :" AnchorPane.rightAnchor="496.0" />
+            <Label layoutX="24.0" layoutY="110.0" prefHeight="17.0" prefWidth="90.0" text="Mes demandes :" AnchorPane.rightAnchor="796.0" />
+            <Label layoutX="369.0" layoutY="110.0" text="Demandes (Cliquez deux fois sur l'une des demandes) :" AnchorPane.rightAnchor="253.0" />
             <Button fx:id="btnCreerDemande" layoutX="118.0" layoutY="429.0" mnemonicParsing="false" onAction="#btnCreerDemandeClicked" prefHeight="41.0" prefWidth="101.0" style="-fx-background-color: #006bff;" styleClass="linear-gradient" stylesheets="@../../CSS/index.css" text="Créer" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="17.0" />
@@ -141,13 +141,12 @@
                   <Font name="System Bold" size="17.0" />
                </font>
             </Button>
-            <TableView fx:id="tbvDemandes" layoutX="315.0" layoutY="141.0" onMouseClicked="#tbvDemandesClicked" prefHeight="281.0" prefWidth="577.0" AnchorPane.leftAnchor="315.0">
+            <TableView fx:id="tbvDemandes" layoutX="370.0" layoutY="141.0" onMouseClicked="#tbvDemandesClicked" prefHeight="281.0" prefWidth="466.0" AnchorPane.leftAnchor="370.0">
               <columns>
                   <TableColumn fx:id="clmNiveau" minWidth="0.0" prefWidth="122.0" text="Niveau" />
                   <TableColumn fx:id="clmDate" prefWidth="129.0" text="Date" />
                 <TableColumn fx:id="clmMatiere" prefWidth="75.0" text="Matière" />
                   <TableColumn fx:id="clmSousMatiere" prefWidth="151.0" text="Sous-matière" />
-                  <TableColumn fx:id="clmStatut" prefWidth="99.0" text="Statut" />
               </columns>
             </TableView>
             <TableView fx:id="tbvMesDemandes" layoutX="24.0" layoutY="141.0" onMouseClicked="#tbvMesDemandesClicked" prefHeight="281.0" prefWidth="287.0">

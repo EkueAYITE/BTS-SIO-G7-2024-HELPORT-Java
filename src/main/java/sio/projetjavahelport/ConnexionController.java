@@ -62,37 +62,41 @@ public class ConnexionController implements Initializable {
             // Affiche un message d'erreur ou effectuez une action en cas d'échec
             Alert alert = new Alert(Alert.AlertType.ERROR, "Identifiant ou mot de passe vide");
             alert.showAndWait(); // Affiche l'alerte de manière synchrone
+            return; // Quitte la méthode si les champs sont vides
         }
 
-            User userInfo = this.requeteServ.verifierIdentifiants(email, password);
+        User userInfo = this.requeteServ.verifierIdentifiants(email, password);
 
-            if (userInfo != null) {
-                try {
-                    UserHolder holder = UserHolder.getInstance();
-                    holder.setUser(userInfo);
-                    // Charge la nouvelle fenêtre en cas de succès
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("accueilAdmin-view.fxml"));
-                    Parent root = fxmlLoader.load();
-                    Scene scene = new Scene(root);
-                    Stage stage = new Stage();
-                    stage.setTitle("Accueil");
-                    stage.setScene(scene);
-                    stage.show();
+        if (userInfo != null) {
+            try {
+                UserHolder holder = UserHolder.getInstance();
+                holder.setUser(userInfo);
+                String role = userInfo.getRole();
 
-                    // Ferme la fenêtre actuelle
-                    stageActuel.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    showAlert("Erreur lors du chargement de la nouvelle fenêtre.");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    showAlert("Une erreur inattendue s'est produite.");
-                }
-            } else {
-                // Affichez un message d'erreur ou effectuez une action en cas d'échec
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Identifiants incorrects");
-                alert.showAndWait(); // Affichez l'alerte de manière synchrone
+                // Charge la nouvelle fenêtre en fonction du rôle de l'utilisateur
+                String fxmlFile = (role.equals("Etudiant")) ? "accueil-view.fxml" : "accueilAdmin-view.fxml";
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
+                Parent root = fxmlLoader.load();
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setTitle("Accueil");
+                stage.setScene(scene);
+                stage.show();
+
+                // Ferme la fenêtre actuelle
+                stageActuel.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                showAlert("Erreur lors du chargement de la nouvelle fenêtre.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("Une erreur inattendue s'est produite.");
             }
+        } else {
+            // Affichez un message d'erreur ou effectuez une action en cas d'échec
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Identifiants incorrects");
+            alert.showAndWait(); // Affichez l'alerte de manière synchrone
+        }
 
     }
 

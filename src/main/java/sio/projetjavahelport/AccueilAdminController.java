@@ -41,8 +41,6 @@ public class AccueilAdminController implements Initializable {
     @javafx.fxml.FXML
     private AnchorPane apnDemandes;
     @javafx.fxml.FXML
-    private Button btnCreerDemande;
-    @javafx.fxml.FXML
     private Button btnDeconnexionAccueil;
     @javafx.fxml.FXML
     private Button btnParametresAccueil;
@@ -89,8 +87,6 @@ public class AccueilAdminController implements Initializable {
     @javafx.fxml.FXML
     private TableColumn clmSousMatiere;
     @javafx.fxml.FXML
-    private TableColumn clmEleve;
-    @javafx.fxml.FXML
     private TableColumn clmSoutienNiveau;
     @javafx.fxml.FXML
     private TableColumn clmSoutienDate;
@@ -99,8 +95,6 @@ public class AccueilAdminController implements Initializable {
     @javafx.fxml.FXML
     private TableColumn clmSoutienSousMatiere;
     @javafx.fxml.FXML
-    private TableColumn clmSoutienEleve;
-    @javafx.fxml.FXML
     private ComboBox cboMatiere;
     @javafx.fxml.FXML
     private ListView lstMatiere;
@@ -108,6 +102,32 @@ public class AccueilAdminController implements Initializable {
     private TableColumn clmSalle;
     @javafx.fxml.FXML
     private TableColumn clmEtage;
+    @javafx.fxml.FXML
+    private TableColumn clmSoutienEleveAssisté;
+    @javafx.fxml.FXML
+    private TableColumn clmSoutienSalle;
+    @javafx.fxml.FXML
+    private TableColumn clmSoutienEleveAssistant;
+    @javafx.fxml.FXML
+    private TableColumn clmSoutienStatus;
+    @javafx.fxml.FXML
+    private TableView tbvSoutiensValides;
+    @javafx.fxml.FXML
+    private TableColumn clmSoutienNiveauV;
+    @javafx.fxml.FXML
+    private TableColumn clmSoutienDateV;
+    @javafx.fxml.FXML
+    private TableColumn clmSoutienMatiereV;
+    @javafx.fxml.FXML
+    private TableColumn clmSoutienSousMatiereV;
+    @javafx.fxml.FXML
+    private TableColumn clmSoutienEleveAssistéV;
+    @javafx.fxml.FXML
+    private TableColumn clmSoutienEleveAssistantV;
+    @javafx.fxml.FXML
+    private TableColumn clmSoutienSalleV;
+    @javafx.fxml.FXML
+    private TableColumn clmSoutienStatusV;
 
     @javafx.fxml.FXML
     public void btnDemandesAccueilClicked(ActionEvent actionEvent) {
@@ -134,17 +154,43 @@ public class AccueilAdminController implements Initializable {
     }
 
 
-    @javafx.fxml.FXML
+    @Deprecated
     public void btnCreerDemandeClicked(ActionEvent actionEvent) {
     }
 
 
     @javafx.fxml.FXML
-    public void btnDeconnexionAccueilClicked(ActionEvent actionEvent) {
+    public void btnDeconnexionAccueilClicked(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("connexion-view.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Connexion");
+        stage.setScene(scene);
+
+
+        Scene sceneActuelle = ((Node) actionEvent.getSource()).getScene();
+        Stage stageActuel = (Stage) sceneActuelle.getWindow();
+        stageActuel.close();
+        stage.show();
     }
 
     @javafx.fxml.FXML
-    public void btnParametresAccueilClicked(ActionEvent actionEvent) {
+    public void btnParametresAccueilClicked(ActionEvent actionEvent) throws IOException {
+        if (fenetre == null) {
+            // Si la fenêtre n'est pas encore ouverte on créer une instance
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("parametres-view.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Scene scene = new Scene(root);
+            fenetre = new Stage();
+            fenetre.setTitle("Paramètres");
+            fenetre.setScene(scene);
+            fenetre.setOnCloseRequest(event -> {
+                fenetre = null;
+            });
+            fenetre.show();
+        }
     }
 
 
@@ -265,9 +311,7 @@ public class AccueilAdminController implements Initializable {
     public void tbvDemandesClicked(Event event) {
     }
 
-    @Deprecated
-    public void tbvValiderSoutienClicked(Event event) {
-    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -289,15 +333,62 @@ public class AccueilAdminController implements Initializable {
 
             tbvDemandes.setItems(tabDemandes);
 
-            clmSoutienNiveau.setCellValueFactory(new PropertyValueFactory<Demande, String>("niveauAssiste"));
-            clmSoutienDate.setCellValueFactory(new PropertyValueFactory<Demande, String>("dateDuSoutien"));
-            clmSoutienMatiere.setCellValueFactory(new PropertyValueFactory<Demande, String>("designation"));
-            clmSoutienSousMatiere.setCellValueFactory(new PropertyValueFactory<Demande, String>("sousMatiere"));
-            clmSoutienEleve.setCellValueFactory(new PropertyValueFactory<Demande, String>("nomAssiste"));
+            //Pour afficher les soutiens généraux
+            clmSoutienNiveau.setCellValueFactory(new PropertyValueFactory<Soutien, String>("niveauAssiste"));
+            clmSoutienDate.setCellValueFactory(new PropertyValueFactory<Soutien, String>("dateDuSoutien"));
+            clmSoutienMatiere.setCellValueFactory(new PropertyValueFactory<Soutien, String>("designation"));
+            clmSoutienSousMatiere.setCellValueFactory(new PropertyValueFactory<Soutien, String>("sousMatiere"));
+            clmSoutienEleveAssisté.setCellValueFactory(new PropertyValueFactory<Soutien, String>("nomAssiste"));
+            clmSoutienEleveAssistant.setCellValueFactory(new PropertyValueFactory<Soutien, String>("nomAssistant"));
+            clmSoutienSalle.setCellValueFactory(new PropertyValueFactory<Soutien, String>("idSalle"));
+            clmSoutienStatus.setCellValueFactory(new PropertyValueFactory<Soutien, String>("statusAttente"));
 
-            ObservableList<Soutien> tabMesSoutiens = FXCollections.observableArrayList(requeteServ.getLesSoutiensGeneraux());
 
-            tbvValiderSoutiens.setItems(tabMesSoutiens);
+            ObservableList<Soutien> tabLesSoutiens = FXCollections.observableArrayList(requeteServ.getLesSoutiensGeneraux());
+
+            tbvValiderSoutiens.setItems(tabLesSoutiens);
+
+
+
+            tbvValiderSoutiens.setOnMouseEntered(event -> {
+                // Récupérer une nouvelle liste de soutiens mise à jour
+                ObservableList<Soutien> nouvelleListeMesDemandes = FXCollections.observableArrayList(requeteServ.getLesSoutiensGeneraux());
+
+                // Mettre à jour la liste observable tabMesSoutiens avec la nouvelle liste
+                tabLesSoutiens.setAll(nouvelleListeMesDemandes);
+
+                // Assurez-vous que le tableau est lié à cette liste observable mise à jour
+                tbvValiderSoutiens.setItems(nouvelleListeMesDemandes);
+            });
+
+            clmSoutienNiveauV.setCellValueFactory(new PropertyValueFactory<Soutien, String>("niveauAssiste"));
+            clmSoutienDateV.setCellValueFactory(new PropertyValueFactory<Soutien, String>("dateDuSoutien"));
+            clmSoutienMatiereV.setCellValueFactory(new PropertyValueFactory<Soutien, String>("designation"));
+            clmSoutienSousMatiereV.setCellValueFactory(new PropertyValueFactory<Soutien, String>("sousMatiere"));
+            clmSoutienEleveAssistéV.setCellValueFactory(new PropertyValueFactory<Soutien, String>("nomAssiste"));
+            clmSoutienEleveAssistantV.setCellValueFactory(new PropertyValueFactory<Soutien, String>("nomAssistant"));
+            clmSoutienSalleV.setCellValueFactory(new PropertyValueFactory<Soutien, String>("idSalle"));
+            clmSoutienStatusV.setCellValueFactory(new PropertyValueFactory<Soutien, String>("statusAttente"));
+
+            ObservableList<Soutien> tabSoutiensValides = FXCollections.observableArrayList(requeteServ.getLesSoutiensGenerauxValides());
+
+            tbvSoutiensValides.setItems(tabSoutiensValides);
+
+            tbvSoutiensValides.setOnMouseEntered(event -> {
+                // Récupérer une nouvelle liste de soutiens mise à jour
+                ObservableList<Soutien> nouvelleListeMesDemandes = FXCollections.observableArrayList(requeteServ.getLesSoutiensGenerauxValides());
+
+                // Mettre à jour la liste observable tabMesSoutiens avec la nouvelle liste
+                tabSoutiensValides.setAll(nouvelleListeMesDemandes);
+
+                // Assurez-vous que le tableau est lié à cette liste observable mise à jour
+                tbvSoutiensValides.setItems(nouvelleListeMesDemandes);
+            });
+
+
+
+
+
 
             clmSalle.setCellValueFactory(new PropertyValueFactory<Salle, String>("codeSalle"));
             clmEtage.setCellValueFactory(new PropertyValueFactory<Salle, Integer>("etageSalle"));
@@ -372,5 +463,25 @@ public class AccueilAdminController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+
+    @javafx.fxml.FXML
+    public void tbvValiderSoutienClicked(Event event) throws IOException {
+        Soutien d = (Soutien) tbvValiderSoutiens.getSelectionModel().getSelectedItem();
+        if (d != null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("gererSoutien-view.fxml"));
+            Parent root = loader.load();
+            GererSoutienController gererSoutienController = loader.getController();
+            gererSoutienController.initData(d); // Méthode pour initialiser les données dans AcceptationController
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setTitle("Gérer un soutien");
+            stage.setScene(scene);
+            stage.show();
+        }
+    }
+
+    @javafx.fxml.FXML
+    public void tbvSoutiensValides(Event event) {
     }
 }

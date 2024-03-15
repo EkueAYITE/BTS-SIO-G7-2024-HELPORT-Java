@@ -19,6 +19,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -29,10 +30,6 @@ public class CreerDemandeController implements Initializable {
     private ComboBox cboMatiere;
     @javafx.fxml.FXML
     private ComboBox cboSousMatiere;
-    @javafx.fxml.FXML
-    private TreeView root;
-    @javafx.fxml.FXML
-    private Button btnAjouterSousMatiere;
     private User user;
     RequeteServiceController requeteServ;
     ConnexionBDD maCnx;
@@ -43,7 +40,14 @@ public class CreerDemandeController implements Initializable {
     private AnchorPane apCreerDemande;
     @javafx.fxml.FXML
     private Button btnRetour;
-
+    @javafx.fxml.FXML
+    private ListView lstSousMatiere;
+    @javafx.fxml.FXML
+    private TextField txtAide;
+    @javafx.fxml.FXML
+    private Button btnAjouterSousMatiere;
+    @javafx.fxml.FXML
+    private Button btnAjouter;
 
 
     @javafx.fxml.FXML
@@ -71,7 +75,7 @@ public class CreerDemandeController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur de saisie");
             alert.setHeaderText("");
-            alert.setContentText("Veuillez choisir une sous matière");
+            alert.setContentText("Veuillez choisir une sous-matière");
             alert.showAndWait();
 
         } else {
@@ -82,35 +86,25 @@ public class CreerDemandeController implements Initializable {
             user = UserHolder.getInstance().getUser();
 
 
-            Demande demande = new Demande();
-
-            String mDesignation = (String) cboMatiere.getValue();
-
-            // Pour insérer les données remplies par l'utilisateur dans la bdd
-            // Matière choisie par l'utilisateur
-            switch (cboMatiere.getSelectionModel().getSelectedIndex() + 1) {
-                case 1: // Anglais
-                    demande.setId_matiere(1);
-                    break;
-                case 2: // CEJM
-                    demande.setId_matiere(2);
-                    break;
-                case 3: // Français
-                    demande.setId_matiere(3);
-                    break;
-                case 4: // Mathématiques
-                    demande.setId_matiere(4);
-                    break;
-                case 5: // Informatique
-                    demande.setId_matiere(5);
-                    break;
-                case 6: // Histoire
-                    demande.setId_matiere(6);
-                    break;
-
+            int idMatiere = 0;
+            String matiere = (String) cboMatiere.getValue();
+            try {
+                idMatiere = requeteServ.getIdMatiere(matiere); // Remplacez getIdMatiere par la méthode appropriée pour obtenir l'ID de la matière
+            } catch (SQLException e) {
+                e.printStackTrace(); // Gérez les exceptions de base de données
             }
 
-            demande.setSousMatiere((String) cboSousMatiere.getValue());
+            Demande demande = new Demande();
+
+            demande.setId_matiere(idMatiere);
+
+            ArrayList<String> sousMatieres = new ArrayList<>(lstSousMatiere.getItems());
+
+            // Mettre les sous-matières dans un tableau pour les stocker dans la demande
+            String[] sousMatieresArray = sousMatieres.toArray(new String[0]);
+
+            // Affectation du tableau de sous-matières à la demande
+            demande.setSousMatiere(Arrays.toString(sousMatieresArray));
             demande.setDateFinDemande(java.sql.Date.valueOf(dpDate.getValue()));
             demande.setDate_updated(java.sql.Date.valueOf(currentDate));
             demande.setId_user(user.getId());
@@ -150,6 +144,7 @@ public class CreerDemandeController implements Initializable {
 
     @javafx.fxml.FXML
     public void btnAjouterSousMatiereClicked(ActionEvent actionEvent) {
+        txtAide.setText(cboSousMatiere.getValue().toString());
     }
 
     @javafx.fxml.FXML
@@ -232,6 +227,24 @@ public class CreerDemandeController implements Initializable {
             fenetre.show();
         }
     }
+    @javafx.fxml.FXML
+    public void btnAjouterClicked(ActionEvent actionEvent) {
+        if (cboSousMatiere.getSelectionModel().getSelectedItem() != null) {
+            // Ajoute la valeur sélectionnée dans la ListView
+            lstSousMatiere.getItems().add(cboSousMatiere.getValue().toString());
+        }
+        else
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur de saisie");
+            alert.setHeaderText("");
+            alert.setContentText("Veuillez choisir une sous-matière");
+            alert.showAndWait();
+        }
+
+
+    }
+
     // Classe qui permet d'instaurer une intervalle dans la sélection de date
     private class DatePickerCell extends DateCell {
         private final LocalDate minDate;
