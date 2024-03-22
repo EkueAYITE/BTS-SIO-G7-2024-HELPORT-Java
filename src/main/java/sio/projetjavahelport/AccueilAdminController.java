@@ -132,6 +132,8 @@ public class AccueilAdminController implements Initializable {
     private Label lblNomEleve;
     @javafx.fxml.FXML
     private Label lblRole;
+    @javafx.fxml.FXML
+    private Button btnModifier;
 
     @javafx.fxml.FXML
     public void btnDemandesAccueilClicked(ActionEvent actionEvent) {
@@ -489,5 +491,29 @@ public class AccueilAdminController implements Initializable {
 
     @javafx.fxml.FXML
     public void tbvSoutiensValides(Event event) {
+    }
+
+
+
+    @javafx.fxml.FXML
+    public void btnModifierClicked(ActionEvent actionEvent) throws IOException {
+        if (fenetre == null) {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ajouterSousMatiere-view.fxml"));
+
+            Parent root = fxmlLoader.load();
+
+            Scene scene = new Scene(root);
+            fenetre = new Stage();
+            fenetre.setTitle("Ajouter une sous-matières");
+            fenetre.setScene(scene);
+            fenetre.setOnCloseRequest(event -> {
+                fenetre = null;
+            });
+            Scene sceneActuelle = ((Node) actionEvent.getSource()).getScene();
+            Stage stageActuel = (Stage) sceneActuelle.getWindow();
+            stageActuel.close();
+            fenetre.show();
+        }
     }
 }

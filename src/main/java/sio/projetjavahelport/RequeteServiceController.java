@@ -912,7 +912,35 @@ public class RequeteServiceController {
         }
         return false;
     }
+    public void ajouterSousMatieres(String nomMatiere, List<String> sousMatieres) {
+        try {
+            cnx = ConnexionBDD.getCnx();
 
+            // Récupérer les sous-matières existantes
+            ps = cnx.prepareStatement("SELECT sous_matiere FROM matiere WHERE designation = ?");
+
+            ps.setString(1, nomMatiere);
+            rs = ps.executeQuery();
+
+            // Concaténer les nouvelles sous-matières avec les existantes
+            String sousMatieresExistantes = "";
+            if (rs.next()) {
+                sousMatieresExistantes = rs.getString("sous_matiere");
+            }
+            String sousMatieresConcatenees = sousMatieresExistantes + " " + String.join(" ", sousMatieres);
+
+            // Mettre à jour la matière avec les sous-matières concaténées
+            String queryUpdate = "UPDATE matiere SET sous_matiere = ? WHERE designation = ?";
+            ps = cnx.prepareStatement(queryUpdate);
+            ps.setString(1, sousMatieresConcatenees);
+            ps.setString(2, nomMatiere);
+            ps.executeUpdate();
+
+            System.out.println("Les sous-matières ont été ajoutées avec succès à la matière : " + nomMatiere);
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de l'ajout des sous-matières à la matière : " + e.getMessage());
+        }
+    }
 }
 
 
