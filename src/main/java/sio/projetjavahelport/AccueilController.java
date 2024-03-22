@@ -303,90 +303,28 @@ public class AccueilController implements Initializable {
 
     @javafx.fxml.FXML
     public void btnSupprimerCompetenceClicked(ActionEvent actionEvent) throws IOException {
-        // recupération de toutes les compétences
-        List<String> tabCompetence = lstCompetence.getItems();
-        List<String> competenceUpdte = new ArrayList<>();
-
-        // System.out.println("Élément mis à jour : " + competenceUpdte);
-
-        if (tabCompetence != null) {
-            System.out.println("liste sélectionné : " + tabCompetence);
-            // Faites quelque chose avec l'élément sélectionné
-        }
-
-
-        //recupération de la compétences selectionné
-        String laCompetence = String.valueOf(lstCompetence.getSelectionModel().getSelectedItem());
-        //test si la compétence fonctionne
-        if (laCompetence != null) {
-            System.out.println("Élément sélectionné : " + laCompetence);
-
-        }
-        // competenceUpdte.addAll(tabCompetence);
-        System.out.println("nouveau tableau sélectionné : " + competenceUpdte);
-
-        //on refait un tableau sans la valeur selectionné
-        assert tabCompetence != null;
-        for (String competence : tabCompetence) {
-            if (!competence.equals(laCompetence)) {
-                competenceUpdte.add(competence);
-                System.out.println("Élément mis à jour : " + competenceUpdte);
-                //  break; // Sort de la boucle une fois que l'élément est trouvé
-            }
-
-        }
-        //Chaîne pour stocker le résultat
-        StringBuilder resultat = new StringBuilder();
-        for (String element : competenceUpdte) {
-            // Ajouter le séparateur "#" avant chaque élément (sauf pour le premier)
-            if (!resultat.isEmpty()) {
-                resultat.append("#");
-            }
-            // Ajouter l'élément au résultat
-            resultat.append(element);
-
-            System.out.println("Élément indenté : " + resultat);
-        }
-        int idEtudiant = user.getId();
-        int idMatiere = -1;
-        String selectedValue;
-        HashMap<Integer, String> matieres = requeteServ.GetAllMatieres();
-        for (Map.Entry<Integer, String> entry : matieres.entrySet()) {
-            Object selectedItem = cboMatiereCompetence.getSelectionModel().getSelectedItem();
-            if (selectedItem != null) {
-                selectedValue = selectedItem.toString();
-                if (entry.getValue().equals(cboMatiereCompetence.getSelectionModel().getSelectedItem().toString())) {
+        String selectedCompetence = (String) lstCompetence.getSelectionModel().getSelectedItem();
+        if (selectedCompetence != null) {
+            int idMatiere = -1;
+            String selectedMatiere = (String) cboMatiereCompetence.getSelectionModel().getSelectedItem();
+            HashMap<Integer, String> matieres = requeteServ.GetAllMatieres();
+            for (Map.Entry<Integer, String> entry : matieres.entrySet()) {
+                if (entry.getValue().equals(selectedMatiere)) {
                     idMatiere = entry.getKey();
                     break;
                 }
+            }
+            if (idMatiere != -1) {
+                int idEtudiant = user.getId();
+                requeteServ.DeleteCompetence(selectedCompetence, idMatiere, idEtudiant);
+                // Rafraîchir l'interface ou effectuer d'autres opérations après la suppression
             } else {
-                System.out.println("Aucune sélection dans la ComboBox.");
+                System.out.println("Erreur : Impossible de trouver l'ID de la matière.");
             }
+        } else {
+            System.out.println("Erreur : Aucune compétence sélectionnée.");
         }
-        String sousMatiere = String.valueOf(resultat);
-        System.out.println("Élément string : " + resultat);
-        /*if (fenetre == null) {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("supprimerCompetence-view.fxml"));
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root);
-            fenetre = new Stage();
-            fenetre.setTitle("Supprimer une compétence");
-            fenetre.setScene(scene);
-            fenetre.setOnCloseRequest(e -> {
-                fenetre = null; // Réinitialisez la référence lorsque la fenêtre est fermée
-            });
-            fenetre.show();
-        }*/
-        Boolean sousMatiereExiste;
-        ArrayList<String> tabCompetenceDemande = requeteServ.CheckMesDemande();
 
-        for (String competenceD : tabCompetenceDemande) {
-            for (String competence : tabCompetence) {
-                if (!competenceD.equals(competence)) {
-                    requeteServ.DeletCompetence(sousMatiere, idMatiere, idEtudiant);
-                }
-            }
-        }
 
     }
 

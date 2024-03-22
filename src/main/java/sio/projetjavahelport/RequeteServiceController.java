@@ -182,19 +182,25 @@ public class RequeteServiceController {
 
     }
 
-    public void DeletCompetence(String sousMatiere, int idMatiere, int idUser){
+    public void DeleteCompetence(String sousMatiere, int idMatiere, int idUser){
         try {
             cnx = ConnexionBDD.getCnx();
-            ps = cnx.prepareStatement("UPDATE competence\n" +
-                    "    set sous_matiere = ?\n" +
-                    "    WHERE id_matiere = ?\n" +
-                    "    AND id_user = ?" );
-            ps.setString(1, sousMatiere);
-            ps.setInt(2, idMatiere);
-            ps.setInt(3, idUser);
-            ps.executeUpdate();
+            ps = cnx.prepareStatement("DELETE FROM competence WHERE id_matiere = ? AND id_user = ? AND sous_matiere = ?");
+
+
+            ps.setInt(1, idMatiere);
+            ps.setInt(2, idUser);
+            ps.setString(3, sousMatiere);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("La compétence a été supprimée avec succès.");
+            } else {
+                System.out.println("Aucune compétence n'a été supprimée.");
+            }
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.err.println("Erreur lors de la suppression de la compétence : " + e.getMessage());
         }
     }
     public void ajouterDemande(Demande demande) throws SQLException {
@@ -825,17 +831,15 @@ public class RequeteServiceController {
             throw new RuntimeException();
         }
     }
-    public boolean isDemandeAppartenantUtilisateur(int idDemande, int idUser) {
+    public boolean isDemandeAppartenantUtilisateur(int idDemande, int idUtilisateur) {
         try {
             cnx = ConnexionBDD.getCnx();
             ps = cnx.prepareStatement("SELECT COUNT(*) FROM demande WHERE id = ? AND id_user = ?");
-
-
             ps.setInt(1, idDemande);
-            ps.setInt(2, idUser);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    int count = rs.getInt(1);
+            ps.setInt(2, idUtilisateur);
+            try (ResultSet resultSet = ps.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
                     return count > 0;
                 }
             }
@@ -846,17 +850,62 @@ public class RequeteServiceController {
     }
     public boolean userPossedeSousMatiere(int idUser, String sousMatiere) {
         try {
-
             cnx = ConnexionBDD.getCnx();
-            ps = cnx.prepareStatement("SELECT COUNT(*) FROM demande WHERE id_user = ? AND sous_matiere LIKE ?");
-
+            ps = cnx.prepareStatement("SELECT COUNT(*) FROM competence WHERE id_user = ? AND sous_matiere = ?");
             ps.setInt(1, idUser);
-            ps.setString(2, "%" + sousMatiere + "%");
+            ps.setString(2, sousMatiere);
             try (ResultSet resultSet = ps.executeQuery()) {
                 if (resultSet.next()) {
                     int count = resultSet.getInt(1);
                     return count > 0;
                 }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public List<String> getSousMatieres(String matiere) {
+        List<String> sousMatieres = new ArrayList<>();
+        try {
+            cnx = ConnexionBDD.getCnx();
+            ps = cnx.prepareStatement("SELECT sous_matiere\n" +
+                    "FROM `matiere` \n" +
+                    "WHERE matiere.designation = ?");
+            ps.setString(1, matiere);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String sousMatiereConcat = rs.getString("sous_matiere");
+                    String[] mots = sousMatiereConcat.split("#");
+                    for(String mot : mots) {
+                        sousMatieres.add(mot);
+                    }
+                }
+            }
+        }
+         catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sousMatieres;
+    }
+    public boolean userHasCompetence(int idEtudiant, int idMatiere, String sousMatiere) {
+        try {
+            cnx = ConnexionBDD.getCnx();
+            ps = cnx.prepareStatement( "SELECT COUNT(*) AS competence_count " +
+                    "FROM competence " +
+                    "WHERE id_user = ? " +
+                    "AND id_matiere = ? " +
+                    "AND sous_matiere = ?");
+
+
+            ps.setInt(1, idEtudiant);
+            ps.setInt(2, idMatiere);
+            ps.setString(3, sousMatiere);
+
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                int competenceCount = resultSet.getInt("competence_count");
+                return competenceCount > 0;
             }
         } catch (SQLException e) {
             e.printStackTrace();

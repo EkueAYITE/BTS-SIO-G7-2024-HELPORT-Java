@@ -111,7 +111,7 @@ public class AjouterCompetenceController implements Initializable {
 
            requeteServ.saveUserCompetence(idMatiere, idEtudiant, laSousMatiere);
 
-           Alert alert = new Alert(Alert.AlertType.ERROR);
+           Alert alert = new Alert(Alert.AlertType.INFORMATION);
            alert.setTitle("Sous-matière ajouté.");
            alert.setHeaderText("Vous avez bien ajouté la sous-matière");
            alert.showAndWait();

@@ -2,10 +2,7 @@ package sio.projetjavahelport;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import sio.projetjavahelport.tools.Salle;
 import sio.projetjavahelport.tools.Soutien;
 import sio.projetjavahelport.tools.User;
@@ -37,6 +34,13 @@ public class GererSoutienController implements Initializable {
 
     @javafx.fxml.FXML
     public void btnConfirmerDemandeClicked(ActionEvent actionEvent) {
+        if (cbSalle.getSelectionModel().getSelectedItem() == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur de validation");
+            alert.setHeaderText("Vous devez sélectionner une salle.");
+            alert.showAndWait();
+        } else {
         try {
             // Récupère l'ID de la salle choisie dans la ComboBox
             Integer idSalleChoisie = (Integer) cbSalle.getSelectionModel().getSelectedItem();
@@ -55,7 +59,7 @@ public class GererSoutienController implements Initializable {
             // Gérez les erreurs de conversion de l'ID de la salle en entier
             e.printStackTrace();
         }
-    }
+    }}
 
     @javafx.fxml.FXML
     public void cbSalle(ActionEvent actionEvent) {

@@ -128,6 +128,10 @@ public class AccueilAdminController implements Initializable {
     private TableColumn clmSoutienSalleV;
     @javafx.fxml.FXML
     private TableColumn clmSoutienStatusV;
+    @javafx.fxml.FXML
+    private Label lblNomEleve;
+    @javafx.fxml.FXML
+    private Label lblRole;
 
     @javafx.fxml.FXML
     public void btnDemandesAccueilClicked(ActionEvent actionEvent) {
@@ -320,6 +324,8 @@ public class AccueilAdminController implements Initializable {
             requeteServ = new RequeteServiceController();
             user = UserHolder.getInstance().getUser();
             String matiereSelected = "";
+            lblNomEleve.setText(user.getNom());
+            lblRole.setText(user.getRole());
 
 
             //Pour afficher les demandes générales
@@ -453,7 +459,7 @@ public class AccueilAdminController implements Initializable {
             }
 
             if (idMatiere != -1) {
-                ArrayList<String> tblSousMatiere = requeteServ.GetSousMatiereByMatiereAdmin(idMatiere);
+                ArrayList<String> tblSousMatiere = (ArrayList<String>) requeteServ.getSousMatieres(selectedValue);
                 lstMatiere.getItems().clear();
                 lstMatiere.getItems().addAll(tblSousMatiere);
             } else {

@@ -18,6 +18,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class AcceptationController implements Initializable {
@@ -39,11 +40,13 @@ public class AcceptationController implements Initializable {
     private int idDemande;
     private String niveauDemande;
     private String nomMatiere;
+    private int idUser;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         requeteServ = new RequeteServiceController();
+        user = UserHolder.getInstance().getUser();
 
     }
 
@@ -55,6 +58,7 @@ public class AcceptationController implements Initializable {
         idDemande = selectedDemande.getIdDemande();
         nomMatiere = selectedDemande.getMatiereDesignation();
         niveauDemande = selectedDemande.getNiveau();
+        idUser = selectedDemande.getId_user();
     }
 
     @javafx.fxml.FXML
@@ -66,15 +70,20 @@ public class AcceptationController implements Initializable {
                 alert.setTitle("Erreur d'ajout");
                 alert.setHeaderText("Cette demande a déjà été sélectionnée en tant que soutien. Aide impossible.");
                 alert.showAndWait();
-            } else if (peutAccepterDemandeSoutien(niveauDemande)) {
+            } else if (txtADescription.getText().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Erreur d'ajout");
-                alert.setHeaderText("Cette demande est supérieure à votre niveau. Aide impossible.");
+                alert.setTitle("Erreur de confirmation");
+                alert.setHeaderText("Veuillez ajouter une description avec l'heure de votre disponibilité");
                 alert.showAndWait();
-            } else if (requeteServ.isDemandeAppartenantUtilisateur(idDemande, user.getId())){
+            }  else if (requeteServ.isDemandeAppartenantUtilisateur(idDemande, user.getId())){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Erreur d'ajout");
                 alert.setHeaderText("Vous ne pouvez pas accepter vos propres demandes.");
+                alert.showAndWait();
+            }else if (!peutAccepterDemandeSoutien(niveauDemande)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur d'ajout");
+                alert.setHeaderText("Cette demande est supérieure à votre niveau ou vous n'êtes pas assez haut niveau. Aide impossible.");
                 alert.showAndWait();
             }else {
                 user = UserHolder.getInstance().getUser();
@@ -98,26 +107,33 @@ public class AcceptationController implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur d'ajout");
-            alert.setHeaderText("Impossible d'ajouter le soutien : Vous devez au moins posséder une des compétences de la demande.");
+            alert.setHeaderText("Vous devez posséder au moins l'une des compétences de la demande.");
             alert.showAndWait();
+
         }
     }
     public boolean peutAccepterDemandeSoutien(String niveauDemande) {
-        // Définir l'ordre des niveaux
         try {
-            user = UserHolder.getInstance().getUser();
-            String niveau = user.getNiveau();
-            String[] ordreNiveaux = {"Master 2", "Master 1", "Bachelor", "BTS 2", "BTS 1", "Terminale"};
+            // Associer chaque niveau à un nombre
+            HashMap<String, Integer> niveauxNumerotes = new HashMap<>();
+            niveauxNumerotes.put("Terminale", 1);
+            niveauxNumerotes.put("BTS 1", 2);
+            niveauxNumerotes.put("BTS 2", 3);
+            niveauxNumerotes.put("Bachelor", 4);
+            niveauxNumerotes.put("Master 1", 5);
+            niveauxNumerotes.put("Master 2", 6);
 
-            // Récupérer l'index des niveaux dans l'ordre défini
-            int indexUtilisateur = Arrays.asList(ordreNiveaux).indexOf(niveau);
-            int indexDemande = Arrays.asList(ordreNiveaux).indexOf(niveauDemande);
+            // Récupérer le niveau de l'utilisateur et celui de la demande
+            user = UserHolder.getInstance().getUser();
+            int niveauUtilisateur = niveauxNumerotes.getOrDefault(user.getNiveau(), 0);
+            int niveauDemandeNumerote = niveauxNumerotes.getOrDefault(niveauDemande, 0);
 
             // Vérifier si l'utilisateur peut accepter la demande en soutien
-            return indexUtilisateur >= indexDemande + 2;
+            return niveauUtilisateur >= niveauDemandeNumerote + 2;
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
 }
